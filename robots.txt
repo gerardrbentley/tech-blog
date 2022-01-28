@@ -1,1 +1,1 @@
-Sitemap: https://gerardrbentley.github.io/tech-blog/sitemap.xml
+Sitemap: https://gerardrbentley.github.io/sitemap.xml

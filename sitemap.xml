@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://gerardrbentley.github.io/tech-blog/markdown/2020/01/14/test-markdown-post.html</loc>
-<lastmod>2020-01-14T00:00:00-06:00</lastmod>
+<loc>https://gerardrbentley.github.io/streamlit/python/aws/2022/01/24/streamlit-url-scan.html</loc>
+<lastmod>2022-01-24T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://gerardrbentley.github.io/tech-blog/jupyter/2020/02/20/test.html</loc>
-<lastmod>2020-02-20T00:00:00-06:00</lastmod>
+<loc>https://gerardrbentley.github.io/about/</loc>
 </url>
 <url>
-<loc>https://gerardrbentley.github.io/tech-blog/about/</loc>
+<loc>https://gerardrbentley.github.io/</loc>
 </url>
 <url>
-<loc>https://gerardrbentley.github.io/tech-blog/</loc>
+<loc>https://gerardrbentley.github.io/search/</loc>
 </url>
 <url>
-<loc>https://gerardrbentley.github.io/tech-blog/search/</loc>
-</url>
-<url>
-<loc>https://gerardrbentley.github.io/tech-blog/categories/</loc>
+<loc>https://gerardrbentley.github.io/categories/</loc>
 </url>
 </urlset>
