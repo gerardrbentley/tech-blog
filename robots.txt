@@ -1,1 +1,1 @@
-Sitemap: https://gerardbentley.com/sitemap.xml
+Sitemap: https://tech.gerardbentley.com/sitemap.xml
