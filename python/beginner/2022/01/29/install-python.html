@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Install Python with Conda | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Install Python with Conda" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Install Python on your local computer with Conda to install packages and switch Python versions easily." />
+<meta property="og:description" content="Install Python on your local computer with Conda to install packages and switch Python versions easily." />
+<link rel="canonical" href="https://tech.gerardbentley.com/python/beginner/2022/01/29/install-python.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/python/beginner/2022/01/29/install-python.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:image" content="https://tech.gerardbentley.com/images/install_python.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-01-29T00:00:00-06:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://tech.gerardbentley.com/images/install_python.png" />
+<meta property="twitter:title" content="Install Python with Conda" />
+<script type="application/ld+json">
+{"url":"https://tech.gerardbentley.com/python/beginner/2022/01/29/install-python.html","@type":"BlogPosting","image":"https://tech.gerardbentley.com/images/install_python.png","headline":"Install Python with Conda","dateModified":"2022-01-29T00:00:00-06:00","datePublished":"2022-01-29T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/python/beginner/2022/01/29/install-python.html"},"description":"Install Python on your local computer with Conda to install packages and switch Python versions easily.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Install Python with Conda</h1><p class="page-description">Install Python on your local computer with Conda to install packages and switch Python versions easily.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-01-29T00:00:00-06:00" itemprop="datePublished">
+        Jan 29, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#beginner">beginner</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gerardrbentley/tech-blog/tree/master/_notebooks/2022-01-29-install-python.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gerardrbentley/tech-blog/master?filepath=_notebooks%2F2022-01-29-install-python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/gerardrbentley/tech-blog/blob/master/_notebooks/2022-01-29-install-python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fgerardrbentley%2Ftech-blog%2Fblob%2Fmaster%2F_notebooks%2F2022-01-29-install-python.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Personal-Python-Preferences">Personal Python Preferences </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Installing">Installing </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Download-and-Install-Python-Conda">Download and Install Python Conda </a></li>
+<li class="toc-entry toc-h3"><a href="#Initialize-Conda-Base-Environment">Initialize Conda Base Environment </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Conda-Init">Conda Init </a></li>
+<li class="toc-entry toc-h4"><a href="#Python-Base-Environment">Python Base Environment </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#VS-Code-Text-Editor-Setup">VS Code Text Editor Setup </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Set-up-test-project">Set up test project </a></li>
+<li class="toc-entry toc-h3"><a href="#Download-and-Install-VS-Code">Download and Install VS Code </a></li>
+<li class="toc-entry toc-h3"><a href="#Open-your-test-project-in-VS-Code">Open your test project in VS Code </a></li>
+<li class="toc-entry toc-h3"><a href="#Install-Extensions-for-Python">Install Extensions for Python </a></li>
+<li class="toc-entry toc-h3"><a href="#VS-Code-Set-Python-Env-and-Formatter">VS Code Set Python Env and Formatter </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Get-on-to-Getting-Things-Done">Get on to Getting Things Done </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-01-29-install-python.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Personal-Python-Preferences">
+<a class="anchor" href="#Personal-Python-Preferences" aria-hidden="true"><span class="octicon octicon-link"></span></a>Personal Python Preferences<a class="anchor-link" href="#Personal-Python-Preferences"> </a>
+</h1>
+<p><em>note:</em> These are recommendations, not hard and fast rules.
+There are trade-offs in every decision in software.</p>
+<p>While your set up is largely up to personal preference, some factors to consider are:</p>
+<ul>
+<li>How many different computers you use (will your configuration transfer easily?)</li>
+<li>How many different OS's you use (will your configuration work between Windows / Linux?)</li>
+<li>How many projects or versions of python / python packages do you need to use</li>
+<li>How invested are you in learning the command line (would GUI make your life much less stressful?)</li>
+</ul>
+<p>The following set up has worked well for me doing working with multiple python versions on both Windows and Ubuntu/Debian systems.</p>
+<h2 id="Installing">
+<a class="anchor" href="#Installing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing<a class="anchor-link" href="#Installing"> </a>
+</h2>
+<h3 id="Download-and-Install-Python-Conda">
+<a class="anchor" href="#Download-and-Install-Python-Conda" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download and Install Python Conda<a class="anchor-link" href="#Download-and-Install-Python-Conda"> </a>
+</h3>
+<p>
+</p>
+<center class="youtube-iframe-wrapper">
+    <iframe width="730" height="315" src="https://www.youtube.com/embed/dK52tHClH34" frameborder="0" allowfullscreen=""></iframe>
+</center>
+
+<ul>
+<li>
+<p>Use <a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>, the little sibling of <a href="https://www.anaconda.com/products/individual#Downloads">Anaconda</a>.
+It manages downloading and using different python versions and has some unique "virtual environment" features that are especially nice in data science work.</p>
+<ul>
+<li>For the most up to date information (i.e. if the following doesn't work), see the <a href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html">official guide</a> and click the link for your OS</li>
+<li>Browser / GUI method:<ul>
+<li>Download the installer for Python 3.9 for your computer's OS (or 3.10 if available).<ul>
+<li>
+<em>note</em> most Windows computers are 64-bit these days, if you're unsure just <a href="https://support.microsoft.com/en-us/office/determine-whether-your-computer-is-running-a-32-bit-version-or-64-bit-version-of-the-windows-operating-system-aac162a1-0cb3-46f2-888f-2f22897396ce#:~:text=System%20Information%20window-,Click%20Start%2C%20type%20system%20in%20the%20search%20box%2C%20and%20then,the%20System%20Type%20under%20Item.">double check</a>
+</li>
+</ul>
+</li>
+<li>Run the file that was downloaded (probably in your <code>~/Downloads</code> folder)<ul>
+<li>Ask it to add python to your account's <code>PATH</code> variable. </li>
+<li>Installing just for yourself should be fine for most users</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Command line method:</p>
+<ul>
+<li>
+<em>note</em> right click links on website to get specific base version of Python (latest is fine in most cases)</li>
+<li>
+<p>Windows Powershell</p>
+<div class="highlight"><pre><span></span><span class="c1"># Download the installer exe</span>
+  curl -uri https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe -outfile MinicondaInstaller.exe
+  <span class="c1"># Install</span>
+  <span class="p">&amp;</span> .<span class="se">\M</span>inicondaInstaller.exe /AddToPath<span class="o">=</span><span class="m">0</span> /InstallationType<span class="o">=</span>JustMe /RegisterPython<span class="o">=</span><span class="m">0</span> /S /D<span class="o">=</span>%UserProfile%<span class="se">\M</span>iniconda3
+</pre></div>
+</li>
+<li>
+<p>Linux bash (MacOS needs different download link)</p>
+<div class="highlight"><pre><span></span><span class="c1"># Download</span>
+  curl -url https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh --output MinicondaInstaller.sh
+  <span class="c1"># Install</span>
+  bash MinicondaInstaller.sh
+</pre></div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Initialize-Conda-Base-Environment">
+<a class="anchor" href="#Initialize-Conda-Base-Environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialize Conda Base Environment<a class="anchor-link" href="#Initialize-Conda-Base-Environment"> </a>
+</h3>
+<p><em>note</em> This glosses over what virtual environments actually are entirely.
+This is intended to keep the document short.
+In essence they are folders that each hold a specific version of python and specific versions of python packages.</p>
+<p>2 Goals:</p>
+<ul>
+<li>Python can make new virtual environments for different projects</li>
+<li>Allows your code editor to utilize tools like <code>black</code> and <code>flake8</code> to automatically format your code, show you what variables and functions you can use, and catch simple errors and tpyos before you run your code</li>
+</ul>
+<h4 id="Conda-Init">
+<a class="anchor" href="#Conda-Init" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conda Init<a class="anchor-link" href="#Conda-Init"> </a>
+</h4>
+<p>After Installing Miniconda</p>
+<ul>
+<li>On windows open Anaconda Powershell Prompt on Windows, terminal for linux<ul>
+<li>Enter <code>conda init powershell</code> then close and move on to the next step<ul>
+<li>
+<em>note</em> if Windows fails to do the initialization and instead makes a pop-up about "Folder Security", click the pop up then take action to allow the changes.
+You'll need to re-run the <code>conda init</code> command.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>open up a new terminal<ul>
+<li>
+<em>note</em> if you installed via command line method, you may need to close your current terminal and reopen</li>
+<li>If you see <code>(base)</code> on the left of your current line try running the following command<div class="highlight"><pre><span></span>python --version
+</pre></div>
+</li>
+<li>If you don't see <code>(base)</code>, try running the following command.
+Then open a new terminal window and try something like the <code>python --version</code> command again.<div class="highlight"><pre><span></span>conda init
+</pre></div>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Python-Base-Environment">
+<a class="anchor" href="#Python-Base-Environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Base Environment<a class="anchor-link" href="#Python-Base-Environment"> </a>
+</h4>
+<ul>
+<li>
+<p>Install some packages in the <code>(base)</code> conda virtual environment that are useful for code formatting and testing:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Windows Powershell</span>
+  <span class="c1"># Download the requirements file</span>
+  <span class="o">(</span>base<span class="o">)</span>$&gt; curl -uri https://gist.githubusercontent.com/gerardrbentley/b4fd6bdeb9167462cf990160ec246512/raw/e7194b303bb59e518e5d28c65e916cf3ebf1032a/base.requirements.txt -outfile base.requirements.txt
+  <span class="c1"># Install</span>
+  <span class="o">(</span>base<span class="o">)</span>$&gt; python -m pip install -r base.requirements.txt
+
+  <span class="c1"># Unix</span>
+  <span class="c1"># Download the requirements file</span>
+  <span class="o">(</span>base<span class="o">)</span>$&gt; curl -url https://gist.githubusercontent.com/gerardrbentley/b4fd6bdeb9167462cf990160ec246512/raw/e7194b303bb59e518e5d28c65e916cf3ebf1032a/base.requirements.txt --output base.requirements.txt
+  <span class="c1"># Install</span>
+  <span class="o">(</span>base<span class="o">)</span>$&gt; python -m pip install -r base.requirements.txt
+</pre></div>
+</li>
+</ul>
+
+<pre><code>txt
+# formatter
+black
+# % testing coverage
+coverage
+# linter + static checker
+flake8
+# interact with jupyter notebooks
+ipykernel
+# sort imports in a consistent fashion
+isort
+# let flake8 nag you about object naming
+pep8-naming
+# test your code
+pytest
+# make pytest and coverage play nicely
+pytest-cov</code></pre>
+<h2 id="VS-Code-Text-Editor-Setup">
+<a class="anchor" href="#VS-Code-Text-Editor-Setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>VS Code Text Editor Setup<a class="anchor-link" href="#VS-Code-Text-Editor-Setup"> </a>
+</h2>
+<p>VS Code is a very popular code editor with powerful features, active community extensions, and gets useful updates frequently.
+It's by no means the only way to program with Python, but it's one of the most beginner friendly ways to work on a variety of projects.</p>
+<h3 id="Set-up-test-project">
+<a class="anchor" href="#Set-up-test-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set up test project<a class="anchor-link" href="#Set-up-test-project"> </a>
+</h3>
+<p>Make a folder called something like <code>test_python</code> and a file inside it called <code>first_script.py</code></p>
+
+<pre><code>```sh
+mkdir test_python
+cd test_python
+touch first_script.py
+```
+
+</code></pre>
+<h3 id="Download-and-Install-VS-Code">
+<a class="anchor" href="#Download-and-Install-VS-Code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download and Install VS Code<a class="anchor-link" href="#Download-and-Install-VS-Code"> </a>
+</h3>
+<ul>
+<li>Download from your <a href="https://code.visualstudio.com/download">OS link</a> </li>
+<li>Install with downloaded file</li>
+<li>Open VS Code for the first time</li>
+<li>If it won't work or can't open, try reading their <a href="https://code.visualstudio.com/docs">getting started guides</a>
+</li>
+</ul>
+<h3 id="Open-your-test-project-in-VS-Code">
+<a class="anchor" href="#Open-your-test-project-in-VS-Code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Open your test project in VS Code<a class="anchor-link" href="#Open-your-test-project-in-VS-Code"> </a>
+</h3>
+<ul>
+<li>
+<code>File</code> -&gt; <code>Open Folder</code><ul>
+<li>Select the <code>test_python</code> folder</li>
+<li>If a "Trust this workspace" message pops up, hit agree / trust</li>
+<li>Open the <code>first_script.py</code> file<ul>
+<li>Write something like <code>print('Hello There')</code> and save the file</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Go back to your terminal and run <code>python first_script.py</code>
+</li>
+</ul>
+<h3 id="Install-Extensions-for-Python">
+<a class="anchor" href="#Install-Extensions-for-Python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Extensions for Python<a class="anchor-link" href="#Install-Extensions-for-Python"> </a>
+</h3>
+<p>In VS Code, open the extensions menu on the left (or with <code>ctrl+shift+x</code>)</p>
+<ul>
+<li>Search for and install the following:<ul>
+<li>Python (Microsoft)</li>
+</ul>
+</li>
+<li>Reload the window now (close and reopen VS Code) or install some more of the things below then reload (all are optional)</li>
+</ul>
+<p>Some other nice extensions (not necessary off the bat)</p>
+<ul>
+<li>Python Specific<ul>
+<li>Python Docstring Generator (Nils Werner)</li>
+<li>Even Better TOML (tamasfe)</li>
+</ul>
+</li>
+<li>General VS Code<ul>
+<li>indent-rainbow (oderwat): Visualize deeply indented blocks more easily</li>
+<li>GitLens (Eric Amodio): Quickly check git history of files, branches, lines, etc.</li>
+</ul>
+</li>
+<li>Various File Types<ul>
+<li>Markdown TOC (AlanWalk)</li>
+<li>markdownlint (David Anson)</li>
+<li>XML (Red Hat)</li>
+<li>SQL Formatter (adpyke)</li>
+</ul>
+</li>
+</ul>
+<p><em>Bonus:</em> For Emacs users, "Awesome Emacs Keymap" will get you most of the way to familiar text editing keybindings</p>
+<h3 id="VS-Code-Set-Python-Env-and-Formatter">
+<a class="anchor" href="#VS-Code-Set-Python-Env-and-Formatter" aria-hidden="true"><span class="octicon octicon-link"></span></a>VS Code Set Python Env and Formatter<a class="anchor-link" href="#VS-Code-Set-Python-Env-and-Formatter"> </a>
+</h3>
+<p>Recommended settings in VS Code</p>
+<ul>
+<li>Type <code>ctrl+shift+p</code> then type "settings json" and select the entry, add these key-value pairs to file<ul>
+<li>Edit the <code>CHANGEME:USERNAME</code> with your Windows user. (On Ubuntu based systems use <code>/home/username/miniconda3/bin/python</code>, similar for other Unix systems but with relevant user home directory)</li>
+</ul>
+</li>
+</ul>
+<p><em>note</em>: you can instead use <code>ctrl+shift+p</code> and search "settings ui" (or use <code>ctrl+,</code>) and then search for each of the keynames below to explore what other settings you might like to try.</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">"python.pythonPath"</span><span class="p">:</span> <span class="s2">"C:\\Users\\CHANGEME:USERNAME\\miniconda3\\python.exe"</span><span class="p">,</span>
+    <span class="nt">"files.autoSave"</span><span class="p">:</span> <span class="s2">"onFocusChange"</span><span class="p">,</span>
+    <span class="nt">"editor.wordWrap"</span><span class="p">:</span> <span class="s2">"on"</span><span class="p">,</span>
+    <span class="nt">"editor.wordWrapColumn"</span><span class="p">:</span> <span class="mi">88</span><span class="p">,</span>
+    <span class="nt">"jupyter.alwaysTrustNotebooks"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"python.linting.flake8Enabled"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"python.linting.flake8Args"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"--max-line-length=88"</span>
+    <span class="p">],</span>
+    <span class="nt">"python.analysis.typeCheckingMode"</span><span class="p">:</span> <span class="s2">"basic"</span><span class="p">,</span>
+    <span class="nt">"workbench.editorAssociations"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">"viewType"</span><span class="p">:</span> <span class="s2">"jupyter.notebook.ipynb"</span><span class="p">,</span>
+            <span class="nt">"filenamePattern"</span><span class="p">:</span> <span class="s2">"*.ipynb"</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">"python.linting.pylintEnabled"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">"python.formatting.provider"</span><span class="p">:</span> <span class="s2">"black"</span><span class="p">,</span>
+    <span class="nt">"python.linting.ignorePatterns"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">".vscode/*.py"</span><span class="p">,</span>
+        <span class="s2">"**/site-packages/**/*.py"</span><span class="p">,</span>
+        <span class="s2">"venv/*.py"</span>
+    <span class="p">],</span>
+    <span class="nt">"python.testing.pytestEnabled"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"python.venvPath"</span><span class="p">:</span> <span class="s2">"${workspaceFolder}"</span>
+<span class="p">}</span>
+</pre></div>
+<h2 id="Get-on-to-Getting-Things-Done">
+<a class="anchor" href="#Get-on-to-Getting-Things-Done" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get on to Getting Things Done<a class="anchor-link" href="#Get-on-to-Getting-Things-Done"> </a>
+</h2>
+<p>That's the bare-bones Python setup.</p>
+<p>Feel free to try out / research the following (Python related):</p>
+<ul>
+<li>Typing error-filled python code and see how flake8 warns you</li>
+<li>Start your <code>.py</code> document with <code># %%</code> to make it a VS Code <a href="https://code.visualstudio.com/docs/python/jupyter-support-py">"Python Interactive"</a> document (really awesome way to experiment with code blocks and debug small chunks)</li>
+<li>Use <code>alt+shift+f</code> or <code>ctrl+shift+p</code> and search 'Format Document' to format python according to <code>black</code> standard</li>
+<li>Text Editing and Searching <a href="https://code.visualstudio.com/docs/editor/codebasics">Guide</a> including stuff like using multiple cursors, search and replace over multiple files, auto save (which is included in my <code>json</code> settings above)</li>
+<li>Make a new virtual environment for your project with <code>python -m venv venv</code> or look into using <code>conda</code> to manage your environments</li>
+<li>Look into VS Code's <a href="https://visualstudio.microsoft.com/services/live-share/">live code sharing</a> and <a href="https://code.visualstudio.com/docs/editor/github">git integrations</a> to collaborate better</li>
+</ul>
+<p>Or expand your environment by setting up a few more tools (tangential to Python):</p>
+<ul>
+<li>Look into <a href="https://code.visualstudio.com/docs/editor/emmet">Emmet</a> the auto completer for html files built into VS Code</li>
+<li>Install <a href="https://nodejs.org/en/">Node</a> if you're going to be doing some web development or otherwise need <code>npm</code>
+</li>
+<li>Install <a href="https://www.docker.com/resources/what-container">Docker</a> if you want to explore modern container based deployment</li>
+<li>Find some good <a href="https://nostarch.com/catalog/python">Python Reading</a> (Ok one more Python recommendation; some of these are available for low-to-no cost from the authors)</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/python/beginner/2022/01/29/install-python.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
