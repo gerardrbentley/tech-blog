@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>The Terminal (/ Shell / Command Line / Console…) | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="The Terminal (/ Shell / Command Line / Console…)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Go over some basics of Terminal usage, hopefully demistifying some things in the way." />
+<meta property="og:description" content="Go over some basics of Terminal usage, hopefully demistifying some things in the way." />
+<link rel="canonical" href="https://tech.gerardbentley.com/habits/beginner/2020/04/03/terminal.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/habits/beginner/2020/04/03/terminal.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-03T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="The Terminal (/ Shell / Command Line / Console…)" />
+<script type="application/ld+json">
+{"url":"https://tech.gerardbentley.com/habits/beginner/2020/04/03/terminal.html","@type":"BlogPosting","headline":"The Terminal (/ Shell / Command Line / Console…)","dateModified":"2020-04-03T00:00:00-05:00","datePublished":"2020-04-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/habits/beginner/2020/04/03/terminal.html"},"description":"Go over some basics of Terminal usage, hopefully demistifying some things in the way.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">The Terminal (/ Shell / Command Line / Console...)</h1><p class="page-description">Go over some basics of Terminal usage, hopefully demistifying some things in the way.
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-03T00:00:00-05:00" itemprop="datePublished">
+        Apr 3, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#habits">habits</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#beginner">beginner</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#whats-a-terminal">What’s a Terminal</a></li>
+<li class="toc-entry toc-h2"><a href="#why-keyboard-over-mouse">Why Keyboard Over Mouse?</a></li>
+<li class="toc-entry toc-h2"><a href="#3-navigation-commands">3 Navigation Commands</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#go-to-your-project-folder">Go to your project folder</a></li>
+<li class="toc-entry toc-h3"><a href="#go-back-one-or-more-directories">Go back one or more directories</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#going-further">Going Further</a></li>
+</ul><h2 id="whats-a-terminal">
+<a class="anchor" href="#whats-a-terminal" aria-hidden="true"><span class="octicon octicon-link"></span></a>What’s a Terminal</h2>
+
+<p>The Terminal, which you might also hear called shell, console, or command line (with a fair bit of <a href="(https://askubuntu.com/questions/506510/what-is-the-difference-between-terminal-console-shell-and-command-line)">nuance</a>) is a program that lets you enter commands for the computer to run.
+In different computers the program will vary (Terminal, Powershell, bash, etc.), but the idea of interacting with the computer using text commands one line at a time is present in all of them.</p>
+
+<h2 id="why-keyboard-over-mouse">
+<a class="anchor" href="#why-keyboard-over-mouse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Keyboard Over Mouse?</h2>
+
+<p>So the Terminal lets you access apps and files and execute programs without using a mouse or other windows, but why would you want to abandon your mouse?
+All of the work we do in a Terminal is both plain text and can be automated much more easily than mouse movements and clicks.</p>
+
+<p>Using a shell also usually gives you access to the Kernel of your OS, the software in control of basically all your applications, so you can take back your technological freedom.</p>
+
+<p>Finally, Graphical (GUI) interfaces aren’t available for all programs, especially a lot of the older software.
+It’s generally easier to develop a program that takes a few Command Line arguments than a full blown GUI Application.</p>
+
+<h2 id="3-navigation-commands">
+<a class="anchor" href="#3-navigation-commands" aria-hidden="true"><span class="octicon octicon-link"></span></a>3 Navigation Commands</h2>
+
+<p>When you open Terminal.app (on many linux distros use <code class="language-plaintext highlighter-rouge">super+spacebar</code>, on mac you use <code class="language-plaintext highlighter-rouge">command+spacebar</code> then search <code class="language-plaintext highlighter-rouge">Terminal</code>) all you get is a blank command line prompt, probably ending with <code class="language-plaintext highlighter-rouge">$</code></p>
+
+<p>The terminal works like a filesystem/Finder window in that you need to navigate ‘up’ and ‘down’ into different folders to find particular files.
+When you open a new Terminal it is most likely located at your account’s Home folder (also referred to as <code class="language-plaintext highlighter-rouge">~</code>).</p>
+
+<p><strong>NOTE:</strong> On Mac the <code class="language-plaintext highlighter-rouge">~</code> can be replaced with <code class="language-plaintext highlighter-rouge">/Users/YOUR-USERNAME/</code> for an “absolute” path (<a href="https://www.linuxnix.com/abslute-path-vs-relative-path-in-linuxunix/">absolute vs relative</a> explanation).
+Ubuntu based distros <code class="language-plaintext highlighter-rouge">~</code> == <code class="language-plaintext highlighter-rouge">/home/YOUR-USERNAME/</code>.
+And Windows is different… <code class="language-plaintext highlighter-rouge">~</code> == <code class="language-plaintext highlighter-rouge">C:\Users\YOUR-USERNAME</code>.
+For reference, your Desktop folder is located at ~/Desktop, your Documents at ~/Documents</p>
+
+<p>Now for the 3 Basic commands that will help you navigate around (type these in the command line and hit <code class="language-plaintext highlighter-rouge">enter</code>):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">pwd</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Print Working Directory</code>: Tells you where in the filesystem the command line is currently pointed.
+On a fresh Terminal window it should show <code class="language-plaintext highlighter-rouge">/Users/YOUR-USERNAME/</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">List</code>: Lists out all the files and directories in the current directory you’re pointed at.
+Also helps you know where in the filesystem you are and what files you have easy access to.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Change Directory</code>: Actually moves where the command line is pointed to a different directory / folder.</p>
+
+<p>The common uses of <code class="language-plaintext highlighter-rouge">cd</code> and <code class="language-plaintext highlighter-rouge">ls</code>:</p>
+
+<h3 id="go-to-your-project-folder">
+<a class="anchor" href="#go-to-your-project-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Go to your project folder</h3>
+
+<p>On my personal computer I try to keep all my coding projects under a folder called <code class="language-plaintext highlighter-rouge">research</code> (in their own individual folders) which is in my Home folder (<code class="language-plaintext highlighter-rouge">~/research</code> or <code class="language-plaintext highlighter-rouge">/Users/Gerard/research</code>)</p>
+
+<p>So to get to my project I open terminal and enter</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>research/my-project-folder
+</code></pre></div></div>
+
+<p><strong>NOTE</strong>: This works because the Terminal is already pointed at my <code class="language-plaintext highlighter-rouge">~/</code> directory and <code class="language-plaintext highlighter-rouge">research</code> is in that directory.
+You can use <code class="language-plaintext highlighter-rouge">ls</code> to see if <code class="language-plaintext highlighter-rouge">research</code> is present in your Home directory</p>
+
+<p>If you don’t remember the project-folder name you can do the following</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>research
+<span class="nb">ls</span>
+</code></pre></div></div>
+
+<p>This will show you all the files and folders in <code class="language-plaintext highlighter-rouge">research</code>, then you can <code class="language-plaintext highlighter-rouge">cd</code> directly into it without the <code class="language-plaintext highlighter-rouge">research/</code> part</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>project-folder-i-remember-now
+</code></pre></div></div>
+
+<h3 id="go-back-one-or-more-directories">
+<a class="anchor" href="#go-back-one-or-more-directories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Go back one or more directories</h3>
+
+<p>Just like <code class="language-plaintext highlighter-rouge">~/</code> is a shorthand symbol for “Home Directory”, <code class="language-plaintext highlighter-rouge">./</code> is a symbol for the current working directory (<code class="language-plaintext highlighter-rouge">pwd</code>)</p>
+
+<p>By this I mean that <code class="language-plaintext highlighter-rouge">.</code> represents the current working directory, where the terminal command line is pointed.</p>
+
+<p>So the same command from before works the same like this (from a fresh Terminal located at <code class="language-plaintext highlighter-rouge">~/</code>)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ./research/my-project-folder
+</code></pre></div></div>
+
+<p>After executing that command, <code class="language-plaintext highlighter-rouge">pwd</code> will tell you the Terminal is at <code class="language-plaintext highlighter-rouge">/Users/Gerard/research/my-project-folder</code>, which we want because we just <code class="language-plaintext highlighter-rouge">cd</code>d into that directory</p>
+
+<p>If we wanted to switch projects (to a different folder in <code class="language-plaintext highlighter-rouge">research</code>), we need to go ‘up’ a folder. To do this we use <code class="language-plaintext highlighter-rouge">..</code> to represent the folder ‘above’ the current folder</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ..
+</code></pre></div></div>
+
+<p>This brings us back to <code class="language-plaintext highlighter-rouge">research</code>, so <code class="language-plaintext highlighter-rouge">pwd</code> will say <code class="language-plaintext highlighter-rouge">/Users/Gerard/research/</code></p>
+
+<p>Now we can cd into a different folder</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>my-other-project-folder
+</code></pre></div></div>
+
+<p>If we wanted to switch to a different project directly in one command we can use</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ../third-folder
+</code></pre></div></div>
+
+<p>I think of this as ‘going to third-folder, which is in the folder above the current one’</p>
+
+<h2 id="going-further">
+<a class="anchor" href="#going-further" aria-hidden="true"><span class="octicon octicon-link"></span></a>Going Further</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ls</code> and <code class="language-plaintext highlighter-rouge">cd</code> should get you far enough to run Python scripts (also using <code class="language-plaintext highlighter-rouge">python</code> as a command!).</p>
+
+<p>Making your own or finding a terminal commands <a href="https://www.git-tower.com/blog/command-line-cheat-sheet/">cheatsheet</a> online can be extremely helpful when first starting out.
+Repetition is key to becoming comfortable with and memorizing these things.
+Nobody memorizes them after the first use!</p>
+
+  </div><a class="u-url" href="/habits/beginner/2020/04/03/terminal.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
