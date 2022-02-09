@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>I Make Money Editing Text Files (VS Code Settings) | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="I Make Money Editing Text Files (VS Code Settings)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How I use my code editor to help me think less and write more." />
+<meta property="og:description" content="How I use my code editor to help me think less and write more." />
+<link rel="canonical" href="https://tech.gerardbentley.com/beginner/habits/general-coding/2020/04/01/how-i-code.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/beginner/habits/general-coding/2020/04/01/how-i-code.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-01T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="I Make Money Editing Text Files (VS Code Settings)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-04-01T00:00:00-05:00","datePublished":"2020-04-01T00:00:00-05:00","description":"How I use my code editor to help me think less and write more.","headline":"I Make Money Editing Text Files (VS Code Settings)","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/beginner/habits/general-coding/2020/04/01/how-i-code.html"},"url":"https://tech.gerardbentley.com/beginner/habits/general-coding/2020/04/01/how-i-code.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">I Make Money Editing Text Files (VS Code Settings)</h1><p class="page-description">How I use my code editor to help me think less and write more.
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-01T00:00:00-05:00" itemprop="datePublished">
+        Apr 1, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#beginner">beginner</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#habits">habits</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#general-coding">general-coding</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#editing-text-files">Editing Text Files</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#why-use-a-code-editor">Why use a Code Editor?</a></li>
+<li class="toc-entry toc-h2"><a href="#first-steps">First Steps</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#download">Download</a></li>
+<li class="toc-entry toc-h3"><a href="#open-code">Open Code</a></li>
+<li class="toc-entry toc-h3"><a href="#new-project-folder">New Project Folder</a></li>
+<li class="toc-entry toc-h3"><a href="#new-file">New File</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#first-extensions">First Extensions</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#vs-code-set-python-env-and-formatter">VS Code Set Python Env and Formatter</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#get-on-to-getting-things-done">Get on to Getting Things Done</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#python-things-to-try">Python Things to Try</a></li>
+<li class="toc-entry toc-h3"><a href="#other-languages">Other Languages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#relevant-links">Relevant Links</a></li>
+</ul>
+</li>
+</ul><h1 id="editing-text-files">
+<a class="anchor" href="#editing-text-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Editing Text Files</h1>
+
+<p>It’s the core of programming.</p>
+
+<p>I admit there are a lot of GUI and block coding tools in the 21st century.</p>
+
+<p>But unless you’re going to retire from coding and go to woodworking, you’ll probably need to at least open and view some code files or non code files.</p>
+
+<h2 id="why-use-a-code-editor">
+<a class="anchor" href="#why-use-a-code-editor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why use a Code Editor?</h2>
+
+<p>For the same reason some teachers allow cheatsheets: <strong>So you can focus on the relevant task</strong>.
+It’s not efficient to constantly think about the syntax of your program.
+It’s especially not efficient to constantly run into fixable bugs and errors.</p>
+
+<p>A few features in text editors that I now take for granted are:</p>
+<ul>
+  <li>templating</li>
+  <li>autocompletion &amp; suggestion</li>
+  <li>syntax highlighting</li>
+  <li>syntax correction</li>
+</ul>
+
+<p>In this post I’ll focus on how I set up my VS Code to help decrease my cognitive load when coding in Python (And some bonus tips for blogging / READMEs with Markdown).
+I’ll go over relevant extensions for the Python ecosystem, and try to discuss different settings options you may prefer better.</p>
+
+<p><strong>NOTE:</strong> I personally find VS Code more friendly for new users than older text editors like Emacs and Vim, but those are also incredibly powerful and customizable.
+It also has significant community extension support.
+In fact, this post was partially inspired and is partially fueled by <a href="https://howivscode.com/about">“How I VSCode”</a> a 100% open-source VS Code extension by <a href="scottw.com">Scott W</a> that generates a simple public profile to share the extensions you use.
+Here’s mine: <a href="https://howivscode.com/gerardrbentley">howivscode.com/gerardrbentley</a>.</p>
+
+<h2 id="first-steps">
+<a class="anchor" href="#first-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>First Steps</h2>
+
+<h3 id="download">
+<a class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h3>
+
+<p>A VS Code download for your system should be available <a href="https://code.visualstudio.com/#alt-downloads">here</a>.
+If you need additional directions on downloading and installing, Microsoft already has an <a href="https://code.visualstudio.com/docs/setup/setup-overview">extensive guide</a> on using VS Code that I’ll reference a bit.</p>
+
+<h3 id="open-code">
+<a class="anchor" href="#open-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Open Code</h3>
+
+<p>I recommend using your OS’s search (probably <code class="language-plaintext highlighter-rouge">cmd + spacebar</code>, <code class="language-plaintext highlighter-rouge">windows key</code>, or <code class="language-plaintext highlighter-rouge">super key</code>) and typing <code class="language-plaintext highlighter-rouge">code</code> to search and if it pops up hit enter to open VS Code with just the keyboard.</p>
+
+<p>If you don’t want to use the keyboard, go to your Applications folder / Start menu / Launch menu to find VS Code</p>
+
+<h3 id="new-project-folder">
+<a class="anchor" href="#new-project-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>New Project Folder</h3>
+
+<p>For this demo we’ll only be making a few files, but VS Code works best when we have a project folder, so create one now.</p>
+
+<p>Use <code class="language-plaintext highlighter-rouge">ctrl+k</code> then <code class="language-plaintext highlighter-rouge">ctrl+o</code> to Open a folder.
+Go ahead and create one named <code class="language-plaintext highlighter-rouge">/vscodetests/</code> and put it on your Desktop (or use a different name and location, choose your own adventure!)</p>
+
+<p>If you don’t want to use the keyboard, the <code class="language-plaintext highlighter-rouge">File -&gt; Open Folder</code> option from the top bar will do the same action.</p>
+
+<h3 id="new-file">
+<a class="anchor" href="#new-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>New File</h3>
+
+<p>You can use <code class="language-plaintext highlighter-rouge">ctrl+n</code> to create a New file, but I usually Right-Click on the name of the folder to put the file in and select <code class="language-plaintext highlighter-rouge">New File</code>; name it something like <code class="language-plaintext highlighter-rouge">basic_python.py</code>.</p>
+
+<p>If you have only one folder you can Right-Click anywhere in the left “File Explorer” panel (<code class="language-plaintext highlighter-rouge">ctrl+shift+e</code> to get it back in focus if it’s gone)</p>
+
+<p>Check out the default keyboard shortcuts for <a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf">mac</a>, <a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">windows</a>, <a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf">linux keyboard shortcuts</a></p>
+
+<h2 id="first-extensions">
+<a class="anchor" href="#first-extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>First Extensions</h2>
+
+<p>After opening a new file (or saving it with <code class="language-plaintext highlighter-rouge">.py</code> ending if you used <code class="language-plaintext highlighter-rouge">ctrl+n</code> to create one), you’ll probably get a popup in the bottom right corner suggesting you install the Recommended Python Extensions.
+This is from Microsoft and the de-facto Python settings extension in VS Code, so go ahead and install it from there.</p>
+
+<p>In general when you open a new filetype you will get a popup like this.
+The features vary by language / filetype, but there are many linters, formatters, and checkers that benefit from <a href="https://en.wikipedia.org/wiki/Language_Server_Protocol">Language Server Protocol (LSP)</a> these days.</p>
+
+<p>If you ever want to uninstall the Python extension or install new extensions, use <code class="language-plaintext highlighter-rouge">ctrl+shift+x</code> to open the “EXtensions” panel on the left.</p>
+
+<p>Some good candidates for Python project contributors:</p>
+<ul>
+  <li>Python Specific
+    <ul>
+      <li>Python Docstring Generator (Nils Werner)</li>
+      <li>Even Better TOML (tamasfe)</li>
+    </ul>
+  </li>
+  <li>General VS Code
+    <ul>
+      <li>
+<strong>RETIRED, Built In Now</strong> Bracket Pair Colorizer 2 (CoenraadS): Visualize nested brackets and parentheses more easily</li>
+      <li>indent-rainbow (oderwat): Visualize deeply indented blocks more easily</li>
+      <li>GitLens (Eric Amodio): Quickly check git history of files, branches, lines, etc.</li>
+    </ul>
+  </li>
+  <li>Various File Types
+    <ul>
+      <li>Markdown TOC (AlanWalk)</li>
+      <li>markdownlint (David Anson)</li>
+      <li>XML (Red Hat)</li>
+      <li>SQL Formatter (adpyke)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><em>Bonus:</em> For Emacs users, “Awesome Emacs Keymap” will get you most of the way to familiar text editing keybindings</p>
+
+<h3 id="vs-code-set-python-env-and-formatter">
+<a class="anchor" href="#vs-code-set-python-env-and-formatter" aria-hidden="true"><span class="octicon octicon-link"></span></a>VS Code Set Python Env and Formatter</h3>
+
+<p>Recommended settings in VS Code</p>
+
+<ul>
+  <li>Type <code class="language-plaintext highlighter-rouge">ctrl+shift+p</code> then type “settings json” and select the entry, add these key-value pairs to file
+    <ul>
+      <li>Edit the <code class="language-plaintext highlighter-rouge">CHANGEME:YOURNAME</code> with your Windows user. (On Ubuntu based systems use <code class="language-plaintext highlighter-rouge">/home/username/miniconda3/bin/python</code>, similar for other Unix systems but with relevant user home directory)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><em>note</em>: you can instead use <code class="language-plaintext highlighter-rouge">ctrl+shift+p</code> and search “settings ui” (or use <code class="language-plaintext highlighter-rouge">ctrl+,</code>) and then search for each of the keynames below to explore what other settings you might like to try (or different choices for these options!).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"files.autoSave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"onFocusChange"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"editor.wordWrap"</span><span class="p">:</span><span class="w"> </span><span class="s2">"on"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"editor.wordWrapColumn"</span><span class="p">:</span><span class="w"> </span><span class="mi">88</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"jupyter.alwaysTrustNotebooks"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.flake8Enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.flake8Args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"--max-line-length=88"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"python.analysis.typeCheckingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"workbench.editorAssociations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"viewType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jupyter.notebook.ipynb"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"filenamePattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*.ipynb"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"python.linting.pylintEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.formatting.provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.ignorePatterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">".vscode/*.py"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"**/site-packages/**/*.py"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"venv/*.py"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"python.testing.pytestEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.venvPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="get-on-to-getting-things-done">
+<a class="anchor" href="#get-on-to-getting-things-done" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get on to Getting Things Done</h2>
+
+<p>That’s the bare-bones Python setup.</p>
+
+<p>Some of the suggestions below rely on popular Python packages:</p>
+
+<pre><code class="language-requirements.txt"># formatter
+black
+# linter + static checker
+flake8
+# interact with jupyter notebooks
+ipykernel
+# sort imports in a consistent fashion
+isort
+# let flake8 nag you about object naming
+pep8-naming
+</code></pre>
+
+<p>You can install them to your current Python environment with <code class="language-plaintext highlighter-rouge">pip install black</code> for example.</p>
+
+<h3 id="python-things-to-try">
+<a class="anchor" href="#python-things-to-try" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Things to Try</h3>
+
+<p>Feel free to try out / research the following (Python related):</p>
+
+<ul>
+  <li>Typing error-filled python code and see how <code class="language-plaintext highlighter-rouge">flake8</code> warns you</li>
+  <li>Start your <code class="language-plaintext highlighter-rouge">.py</code> document with <code class="language-plaintext highlighter-rouge"># %%</code> to make it a VS Code <a href="https://code.visualstudio.com/docs/python/jupyter-support-py">“Python Interactive”</a> document (really awesome way to experiment with code blocks and debug small chunks)</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">alt+shift+f</code> or <code class="language-plaintext highlighter-rouge">ctrl+shift+p</code> and search ‘Format Document’ to format python according to <code class="language-plaintext highlighter-rouge">black</code> standard</li>
+  <li>Text Editing and Searching <a href="https://code.visualstudio.com/docs/editor/codebasics">Guide</a> including stuff like using multiple cursors, search and replace over multiple files, auto save (which is included in my <code class="language-plaintext highlighter-rouge">json</code> settings above)</li>
+  <li>Make a new virtual environment for your project with <code class="language-plaintext highlighter-rouge">python -m venv venv</code> or look into using <code class="language-plaintext highlighter-rouge">conda</code> to manage your environments</li>
+  <li>Look into VS Code’s <a href="https://visualstudio.microsoft.com/services/live-share/">live code sharing</a> and <a href="https://code.visualstudio.com/docs/editor/github">git integrations</a> to collaborate better</li>
+</ul>
+
+<h3 id="other-languages">
+<a class="anchor" href="#other-languages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Languages</h3>
+
+<p>Or expand your environment by setting up a few more tools (tangential to Python):</p>
+
+<ul>
+  <li>Look into <a href="https://code.visualstudio.com/docs/editor/emmet">Emmet</a> the auto completer for html files built into VS Code</li>
+  <li>Install <a href="https://nodejs.org/en/">Node</a> if you’re going to be doing some web development or otherwise need <code class="language-plaintext highlighter-rouge">npm</code>
+</li>
+  <li>Install <a href="https://www.docker.com/resources/what-container">Docker</a> if you want to explore modern container based deployment</li>
+  <li>Find some good <a href="https://nostarch.com/catalog/python">Python Reading</a> (Ok one more Python recommendation; some of these are available for low-to-no cost from the authors)</li>
+</ul>
+
+<h2 id="relevant-links">
+<a class="anchor" href="#relevant-links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Relevant Links</h2>
+
+<p><a href="https://www.jetbrains.com/pycharm/">PyCharm</a> is tooled specifically for Python and is very popular in the community.</p>
+
+<p><a href="https://jupyterlab.readthedocs.io/en/stable/">JupyterLab</a> and plain <a href="https://jupyter.org/">Jupyter Notebooks</a> are common development tools for Python users as well.</p>
+
+<p><a href="https://atom.io">Atom</a> and <a href="https://sublimetext.com">Sublime</a> are also still rather popular among coders.</p>
+
+<p><a href="https://www.gnu.org/software/emacs/">Emacs</a> and <a href="https://www.vim.org/">Vim</a> are also still great (well, Emacs <a href="https://en.wikipedia.org/wiki/Editor_war">lacks a decent editor</a>…)</p>
+
+  </div><a class="u-url" href="/beginner/habits/general-coding/2020/04/01/how-i-code.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
