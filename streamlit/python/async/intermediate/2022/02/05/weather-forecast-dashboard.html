@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Checking 48 Mountain Weather Locations at Once | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Checking 48 Mountain Weather Locations at Once" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using Async Python to feed a Streamlit Dashboard" />
+<meta property="og:description" content="Using Async Python to feed a Streamlit Dashboard" />
+<link rel="canonical" href="https://tech.gerardbentley.com/streamlit/python/async/intermediate/2022/02/05/weather-forecast-dashboard.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/streamlit/python/async/intermediate/2022/02/05/weather-forecast-dashboard.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:image" content="https://tech.gerardbentley.com/images/weather.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-05T00:00:00-06:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://tech.gerardbentley.com/images/weather.png" />
+<meta property="twitter:title" content="Checking 48 Mountain Weather Locations at Once" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-02-05T00:00:00-06:00","datePublished":"2022-02-05T00:00:00-06:00","description":"Using Async Python to feed a Streamlit Dashboard","headline":"Checking 48 Mountain Weather Locations at Once","image":"https://tech.gerardbentley.com/images/weather.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/python/async/intermediate/2022/02/05/weather-forecast-dashboard.html"},"url":"https://tech.gerardbentley.com/streamlit/python/async/intermediate/2022/02/05/weather-forecast-dashboard.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Checking 48 Mountain Weather Locations at Once</h1><p class="page-description">Using Async Python to feed a Streamlit Dashboard</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-05T00:00:00-06:00" itemprop="datePublished">
+        Feb 5, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      11 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#streamlit">streamlit</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#async">async</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#intermediate">intermediate</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gerardrbentley/tech-blog/tree/master/_notebooks/2022-02-05-weather-forecast-dashboard.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gerardrbentley/tech-blog/master?filepath=_notebooks%2F2022-02-05-weather-forecast-dashboard.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/gerardrbentley/tech-blog/blob/master/_notebooks/2022-02-05-weather-forecast-dashboard.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fgerardrbentley%2Ftech-blog%2Fblob%2Fmaster%2F_notebooks%2F2022-02-05-weather-forecast-dashboard.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Peak-Weather:-Checking-New-Hampshire's-48-4,000-Footers">Peak Weather: Checking New Hampshire&#39;s 48 4,000 Footers </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Data-Scraping">Data Scraping </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Try-Pandas">Try Pandas </a></li>
+<li class="toc-entry toc-h3"><a href="#Naive-Copy+Paste">Naive Copy+Paste </a></li>
+<li class="toc-entry toc-h3"><a href="#A-Links-to-the-Rescue">A-Links to the Rescue </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Scrape-Mountain-Links">Scrape Mountain Links </a></li>
+<li class="toc-entry toc-h4"><a href="#Get-Lat-Lon-For-One-Mountain">Get Lat Lon For One Mountain </a></li>
+<li class="toc-entry toc-h4"><a href="#Get-Lat-Lon-For-Many-Mountains">Get Lat Lon For Many Mountains </a></li>
+<li class="toc-entry toc-h4"><a href="#Faster-Fetching">Faster Fetching </a></li>
+<li class="toc-entry toc-h4"><a href="#Data-Cleaning">Data Cleaning </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Weather-Scraping">Weather Scraping </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#API-Signup-and-Prep">API Signup and Prep </a></li>
+<li class="toc-entry toc-h3"><a href="#Test-One-Location">Test One Location </a></li>
+<li class="toc-entry toc-h3"><a href="#Fetch-for-Many-Locations">Fetch for Many Locations </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Web-App-Component">Web App Component </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Caching-Data">Caching Data </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Caching-Mountain-Data">Caching Mountain Data </a></li>
+<li class="toc-entry toc-h4"><a href="#Caching-Weather-Data">Caching Weather Data </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Bonuses">Bonuses </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Display-future-forecast">Display future forecast </a></li>
+<li class="toc-entry toc-h4"><a href="#Jump-Link-Table">Jump Link Table </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-02-05-weather-forecast-dashboard.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Peak-Weather:-Checking-New-Hampshire's-48-4,000-Footers">
+<a class="anchor" href="#Peak-Weather:-Checking-New-Hampshire's-48-4,000-Footers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Peak Weather: Checking New Hampshire's 48 4,000 Footers<a class="anchor-link" href="#Peak-Weather:-Checking-New-Hampshire's-48-4,000-Footers"> </a>
+</h1>
+<p>Check it out <a href="https://share.streamlit.io/gerardrbentley/peak-weather/main/streamlit_app/streamlit_app.py">live on streamlit cloud</a></p>
+<p>Built to give you a dashboard view of the next few hours' forecast for New Hampshires 48 4,000 ft mountains.
+Gonna rain on the Kinsmans?
+Is it snowing on Washington?
+Should I hike Owl's Head?</p>
+<p>Powered by <a href="https://docs.streamlit.io/">Streamlit</a> + <a href="https://openweathermap.org/api">Open Weather API</a>.
+Specifically, Streamlit runs the web interactinos and OpenWeather provides the data.</p>
+<p>This post will go over a few aspects of the app:</p>
+<ul>
+<li>Data scraping the mountain metadata</li>
+<li>Connecting to Weather API feed</li>
+<li>Making it reasonably fast </li>
+</ul>
+<h2 id="Data-Scraping">
+<a class="anchor" href="#Data-Scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Scraping<a class="anchor-link" href="#Data-Scraping"> </a>
+</h2>
+<p>I couldn't find an easy csv or api for the latitudes and longitudes of the 48 4,000 footers, so I turned to <a href="https://en.wikipedia.org/wiki/Four-thousand_footers">Wikipedia</a> for the list.</p>
+<h3 id="Try-Pandas">
+<a class="anchor" href="#Try-Pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Try Pandas<a class="anchor-link" href="#Try-Pandas"> </a>
+</h3>
+<p>The <code>read_html()</code> function in Pandas has been a sanity saver in my job for reading data from flat file specification documents.</p>
+<p>Unfortunately the data I'm looking for in Wikipedia is in <code>&lt;li&gt;...&lt;/li&gt;</code> tags, not a real html <code>&lt;table&gt;...&lt;/table&gt;</code></p>
+<h3 id="Naive-Copy+Paste">
+<a class="anchor" href="#Naive-Copy+Paste" aria-hidden="true"><span class="octicon octicon-link"></span></a>Naive Copy+Paste<a class="anchor-link" href="#Naive-Copy+Paste"> </a>
+</h3>
+<p>Next I tried just copying the list of names and heights to feed to a search API, yielding a csv like the following after some cleanup:</p>
+
+<pre><code>txt
+name,height_ft
+Washington,6288
+Adams,5774
+Jefferson,5712</code></pre>
+<p>And this gives us csv access to the data like so:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">mountains</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'./data/mtns.txt'</span><span class="p">)</span>
+<span class="n">mountains</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="A-Links-to-the-Rescue">
+<a class="anchor" href="#A-Links-to-the-Rescue" aria-hidden="true"><span class="octicon octicon-link"></span></a>A-Links to the Rescue<a class="anchor-link" href="#A-Links-to-the-Rescue"> </a>
+</h3>
+<p>Now with the list of peaks, I needed the corresponding latitude and longitudes.</p>
+<p>After searching for a straightforward source, I realized the Wikipedia pages linked from the main list page were the best...</p>
+<p>I grabbed the portion of the html with the list to a file with dev tools (chrome f12), but could have been done with BeautifulSoup</p>
+<h4 id="Scrape-Mountain-Links">
+<a class="anchor" href="#Scrape-Mountain-Links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scrape Mountain Links<a class="anchor-link" href="#Scrape-Mountain-Links"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="c1"># Chunk from 4,000 footers page containing list of mountains</span>
+<span class="c1"># https://en.wikipedia.org/wiki/Four-thousand_footers</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"./data/wiki.html"</span><span class="p">),</span> <span class="s2">"html.parser"</span><span class="p">)</span>
+
+<span class="c1"># Gather &lt;a&gt; tags, ignore citation</span>
+<span class="n">links</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)]</span>
+<span class="n">links</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Get-Lat-Lon-For-One-Mountain">
+<a class="anchor" href="#Get-Lat-Lon-For-One-Mountain" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get Lat Lon For One Mountain<a class="anchor-link" href="#Get-Lat-Lon-For-One-Mountain"> </a>
+</h4>
+<p>With access to the <code>href</code> attributes of the <code>&lt;a&gt;</code> tags, I could then fetch all of those pages and scrape out the Lat and Lon from each.</p>
+<p>Most older guides will use Python's <code>requests</code> library for this kind of task, but that library does not have the ability to send asynchronous requests without multiprocessing (Translation: It's difficult to fetch a bunch of pages all at once).</p>
+<p>I've found success with <code>httpx</code> and <code>aiohttp</code> for making asynchronous requests in one Python process.
+So I went with <code>httpx</code> for fetching each page.</p>
+<p>Lets demonstrate fetching one of those pages and scraping the Latitude and Longitude.
+We won't worry too much about errors or missed data for this cleaning phase.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">httpx</span>
+<span class="c1"># English Wikipedia</span>
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">"https://en.wikipedia.org"</span>
+
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">raw_tude</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">"""Takes a wikipedia latitude or longitude string and converts it to float</span>
+<span class="sd">    Math Source: https://stackoverflow.com/questions/21298772/how-to-convert-latitude-longitude-to-decimal-in-python</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        raw_tude (str): Lat or Lon in one of the following forms:</span>
+<span class="sd">            degrees°minutes′seconds″N,</span>
+<span class="sd">            degrees°minutes′N,</span>
+<span class="sd">            degrees-minutes-secondsN,</span>
+<span class="sd">            degrees-minutesN</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (float): Float converted lat or lon based on supplied DMS</span>
+<span class="sd">    """</span>
+    <span class="n">tude</span> <span class="o">=</span> <span class="n">raw_tude</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"°"</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"′"</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"″"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tude</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"-"</span><span class="p">:</span>
+        <span class="n">tude</span> <span class="o">=</span> <span class="n">tude</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">tude</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">multiplier</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">tude</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"N"</span><span class="p">,</span> <span class="s2">"E"</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">**</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tude</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"-"</span><span class="p">))</span>
+    <span class="p">)</span>
+
+<span class="n">a_link</span> <span class="o">=</span> <span class="n">links</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">a_link</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span>
+<span class="n">link</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"href"</span><span class="p">)</span>
+
+<span class="c1"># httpx lets us fetch the raw html page</span>
+<span class="n">raw_page</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">link</span><span class="p">)</span>
+<span class="c1"># Which bs4 will help parse</span>
+<span class="n">raw_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">raw_page</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
+
+<span class="c1"># find returns first instance of a tag with this class</span>
+<span class="n">raw_lat</span> <span class="o">=</span> <span class="n">raw_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">"latitude"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">raw_lat</span><span class="p">)</span>
+<span class="n">raw_lon</span> <span class="o">=</span> <span class="n">raw_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">"longitude"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">raw_lon</span><span class="p">)</span>
+
+<span class="n">name</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Get-Lat-Lon-For-Many-Mountains">
+<a class="anchor" href="#Get-Lat-Lon-For-Many-Mountains" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get Lat Lon For Many Mountains<a class="anchor-link" href="#Get-Lat-Lon-For-Many-Mountains"> </a>
+</h4>
+<p>Lets chuck the first 10 mountains into a for-loop and fetch the same pieces of data.</p>
+<p>First we'll define a function to encapsulate the synchronous fetch logic</p>
+<p>Then we'll see how long this takes with jupyter's <code>%%time</code> magic</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">sync_get_coords</span><span class="p">(</span><span class="n">a_link</span><span class="p">:</span> <span class="n">BeautifulSoup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"href"</span><span class="p">)</span>
+    <span class="n">raw_page</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">link</span><span class="p">)</span>
+    <span class="n">raw_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">raw_page</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
+    <span class="n">raw_lat</span> <span class="o">=</span> <span class="n">raw_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">"latitude"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">raw_lat</span><span class="p">)</span>
+    <span class="n">raw_lon</span> <span class="o">=</span> <span class="n">raw_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">"longitude"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">raw_lon</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"link"</span><span class="p">:</span> <span class="n">link</span><span class="p">,</span> <span class="s2">"lat"</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s2">"lon"</span><span class="p">:</span> <span class="n">lon</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+
+<span class="k">for</span> <span class="n">a_link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sync_get_coords</span><span class="p">(</span><span class="n">a_link</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Results will vary by machine, internet connection, Wikipedia server status, and <a href="https://xkcd.com/378/">butterly wing flaps</a>.</p>
+<p>Mine were like this the first time around:</p>
+
+<pre><code>txt
+CPU times: user 2.25 s, sys: 65.1 ms, total: 2.31 s
+Wall time: 5.47 s</code></pre>
+<h4 id="Faster-Fetching">
+<a class="anchor" href="#Faster-Fetching" aria-hidden="true"><span class="octicon octicon-link"></span></a>Faster Fetching<a class="anchor-link" href="#Faster-Fetching"> </a>
+</h4>
+<p>We're not using the asynchronous capabilities of <code>httpx</code> yet, so each of the 10 requests to Wikipedia needs to go over the wire and back in order for the next request to start.</p>
+<p>How about we speed things up a little (Jupyter <code>%%time</code> doesn't work on async cells):</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_coords</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">,</span> <span class="n">a_link</span><span class="p">:</span> <span class="n">BeautifulSoup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">"""Given http client and &lt;a&gt; link from wikipedia list,</span>
+<span class="sd">    Fetches the place's html page,</span>
+<span class="sd">    Attempts to parse and convert lat and lon to decimal from the page (first occurrence)</span>
+<span class="sd">    Returns entry with keys: "name", "link", "lat", "lon"</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (httpx.AsyncClient): To make requests. See httpx docs</span>
+<span class="sd">        a_link (BeautifulSoup): &lt;a&gt; ... &lt;/a&gt; chunk</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: coordinate entry for this wikipedia place</span>
+<span class="sd">    """</span>    
+    <span class="n">name</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"title"</span><span class="p">)</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">a_link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"href"</span><span class="p">)</span>
+    <span class="n">raw_page</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">link</span><span class="p">)</span>
+    <span class="n">raw_soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">raw_page</span><span class="p">,</span> <span class="s2">"html.parser"</span><span class="p">)</span>
+    <span class="n">raw_lat</span> <span class="o">=</span> <span class="n">raw_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">"latitude"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">raw_lat</span><span class="p">)</span>
+
+    <span class="n">raw_lon</span> <span class="o">=</span> <span class="n">raw_soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">"longitude"</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="n">raw_lon</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"link"</span><span class="p">:</span> <span class="n">link</span><span class="p">,</span> <span class="s2">"lat"</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s2">"lon"</span><span class="p">:</span> <span class="n">lon</span><span class="p">}</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">gather_coords</span><span class="p">(</span><span class="n">links</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">"""Given List of a links, asynchronously fetch all of them and return results"""</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">get_coords</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">link</span><span class="p">))</span> <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">]</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">coords</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span> <span class="k">as</span> <span class="n">timer</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+<span class="c1"># Async get all lat lon as list of dictionaries</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="k">await</span> <span class="n">gather_coords</span><span class="p">(</span><span class="n">links</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">coords</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds"</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="mf">2.16</span> <span class="o">/</span> <span class="mf">5.47</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>40% of the time spent scraping data, sounds good to me!</p>
+<h4 id="Data-Cleaning">
+<a class="anchor" href="#Data-Cleaning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Cleaning<a class="anchor-link" href="#Data-Cleaning"> </a>
+</h4>
+<p>If you thought the "finds first occurrence" strategy for scraping latitude and longitude was going to cause errors, cheers to you.</p>
+<p>Turns out just a few mountains have multiple peaks that count as 4,000 footers, so these mountains have 2 sets of latitudes and longitudes.</p>
+<p>I fetched these by hand and said LGTM with my csv of:</p>
+<ul>
+<li>Mountain Names</li>
+<li>Heights</li>
+<li>Latitudes</li>
+<li>Longitudes</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Weather-Scraping">
+<a class="anchor" href="#Weather-Scraping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Weather Scraping<a class="anchor-link" href="#Weather-Scraping"> </a>
+</h2>
+<p>I figured there's probably a free open API for accessing weather data, and a quick google found two that caught my eye:</p>
+<ul>
+<li><a href="https://openweathermap.org/api">OpenWeatherMap</a></li>
+<li><a href="https://www.weather.gov/documentation/services-web-api">Weather.gov</a></li>
+</ul>
+<p>It's a free API, but this was the selling point for OpenWeatherMap for this Proof-of-Concept project:</p>
+<p>The <code>One Call API</code> provides the following weather data for any geographical coordinates:</p>
+<ul>
+<li><em>Current weather</em></li>
+<li>
+<em>Minute forecast</em> for 1 hour</li>
+<li>
+<em>Hourly forecast</em> for 48 hours</li>
+<li>
+<em>Daily forecast</em> for 7 days</li>
+<li>National weather <em>alerts</em>
+</li>
+<li>
+<em>Historical</em> weather data for the previous 5 days</li>
+</ul>
+<h3 id="API-Signup-and-Prep">
+<a class="anchor" href="#API-Signup-and-Prep" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Signup and Prep<a class="anchor-link" href="#API-Signup-and-Prep"> </a>
+</h3>
+<p>Getting a free account and key was straightforward involving just an email address verification link.</p>
+<p>Then off to the races with the following documentation (there's more on their site in better formatting):</p>
+<div class="highlight"><pre><span></span><span class="c1"># One Call URL</span>
+https://api.openweathermap.org/data/2.5/onecall?lat<span class="o">={</span>lat<span class="o">}</span><span class="p">&amp;</span><span class="nv">lon</span><span class="o">={</span>lon<span class="o">}</span><span class="p">&amp;</span><span class="nv">exclude</span><span class="o">={</span>part<span class="o">}</span><span class="p">&amp;</span><span class="nv">appid</span><span class="o">={</span>API key<span class="o">}</span>
+</pre></div>
+<p><strong>Parameters</strong></p>
+<p><code>lat</code>, <code>lon</code>: <em>required</em> 
+Geographical coordinates (latitude, longitude)</p>
+<p><code>appid</code>: <em>required</em> 
+Your unique API key (you can always find it on your account page under the "API key" tab)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseSettings</span>
+
+
+<span class="k">class</span> <span class="nc">Settings</span><span class="p">(</span><span class="n">BaseSettings</span><span class="p">):</span>
+    <span class="sd">"""Handles fetching configuration from environment variables and secrets.</span>
+<span class="sd">    Type-hinting for config as a bonus"""</span>
+
+    <span class="n">open_weather_api_key</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">WeatherUnit</span><span class="p">:</span>
+    <span class="n">STANDARD</span> <span class="o">=</span> <span class="s2">"standard"</span>
+    <span class="n">KELVIN</span> <span class="o">=</span> <span class="s2">"standard"</span>
+    <span class="n">METRIC</span> <span class="o">=</span> <span class="s2">"metric"</span>
+    <span class="n">IMPERIAL</span> <span class="o">=</span> <span class="s2">"imperial"</span>
+
+
+<span class="k">def</span> <span class="nf">get_one_call_endpoint</span><span class="p">(</span>
+    <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">units</span><span class="p">:</span> <span class="n">WeatherUnit</span> <span class="o">=</span> <span class="n">WeatherUnit</span><span class="o">.</span><span class="n">IMPERIAL</span><span class="p">,</span>
+    <span class="n">exclude</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+    <span class="n">lang</span><span class="o">=</span><span class="s2">"en"</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="n">exclude</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">:</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"&amp;exclude=</span><span class="si">{</span><span class="n">exclude</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"https://api.openweathermap.org/data/2.5/onecall?lat=</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">&amp;lon=</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">&amp;units=</span><span class="si">{</span><span class="n">units</span><span class="si">}{</span><span class="n">exclude</span><span class="si">}</span><span class="s2">&amp;lang=</span><span class="si">{</span><span class="n">lang</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">settings</span><span class="o">.</span><span class="n">open_weather_api_key</span><span class="si">}</span><span class="s2">"</span>
+
+
+<span class="k">def</span> <span class="nf">get_one_call_data</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">):</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">get_one_call_endpoint</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Fetching from '</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Test-One-Location">
+<a class="anchor" href="#Test-One-Location" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test One Location<a class="anchor-link" href="#Test-One-Location"> </a>
+</h3>
+<p>I included some of the API parameters as endpoint configuration options as I messed around with it.</p>
+<p>For this use case these defaults are sensible to me:</p>
+<ul>
+<li>American users -&gt; <code>units = Imperial</code>
+</li>
+<li>English speaking users -&gt; <code>lang="en"</code>
+</li>
+<li>Exclude -&gt; don't care too much about some extra data coming over to the server</li>
+</ul>
+<p>Lets see what we get for a live mountain location!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mount_washington</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">mount_washington</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">get_one_call_data</span><span class="p">(</span><span class="n">mount_washington</span><span class="p">[</span><span class="s1">'lat'</span><span class="p">],</span> <span class="n">mount_washington</span><span class="p">[</span><span class="s1">'lon'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fetch-for-Many-Locations">
+<a class="anchor" href="#Fetch-for-Many-Locations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetch for Many Locations<a class="anchor-link" href="#Fetch-for-Many-Locations"> </a>
+</h3>
+<p>Using the same scaffolding as the Wikipedia asynchronous scrape, the helper code for the main streamlit app also relies on <code>httpx</code> to fetch 48 responses quickly.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">async_get_one_call_data</span><span class="p">(</span><span class="n">client</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">,</span> <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">"""Given http client and valid lat lon, retrieves open weather "One call" API data</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        client (httpx.AsyncClient): To make requests. See httpx docs</span>
+<span class="sd">        lat (float): lat of the desired location</span>
+<span class="sd">        lon (float): lon of the desired location</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: json response from Open Weather One Call</span>
+<span class="sd">    """</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">get_one_call_endpoint</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">gather_one_call_weather_data</span><span class="p">(</span><span class="n">lat_lon_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">"""Given list of tuples of lat, lon pairs, will asynchronously fetch the one call open weather api data for those pairs</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lat_lon_pairs (list): Destinations to get data for</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: List of dictionaries which are json responses from open weather</span>
+<span class="sd">    """</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">async_get_one_call_data</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="ow">in</span> <span class="n">lat_lon_pairs</span>
+        <span class="p">]</span>
+        <span class="n">one_call_weather_data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">tasks</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">one_call_weather_data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Web-App-Component">
+<a class="anchor" href="#Web-App-Component" aria-hidden="true"><span class="octicon octicon-link"></span></a>Web App Component<a class="anchor-link" href="#Web-App-Component"> </a>
+</h2>
+<p>Goals from the start:</p>
+<ul>
+<li>Usable UI for comparing / viewing weather on 48 locations (mobile-friendly for hikers)</li>
+<li>Not sluggish to load data or click through page after page to get different mountains / times</li>
+<li>Good uptime</li>
+</ul>
+<p>Other technical considerations:</p>
+<ul>
+<li>Obeying API limits<ul>
+<li>API key security</li>
+</ul>
+</li>
+<li>Streamlit resource limits<ul>
+<li>Cloud host or self host</li>
+</ul>
+</li>
+</ul>
+<h3 id="Caching-Data">
+<a class="anchor" href="#Caching-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching Data<a class="anchor-link" href="#Caching-Data"> </a>
+</h3>
+<p>There are 2 main points of loading data in the app:</p>
+<ul>
+<li>Load the list of mountains, heights, lats, lons</li>
+<li>Fetch live data from OpenWeatherMap for all locations</li>
+</ul>
+<p>With Streamlit, decorating a function with <code>@st.cache()</code> will save the computed result so that it can be loaded faster by the next user!</p>
+<h4 id="Caching-Mountain-Data">
+<a class="anchor" href="#Caching-Mountain-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching Mountain Data<a class="anchor-link" href="#Caching-Mountain-Data"> </a>
+</h4>
+<p>The first list is static, and purely for convenience of fetching columns I load it in with <code>pandas</code>. (In hindsight I could have at least reset the index after sorting).</p>
+<p>Leaving the default arguments lets this dataset get cached indefinitely (until the app gets shut down / restarted)</p>
+<p><em>note:</em> <code>st.cache</code> decorators commented out in notebook</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="c1"># import streamlit as st</span>
+
+<span class="c1">#@st.cache()</span>
+<span class="k">def</span> <span class="nf">load_metadata</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="sd">"""Function to read mountain lat, lon, and other metadata and cache results</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        pd.DataFrame: df containing information for 48 mountains</span>
+<span class="sd">    """</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"./data/mountains.csv"</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="n">load_metadata</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Caching-Weather-Data">
+<a class="anchor" href="#Caching-Weather-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching Weather Data<a class="anchor-link" href="#Caching-Weather-Data"> </a>
+</h4>
+<p>With this dataset I don't want to cache things indefinitely.
+In fact, we want it to update as often as the API limits will allow us to query it!</p>
+<p>Setting a <code>ttl</code> or "Time To Live" value in <code>st.cache(ttl=...)</code> will cause the cache to bust if the precomputed result is longer than the provided time.</p>
+<p>We'll set the <code>ttl</code> to 60 minutes to respect OpenWeatherMaps.</p>
+<p>This means that if 100 users all open the app within 59 minutes of one another then only 1 request to <code>load_data()</code> would actually go to OpenWeatherMaps. The other 99 requests would use the cached result.</p>
+<p>When any user opens it 61 minutes after the first user, the cache will be busted and another request to OpenWeatherMaps will refresh all of the 48 mountains' weather data in the app.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@st</span><span class="o">.</span><span class="n">cache</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">lat_lon_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">"""Function to fetch Open Weather data and cache results</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lat_lon_pairs (list): Destinations to get data for</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: List of dictionaries which are json responses from open weather</span>
+<span class="sd">    """</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">gather_one_call_weather_data</span><span class="p">(</span><span class="n">lat_lon_pairs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Bonuses">
+<a class="anchor" href="#Bonuses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bonuses<a class="anchor-link" href="#Bonuses"> </a>
+</h3>
+<h4 id="Display-future-forecast">
+<a class="anchor" href="#Display-future-forecast" aria-hidden="true"><span class="octicon octicon-link"></span></a>Display future forecast<a class="anchor-link" href="#Display-future-forecast"> </a>
+</h4>
+<p>Hikers don't need to know just the weather right now.
+They also need to know the next few hours' forecast.</p>
+<p>The OpenWeatherMaps data provides temperature and weather event forecasts hourly.</p>
+<p>So how about a row across the screen with 5 hours of data in 5 even columns.</p>
+<p>Feels good on desktop, but a horrendous amount of scrolling past locations you don't care about on mobile.</p>
+<p><code>st.expander()</code> provides a way to tuck sections away in a drop down hide/expand section.</p>
+<p>Then using <code>st.columns()</code> we can get an iterator over <code>x</code> amount of columns.
+Zipping this with the hourly results starting from the next hour gives a nice way to match up layout to data.
+It also gives some flexibility for how many columns to include.</p>
+<div class="highlight"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">current_temperature</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"current"</span><span class="p">][</span><span class="s2">"temp"</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">st</span><span class="o">.</span><span class="n">expander</span><span class="p">(</span><span class="s2">"Expand for future forecast:"</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">entry</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">response</span><span class="p">[</span><span class="s2">"hourly"</span><span class="p">][</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">clean_time</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s1">'dt'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+        <span class="n">temperature</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">"temp"</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">col</span><span class="o">.</span><span class="n">metric</span><span class="p">(</span>
+            <span class="s2">"Temp (F)"</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">temperature</span> <span class="o">-</span> <span class="n">current_temperature</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">current_temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Jump-Link-Table">
+<a class="anchor" href="#Jump-Link-Table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jump Link Table<a class="anchor-link" href="#Jump-Link-Table"> </a>
+</h4>
+<p>Using the app on mobile even with expander sections was too much scrolling.</p>
+<p>I thought a Markdown table of links would be more straightforward, but I would up doing a bunch of string mangling to get it running.</p>
+<p>Having anchors on most commands such as <code>st.title()</code> is great for in-page navigation</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_mtn_anchor</span><span class="p">(</span><span class="n">mountain</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">anchor</span> <span class="o">=</span> <span class="n">mountain</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">mountain</span><span class="si">}</span><span class="s2">](#</span><span class="si">{</span><span class="n">anchor</span><span class="si">}</span><span class="s2">)"</span>
+
+<span class="n">mountains</span> <span class="o">=</span> <span class="n">load_metadata</span><span class="p">()</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"| Mountains |  |  |"</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"|---|---|---|"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">left</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">right</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="n">mountains</span><span class="o">.</span><span class="n">name</span><span class="p">[::</span><span class="mi">3</span><span class="p">],</span> <span class="n">mountains</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="n">mountains</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"| </span><span class="si">{</span><span class="n">get_mtn_anchor</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">get_mtn_anchor</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">get_mtn_anchor</span><span class="p">(</span><span class="n">right</span><span class="p">)</span><span class="si">}</span><span class="s2"> |"</span>
+    <span class="p">)</span>
+<span class="c1"># st.markdown("\n".join(table))</span>
+<span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="gerardrbentley/tech-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/streamlit/python/async/intermediate/2022/02/05/weather-forecast-dashboard.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
