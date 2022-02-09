@@ -561,8 +561,8 @@ We won't worry too much about errors or missed data for this cleaning phase.</p>
 {'name': 'South Twin Mountain (New Hampshire)', 'link': '/wiki/South_Twin_Mountain_(New_Hampshire)', 'lat': 44.1875, 'lon': -71.55533333333334}
 {'name': 'Carter Dome', 'link': '/wiki/Carter_Dome', 'lat': 44.26722222222222, 'lon': -71.17888888888889}
 {'name': 'Mount Moosilauke', 'link': '/wiki/Mount_Moosilauke', 'lat': 44.02444444444444, 'lon': -71.83083333333333}
-CPU times: user 2.18 s, sys: 47.5 ms, total: 2.23 s
-Wall time: 3.53 s
+CPU times: user 2.44 s, sys: 62.4 ms, total: 2.5 s
+Wall time: 3.9 s
 </pre>
 </div>
 </div>
@@ -675,7 +675,7 @@ Wall time: 5.47 s</code></pre>
 {'name': 'South Twin Mountain (New Hampshire)', 'link': '/wiki/South_Twin_Mountain_(New_Hampshire)', 'lat': 44.1875, 'lon': -71.55533333333334}
 {'name': 'Carter Dome', 'link': '/wiki/Carter_Dome', 'lat': 44.26722222222222, 'lon': -71.17888888888889}
 {'name': 'Mount Moosilauke', 'link': '/wiki/Mount_Moosilauke', 'lat': 44.02444444444444, 'lon': -71.83083333333333}
-2.07 seconds
+2.01 seconds
 </pre>
 </div>
 </div>
@@ -904,7 +904,10 @@ Your unique API key (you can always find it on your account page under the "API 
     </div>
 </div>
 </div>
-
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Output" data-close="Show Output"></summary>
+        <p>
+</p>
 <div class="output_wrapper">
 <div class="output">
 
@@ -917,14 +920,14 @@ Your unique API key (you can always find it on your account page under the "API 
  'lon': -71.3032,
  'timezone': 'America/New_York',
  'timezone_offset': -18000,
- 'current': {'dt': 1644374321,
+ 'current': {'dt': 1644375343,
   'sunrise': 1644321288,
   'sunset': 1644357845,
-  'temp': 12.09,
-  'feels_like': 0.19,
+  'temp': 11.35,
+  'feels_like': -0.72,
   'pressure': 1011,
   'humidity': 84,
-  'dew_point': 8.62,
+  'dew_point': 7.88,
   'uvi': 0,
   'clouds': 99,
   'visibility': 300,
@@ -936,24 +939,7 @@ Your unique API key (you can always find it on your account page under the "API 
     'description': 'light snow',
     'icon': '13n'}],
   'snow': {'1h': 0.19}},
- 'minutely': [{'dt': 1644374340, 'precipitation': 0},
-  {'dt': 1644374400, 'precipitation': 0},
-  {'dt': 1644374460, 'precipitation': 0},
-  {'dt': 1644374520, 'precipitation': 0},
-  {'dt': 1644374580, 'precipitation': 0},
-  {'dt': 1644374640, 'precipitation': 0},
-  {'dt': 1644374700, 'precipitation': 0},
-  {'dt': 1644374760, 'precipitation': 0},
-  {'dt': 1644374820, 'precipitation': 0},
-  {'dt': 1644374880, 'precipitation': 0},
-  {'dt': 1644374940, 'precipitation': 0},
-  {'dt': 1644375000, 'precipitation': 0},
-  {'dt': 1644375060, 'precipitation': 0},
-  {'dt': 1644375120, 'precipitation': 0},
-  {'dt': 1644375180, 'precipitation': 0},
-  {'dt': 1644375240, 'precipitation': 0},
-  {'dt': 1644375300, 'precipitation': 0},
-  {'dt': 1644375360, 'precipitation': 0},
+ 'minutely': [{'dt': 1644375360, 'precipitation': 0},
   {'dt': 1644375420, 'precipitation': 0},
   {'dt': 1644375480, 'precipitation': 0},
   {'dt': 1644375540, 'precipitation': 0},
@@ -996,13 +982,30 @@ Your unique API key (you can always find it on your account page under the "API 
   {'dt': 1644377760, 'precipitation': 0},
   {'dt': 1644377820, 'precipitation': 0},
   {'dt': 1644377880, 'precipitation': 0},
-  {'dt': 1644377940, 'precipitation': 0}],
+  {'dt': 1644377940, 'precipitation': 0},
+  {'dt': 1644378000, 'precipitation': 0},
+  {'dt': 1644378060, 'precipitation': 0},
+  {'dt': 1644378120, 'precipitation': 0},
+  {'dt': 1644378180, 'precipitation': 0},
+  {'dt': 1644378240, 'precipitation': 0},
+  {'dt': 1644378300, 'precipitation': 0},
+  {'dt': 1644378360, 'precipitation': 0},
+  {'dt': 1644378420, 'precipitation': 0},
+  {'dt': 1644378480, 'precipitation': 0},
+  {'dt': 1644378540, 'precipitation': 0},
+  {'dt': 1644378600, 'precipitation': 0},
+  {'dt': 1644378660, 'precipitation': 0},
+  {'dt': 1644378720, 'precipitation': 0},
+  {'dt': 1644378780, 'precipitation': 0},
+  {'dt': 1644378840, 'precipitation': 0},
+  {'dt': 1644378900, 'precipitation': 0},
+  {'dt': 1644378960, 'precipitation': 0}],
  'hourly': [{'dt': 1644372000,
-   'temp': 11.34,
-   'feels_like': -0.53,
+   'temp': 10.76,
+   'feels_like': -1.25,
    'pressure': 1011,
    'humidity': 87,
-   'dew_point': 8.56,
+   'dew_point': 7.99,
    'uvi': 0,
    'clouds': 99,
    'visibility': 353,
@@ -1016,11 +1019,11 @@ Your unique API key (you can always find it on your account page under the "API 
    'pop': 0.33,
    'snow': {'1h': 0.22}},
   {'dt': 1644375600,
-   'temp': 12.09,
-   'feels_like': 0.19,
+   'temp': 11.35,
+   'feels_like': -0.72,
    'pressure': 1011,
    'humidity': 84,
-   'dew_point': 8.62,
+   'dew_point': 7.88,
    'uvi': 0,
    'clouds': 99,
    'visibility': 300,
@@ -1034,11 +1037,11 @@ Your unique API key (you can always find it on your account page under the "API 
    'pop': 0.33,
    'snow': {'1h': 0.19}},
   {'dt': 1644379200,
-   'temp': 10.92,
-   'feels_like': -1.1,
+   'temp': 10.33,
+   'feels_like': -1.82,
    'pressure': 1011,
    'humidity': 86,
-   'dew_point': 7.92,
+   'dew_point': 7.34,
    'uvi': 0,
    'clouds': 99,
    'visibility': 338,
@@ -1052,11 +1055,11 @@ Your unique API key (you can always find it on your account page under the "API 
    'pop': 0.33,
    'snow': {'1h': 0.24}},
   {'dt': 1644382800,
-   'temp': 9.52,
-   'feels_like': -2.65,
+   'temp': 9.09,
+   'feels_like': -3.19,
    'pressure': 1011,
    'humidity': 89,
-   'dew_point': 7.21,
+   'dew_point': 6.78,
    'uvi': 0,
    'clouds': 99,
    'visibility': 302,
@@ -1070,11 +1073,11 @@ Your unique API key (you can always find it on your account page under the "API 
    'pop': 0.33,
    'snow': {'1h': 0.17}},
   {'dt': 1644386400,
-   'temp': 8.24,
-   'feels_like': -4.36,
+   'temp': 7.93,
+   'feels_like': -4.67,
    'pressure': 1012,
    'humidity': 90,
-   'dew_point': 6.17,
+   'dew_point': 5.86,
    'uvi': 0,
    'clouds': 98,
    'visibility': 319,
@@ -1088,11 +1091,11 @@ Your unique API key (you can always find it on your account page under the "API 
    'pop': 0.33,
    'snow': {'1h': 0.18}},
   {'dt': 1644390000,
-   'temp': 6.62,
-   'feels_like': -5.98,
+   'temp': 6.48,
+   'feels_like': -6.12,
    'pressure': 1012,
    'humidity': 92,
-   'dew_point': 4.98,
+   'dew_point': 4.84,
    'uvi': 0,
    'clouds': 96,
    'visibility': 417,
@@ -1835,12 +1838,12 @@ Your unique API key (you can always find it on your account page under the "API 
    'moonset': 1644298020,
    'moon_phase': 0.25,
    'temp': {'day': 18.59,
-    'min': 10.92,
+    'min': 10.33,
     'max': 19.72,
-    'night': 10.92,
+    'night': 10.33,
     'eve': 15.06,
     'morn': 14.94},
-   'feels_like': {'day': 12.94, 'night': -1.1, 'eve': 5.97, 'morn': 14.94},
+   'feels_like': {'day': 12.94, 'night': -1.82, 'eve': 5.97, 'morn': 14.94},
    'pressure': 1010,
    'humidity': 97,
    'dew_point': 26.85,
@@ -2054,6 +2057,7 @@ Your unique API key (you can always find it on your account page under the "API 
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -2295,7 +2299,9 @@ In fact, we want it to update as often as the API limits will allow us to query 
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">lat_lon_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">pass</span>
+<span class="c1"># @st.cache(ttl=60 * 60)</span>
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">lat_lon_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sd">"""Function to fetch Open Weather data and cache results</span>
 
 <span class="sd">    Args:</span>
