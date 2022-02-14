@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Python Form Generator (JSON to Streamlit Form!) | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Python Form Generator (JSON to Streamlit Form!)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Generating well typed form inputs from JSON example with Pydantic and Streamlit" />
+<meta property="og:description" content="Generating well typed form inputs from JSON example with Pydantic and Streamlit" />
+<link rel="canonical" href="https://tech.gerardbentley.com/intermediate/streamlit/python/2022/02/13/python-form-generator.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/intermediate/streamlit/python/2022/02/13/python-form-generator.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-13T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Python Form Generator (JSON to Streamlit Form!)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-02-13T00:00:00-06:00","datePublished":"2022-02-13T00:00:00-06:00","description":"Generating well typed form inputs from JSON example with Pydantic and Streamlit","headline":"Python Form Generator (JSON to Streamlit Form!)","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/intermediate/streamlit/python/2022/02/13/python-form-generator.html"},"url":"https://tech.gerardbentley.com/intermediate/streamlit/python/2022/02/13/python-form-generator.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper">
+<a class="site-title" rel="author" href="/">Gar's Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+<a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a>
+</div>
+      </nav>
+</div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Python Form Generator (JSON to Streamlit Form!)</h1>
+<p class="page-description">Generating well typed form inputs from JSON example with Pydantic and Streamlit
+</p>
+<p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-13T00:00:00-06:00" itemprop="datePublished">
+        Feb 13, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i> 
+      
+        <a class="category-tags-link" href="/categories/#intermediate">intermediate</a>
+         
+      
+        <a class="category-tags-link" href="/categories/#streamlit">streamlit</a>
+         
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1">
+<a href="#python-form-generator">Python Form Generator</a>
+<ul>
+<li class="toc-entry toc-h2">
+<a href="#full-walkthrough">Full Walkthrough</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#skeleton">Skeleton</a></li>
+<li class="toc-entry toc-h3"><a href="#install">Install</a></li>
+<li class="toc-entry toc-h3"><a href="#hello-world">Hello World</a></li>
+<li class="toc-entry toc-h3">
+<a href="#model-generation">Model Generation</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#imports">Imports</a></li>
+<li class="toc-entry toc-h4"><a href="#upgraded-input">Upgraded Input</a></li>
+<li class="toc-entry toc-h4"><a href="#conversion">Conversion</a></li>
+<li class="toc-entry toc-h4"><a href="#lgtm">LGTM</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3">
+<a href="#bootstrapping">Bootstrapping</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#update-show-model">Update Show Model</a></li>
+<li class="toc-entry toc-h4"><a href="#inject-generated-code">Inject Generated Code</a></li>
+<li class="toc-entry toc-h4"><a href="#lgtm-1">LGTM</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#wrap-up">Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="python-form-generator">
+<a class="anchor" href="#python-form-generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Form Generator</h1>
+
+<p>From raw JSON to Python Pydantic Model to Streamlit Input Form :exploding_head:</p>
+
+<p>Bootstrapping more Streamlit apps from within a Streamlit app <img class="emoji" title=":recycle:" alt=":recycle:" src="https://github.githubassets.com/images/icons/emoji/unicode/267b.png" height="20" width="20"></p>
+
+<p>Generate well-typed and validated Python forms from basic JSON example.</p>
+
+<p><em>DEPENDENCIES:</em></p>
+<ul>
+  <li>
+<a href="https://github.com/koxudaxi/datamodel-code-generator/">Datamodel Code Generator</a> for mapping to Pydantic model</li>
+  <li>
+<a href="https://jsontopydantic.com/">JSON to Pydantic</a> for proof this can work</li>
+  <li>
+<a href="https://github.com/LukasMasuch/streamlit-pydantic">Streamlit Pydantic</a> for bootstrapped app code</li>
+</ul>
+
+<h2 id="full-walkthrough">
+<a class="anchor" href="#full-walkthrough" aria-hidden="true"><span class="octicon octicon-link"></span></a>Full Walkthrough</h2>
+
+<h3 id="skeleton">
+<a class="anchor" href="#skeleton" aria-hidden="true"><span class="octicon octicon-link"></span></a>Skeleton</h3>
+
+<p><em>GOAL:</em>
+Initialize git repo with necessary file scaffold:</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">app.py</code>: The main streamlit entry app</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">requirements.txt</code>: Pin versions of Python packages so deployment and development is repeatable</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">README.md</code>: This documentation</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">.gitignore</code>: Prevent secrets or large files or unecessary things from going into github
+    <ul>
+      <li>Recommended github python <a href="https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore">gitignore template</a> works fine for this, slightly overkill</li>
+    </ul>
+  </li>
+  <li>
+<code class="language-plaintext highlighter-rouge">LICENSE</code>: <a href="https://choosealicense.com/licenses/apache-2.0/">Apache 2.0</a> same as <a href="https://streamlit.io/terms-of-use">Streamlit Terms</a>
+</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>python-form-generator
+<span class="nb">cd </span>python-form-generator/
+<span class="nb">touch </span>README.md LICENSE .gitignore app.py requirements.txt
+git init
+git checkout <span class="nt">-b</span> main
+git remote add origin git@github.com:gerardrbentley/python-form-generator.git
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"skeleton"</span>
+</code></pre></div></div>
+
+<h3 id="install">
+<a class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h3>
+
+<p>We’ll plan on 4 main packages for this:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">streamlit</code></li>
+  <li><code class="language-plaintext highlighter-rouge">pydantic</code></li>
+  <li><code class="language-plaintext highlighter-rouge">streamlit-pydantic</code></li>
+  <li><code class="language-plaintext highlighter-rouge">datamodel-code-generator</code></li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> venv venv
+<span class="nb">.</span> ./venv/bin/activate
+pip <span class="nb">install </span>streamlit-pydantic datamodel-code-generator
+pip list | <span class="nb">grep</span> <span class="s2">"streamlit</span><span class="se">\|</span><span class="s2">pydantic</span><span class="se">\|</span><span class="s2">datamodel-code"</span>
+</code></pre></div></div>
+
+<p><em>Note:</em> This lets <code class="language-plaintext highlighter-rouge">streamlit-pydantic</code> to choose which versions of <code class="language-plaintext highlighter-rouge">streamlit</code> and <code class="language-plaintext highlighter-rouge">pydantic</code> work for the latest release.</p>
+
+<p>Saving the output to <code class="language-plaintext highlighter-rouge">requirements.txt</code> in the format:</p>
+
+<pre><code class="language-txt">datamodel-code-generator==0.11.19
+pydantic==1.9.0
+streamlit==1.5.1
+streamlit-pydantic==0.5.0
+</code></pre>
+
+<p>Saving the output to requirements.txt allows new users / deploys to install pinned verions with something like the following:</p>
+
+<p><code class="language-plaintext highlighter-rouge">pip install -r requirements.txt</code></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add requirements.txt README.md
+git commit <span class="nt">-m</span> <span class="s2">"install"</span>
+</code></pre></div></div>
+
+<h3 id="hello-world">
+<a class="anchor" href="#hello-world" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hello World</h3>
+
+<p>Adding the following to <code class="language-plaintext highlighter-rouge">app.py</code>:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s">"Python Form Generator"</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">subheader</span><span class="p">(</span><span class="s">"Enter your JSON and get a free Pydantic model + Streamlit Input Form using it!"</span><span class="p">)</span>
+    <span class="n">json_input</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">text_area</span><span class="p">(</span><span class="s">'JSON example'</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">json_input</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Then run with <code class="language-plaintext highlighter-rouge">streamlit</code> to check if basic input / processing frontend works.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>streamlit run app.py
+<span class="c"># ctrl + c to stop</span>
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add app.py README.md
+git commit <span class="nt">-m</span> <span class="s2">"input hello world"</span>
+</code></pre></div></div>
+
+<h3 id="model-generation">
+<a class="anchor" href="#model-generation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Generation</h3>
+
+<p>We’ll draw from 3 sources for the meat and potatoes of this app:</p>
+
+<ul>
+  <li><a href="https://github.com/LukasMasuch/streamlit-pydantic#usage">Streamlit Pydantic Usage Guide</a></li>
+  <li><a href="https://github.com/koxudaxi/datamodel-code-generator/blob/381abc1946c088c99dc79bebc62b7e37a2d4b8d3/datamodel_code_generator/__init__.py#L311">Datamodel Code Generator conversion</a></li>
+  <li><a href="https://github.com/brokenloop/jsontopydantic/blob/master/server/app/scripts/generator.py">JSON to Pydantic conversion</a></li>
+</ul>
+
+<h4 id="imports">
+<a class="anchor" href="#imports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports</h4>
+
+<p>Expand import section of <code class="language-plaintext highlighter-rouge">app.py</code> to accomodate Streamlit Pydantic, Datamodel code generator, and GenSON</p>
+
+<p>(Datamodel code generator is intended as CLI tool, so we have to dig a bit into it)</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Json</span><span class="p">,</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">datamodel_code_generator.parser.jsonschema</span> <span class="kn">import</span> <span class="n">JsonSchemaParser</span>
+<span class="kn">from</span> <span class="nn">genson</span> <span class="kn">import</span> <span class="n">SchemaBuilder</span>
+<span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">import</span> <span class="nn">streamlit_pydantic</span> <span class="k">as</span> <span class="n">sp</span>
+</code></pre></div></div>
+
+<h4 id="upgraded-input">
+<a class="anchor" href="#upgraded-input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upgraded Input</h4>
+
+<p>We’ll use Streamlit Pydantic to get out of the box validation of the JSON that the user provides. 
+Plus we get extensibility via the FormModel if we want to add more configuration options!</p>
+
+<p>Instead of a plain <code class="language-plaintext highlighter-rouge">text_input</code> from streamlit, we utilize <code class="language-plaintext highlighter-rouge">sp.pydantic_form</code> and provide our model (which only has 1 input field for now!)</p>
+
+<p>After getting some input JSON from the User it will pass off to converting to a model.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">FormGeneratorModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_schema</span><span class="p">:</span> <span class="n">Json</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s">"Python Form Generator"</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">subheader</span><span class="p">(</span>
+        <span class="s">"Enter your JSON and get a free Pydantic model + Streamlit Input Form using it!"</span>
+    <span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">pydantic_form</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">"json_input"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">FormGeneratorModel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">show_generated_code</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">model_schema</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="conversion">
+<a class="anchor" href="#conversion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conversion</h4>
+
+<p>Following in the footsteps of JSON to Pydantic and Datamodel Code Generator, we use GenSON to build a JSONSchema representation from raw JSON data, then dump that into the Datamodel Code Generator parser.</p>
+
+<p>We’ll handle the same error case Datamodel code generator does, otherwise assume the happy path and display the results!</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">show_generated_code</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="n">Json</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">model_code</span> <span class="o">=</span> <span class="n">json_to_pydantic</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">model_code</span><span class="p">:</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">"Models not found in the input data"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">code</span><span class="p">(</span><span class="n">model_code</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">json_to_pydantic</span><span class="p">(</span><span class="n">input_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">builder</span> <span class="o">=</span> <span class="n">SchemaBuilder</span><span class="p">()</span>
+    <span class="n">builder</span><span class="p">.</span><span class="n">add_object</span><span class="p">(</span><span class="n">input_text</span><span class="p">)</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="n">builder</span><span class="p">.</span><span class="n">to_schema</span><span class="p">()</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">JsonSchemaParser</span><span class="p">(</span>
+        <span class="n">source</span><span class="o">=</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">schema</span><span class="p">),</span>
+        <span class="n">base_class</span><span class="o">=</span><span class="s">"pydantic.BaseModel"</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="lgtm">
+<a class="anchor" href="#lgtm" aria-hidden="true"><span class="octicon octicon-link"></span></a>LGTM</h4>
+
+<p>Trying out a simple entry (even simpler than the <a href="https://streamlit-postgres.gerardbentley.com/">littlest fullstack app</a>) such as the following:</p>
+
+<pre><code class="language-txt">{"body": ":tada:", "username": ":cat:"}
+</code></pre>
+
+<p>Produces expected result</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div></div>
+
+<p>Time to ship it and generate a Form!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add app.py README.md
+git commit <span class="nt">-m</span> <span class="s2">"model generation"</span>
+</code></pre></div></div>
+
+<h3 id="bootstrapping">
+<a class="anchor" href="#bootstrapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bootstrapping</h3>
+
+<p>Alright, we’ve got a nice Pydantic model, time to generate a Streamlit Pydantic scaffold from it and provide a download link.</p>
+
+<h4 id="update-show-model">
+<a class="anchor" href="#update-show-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update Show Model</h4>
+
+<p>We’ll allow the user to download just the model into a <code class="language-plaintext highlighter-rouge">.py</code> file and hide the generated model unless they want to see it.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">show_generated_code</span><span class="p">(</span><span class="n">schema</span><span class="p">:</span> <span class="n">Json</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">model_code</span> <span class="o">=</span> <span class="n">json_to_pydantic</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">model_code</span><span class="p">:</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">"Models not found in the input data"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">st</span><span class="p">.</span><span class="n">expander</span><span class="p">(</span><span class="s">"Original Converted Model"</span><span class="p">):</span>
+            <span class="n">st</span><span class="p">.</span><span class="n">code</span><span class="p">(</span><span class="n">model_code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"python"</span><span class="p">)</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">download_button</span><span class="p">(</span><span class="s">"Download Generated Model Only"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">model_code</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s">"model.py"</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">"text/plain"</span><span class="p">)</span>
+        <span class="n">show_generated_form</span><span class="p">(</span><span class="n">model_code</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="inject-generated-code">
+<a class="anchor" href="#inject-generated-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inject Generated Code</h4>
+
+<p>We only need 2 features to really bootstrap these forms:</p>
+
+<ul>
+  <li>Added imports</li>
+  <li>Retrieve form data in Streamlit app</li>
+</ul>
+
+<p>I’ll add a <code class="language-plaintext highlighter-rouge">main()</code> method to keep scope contained, but the Streamlit execution model embraces all <a href="https://streamlit.io/">Python scripting</a></p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MAIN_TEMPLATE</span> <span class="o">=</span> <span class="s">"""</span><span class="se">\
+</span><span class="s">
+
+def main() -&gt; None:
+    st.header("Model Form Submission")
+    data = sp.pydantic_form(key="my_model", model=Model)
+    if data:
+        st.json(data.json())
+
+
+if __name__ == "__main__":
+    main()
+"""</span>
+
+<span class="k">def</span> <span class="nf">show_generated_form</span><span class="p">(</span><span class="n">model_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">code_lines</span> <span class="o">=</span> <span class="n">model_code</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">code_lines</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">"import streamlit_pydantic as sp"</span><span class="p">)</span>
+    <span class="n">code_lines</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">"import streamlit as st"</span><span class="p">)</span>
+
+    <span class="n">code_lines</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">MAIN_TEMPLATE</span><span class="p">)</span>
+
+    <span class="n">full_code</span> <span class="o">=</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">code_lines</span><span class="p">)</span>
+
+    <span class="n">st</span><span class="p">.</span><span class="n">subheader</span><span class="p">(</span><span class="s">"Generated Streamlit Pydantic App"</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">caption</span><span class="p">(</span><span class="s">"Download it and run with `streamlit run model_form.py`"</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">download_button</span><span class="p">(</span><span class="s">"Download Generated Form!"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">full_code</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s">"model_form.py"</span><span class="p">,</span> <span class="n">mime</span><span class="o">=</span><span class="s">"text/plain"</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">code</span><span class="p">(</span><span class="n">full_code</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"python"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="lgtm-1">
+<a class="anchor" href="#lgtm-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>LGTM</h4>
+
+<p>Testing out the download and run on our simple model yields great results!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add app.py README.md
+git commit <span class="nt">-m</span> <span class="s2">"app generation"</span>
+</code></pre></div></div>
+
+<h3 id="wrap-up">
+<a class="anchor" href="#wrap-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wrap Up</h3>
+
+<p>That’s it for the basic idea!</p>
+
+<p>Next steps would be allowing configuration options such as “all Optional” and snake casing akin to JSON to Pydantic.
+Also more input forms, as Datamodel code generator handles OpenAPI, CSV data, and more.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add README.md
+git commit <span class="nt">-m</span> <span class="s2">"lgtm!"</span>
+git push origin main
+</code></pre></div></div>
+
+  </div>
+<a class="u-url" href="/intermediate/streamlit/python/2022/02/13/python-form-generator.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links">
+<ul class="social-media-list">
+<li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li>
+<li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li>
+</ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
