@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>My Favorite Python One Liner Sucks | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="My Favorite Python One Liner Sucks" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Turning Path into muscle memory" />
+<meta property="og:description" content="Turning Path into muscle memory" />
+<link rel="canonical" href="https://tech.gerardbentley.com/beginner/python/2022/02/15/my-favorite-python-one-liner-sucks.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/beginner/python/2022/02/15/my-favorite-python-one-liner-sucks.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-15T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="My Favorite Python One Liner Sucks" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-02-15T00:00:00-06:00","datePublished":"2022-02-15T00:00:00-06:00","description":"Turning Path into muscle memory","headline":"My Favorite Python One Liner Sucks","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/beginner/python/2022/02/15/my-favorite-python-one-liner-sucks.html"},"url":"https://tech.gerardbentley.com/beginner/python/2022/02/15/my-favorite-python-one-liner-sucks.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">My Favorite Python One Liner Sucks</h1><p class="page-description">Turning Path into muscle memory</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-15T00:00:00-06:00" itemprop="datePublished">
+        Feb 15, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#beginner">beginner</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gerardrbentley/tech-blog/tree/master/_notebooks/2022-02-15-my-favorite-python-one-liner-sucks.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gerardrbentley/tech-blog/master?filepath=_notebooks%2F2022-02-15-my-favorite-python-one-liner-sucks.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/gerardrbentley/tech-blog/blob/master/_notebooks/2022-02-15-my-favorite-python-one-liner-sucks.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fgerardrbentley%2Ftech-blog%2Fblob%2Fmaster%2F_notebooks%2F2022-02-15-my-favorite-python-one-liner-sucks.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Writing-to-a-file-in-one-line">Writing to a file in one line </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Favorite-One-Liner">Favorite One-Liner </a></li>
+<li class="toc-entry toc-h2"><a href="#With-Statement">With Statement </a></li>
+<li class="toc-entry toc-h2"><a href="#Comparing-With-and-Without-(With)">Comparing With and Without (With) </a></li>
+<li class="toc-entry toc-h2"><a href="#Pathlib-usage">Pathlib usage </a></li>
+<li class="toc-entry toc-h2"><a href="#Conclusion">Conclusion </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-02-15-my-favorite-python-one-liner-sucks.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Writing-to-a-file-in-one-line">
+<a class="anchor" href="#Writing-to-a-file-in-one-line" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing to a file in one line<a class="anchor-link" href="#Writing-to-a-file-in-one-line"> </a>
+</h1>
+<p>tl;dr it's now:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">some_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'alice'</span><span class="p">,</span> <span class="s1">'bob'</span><span class="p">,</span> <span class="s1">'chuck'</span><span class="p">]</span>  <span class="c1"># Some sample data</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Write data to file called my_file.txt</span>
+<span class="n">Path</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">some_data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>15</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Favorite-One-Liner">
+<a class="anchor" href="#Favorite-One-Liner" aria-hidden="true"><span class="octicon octicon-link"></span></a>Favorite One-Liner<a class="anchor-link" href="#Favorite-One-Liner"> </a>
+</h2>
+<p>Python is full of one-liners.</p>
+<p>One of my favorites has been:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">open</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">some_data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>15</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It opens a file in write mode and writes some data or other text to that file, returning the amount of bytes written to the file.
+Generally useful for saving a list of column names or people names or what have you.
+No external libraries, and even no extra imports because <a href="https://docs.python.org/3/library/functions.html#open"><code>open()</code> is a built-in function</a></p>
+<p>But it leaves the file handle open...</p>
+<p>Which may not be a problem in some usecases, but it can prevent other users or processes from moving or deleting the file.
+<a href="https://google.github.io/styleguide/pyguide.html#311-files-and-sockets">Google's Python style guide</a> provides some more reasons, including wasting resources and preventing logical errors in code.</p>
+<h2 id="With-Statement">
+<a class="anchor" href="#With-Statement" aria-hidden="true"><span class="octicon octicon-link"></span></a>With Statement<a class="anchor-link" href="#With-Statement"> </a>
+</h2>
+<p>Of course the <code>with ... as ...:</code> <a href="https://docs.python.org/3/reference/compound_stmts.html#the-with-statement">syntax</a> from <a href="https://www.python.org/dev/peps/pep-0343/">PEP 343</a> is great for this safe handling of a file object that has to be opened and closed.</p>
+<p>It can be done in one line, but most prefer to break it up into 2.
+This is more awkward to use in a REPL doing ad-hoc work or notebook trying to conserve cell space</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">some_data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> 
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">some_data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Comparing-With-and-Without-(With)">
+<a class="anchor" href="#Comparing-With-and-Without-(With)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparing With and Without (With)<a class="anchor-link" href="#Comparing-With-and-Without-(With)"> </a>
+</h2>
+<p>Checking out the bytecode on a simplified <code>write</code>, we can confirm that my favorite one-liner doesn't close the file, whereas the <code>with</code> one-liner does.</p>
+<p>(If you're not familiar with <a href="https://docs.python.org/3/library/dis.html">dis</a>, it's the Python module for disassembling Python code into its C bytecode. Not always necessary, but will prove 100% whether 2 code snippets operate the same under the covers)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">dis</span> <span class="kn">import</span> <span class="n">dis</span>
+<span class="n">dis</span><span class="p">(</span><span class="s2">"open('my_file.txt', 'w').write('something')"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  1           0 LOAD_NAME                0 (open)
+              2 LOAD_CONST               0 ('my_file.txt')
+              4 LOAD_CONST               1 ('w')
+              6 CALL_FUNCTION            2
+              8 LOAD_METHOD              1 (write)
+             10 LOAD_CONST               2 ('something')
+             12 CALL_METHOD              1
+             14 RETURN_VALUE
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Definitely no calls to <code>close()</code>.
+What about in the with statement?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dis</span><span class="p">(</span><span class="s2">"with open('my_file.txt', 'w') as f: f.write('something')"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  1           0 LOAD_NAME                0 (open)
+              2 LOAD_CONST               0 ('my_file.txt')
+              4 LOAD_CONST               1 ('w')
+              6 CALL_FUNCTION            2
+              8 SETUP_WITH              26 (to 36)
+             10 STORE_NAME               1 (f)
+             12 LOAD_NAME                1 (f)
+             14 LOAD_METHOD              2 (write)
+             16 LOAD_CONST               2 ('something')
+             18 CALL_METHOD              1
+             20 POP_TOP
+             22 POP_BLOCK
+             24 LOAD_CONST               3 (None)
+             26 DUP_TOP
+             28 DUP_TOP
+             30 CALL_FUNCTION            3
+             32 POP_TOP
+             34 JUMP_FORWARD            16 (to 52)
+        &gt;&gt;   36 WITH_EXCEPT_START
+             38 POP_JUMP_IF_TRUE        42
+             40 RERAISE
+        &gt;&gt;   42 POP_TOP
+             44 POP_TOP
+             46 POP_TOP
+             48 POP_EXCEPT
+             50 POP_TOP
+        &gt;&gt;   52 LOAD_CONST               3 (None)
+             54 RETURN_VALUE
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The context manager takes a lot more steps to manage the call stack.
+But there's no clear call to the <code>close()</code> function, which is the other standard way of writing to a file and closing the handle.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dis</span><span class="p">(</span><span class="s2">"f = open('my_file.txt', 'w')</span><span class="se">\n</span><span class="s2">f.write('something')</span><span class="se">\n</span><span class="s2">f.close()"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  1           0 LOAD_NAME                0 (open)
+              2 LOAD_CONST               0 ('my_file.txt')
+              4 LOAD_CONST               1 ('w')
+              6 CALL_FUNCTION            2
+              8 STORE_NAME               1 (f)
+
+  2          10 LOAD_NAME                1 (f)
+             12 LOAD_METHOD              2 (write)
+             14 LOAD_CONST               2 ('something')
+             16 CALL_METHOD              1
+             18 POP_TOP
+
+  3          20 LOAD_NAME                1 (f)
+             22 LOAD_METHOD              3 (close)
+             24 CALL_METHOD              0
+             26 POP_TOP
+             28 LOAD_CONST               3 (None)
+             30 RETURN_VALUE
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>open()</code> function code lives <a href="https://github.com/python/cpython/blob/602630ac1855e38ef06361c68f6e216375a06180/Lib/_pyio.py#L73">here</a>.</p>
+<p>It's a wrapper around a FileIO object, whose <code>close</code> method will use <code>os.close()</code>, the low-level file closing method.</p>
+<p>The FileIO inherits a context manager from IOBase that calls <code>close</code> when exited, so we can be sure it'll get called.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pathlib-usage">
+<a class="anchor" href="#Pathlib-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pathlib usage<a class="anchor-link" href="#Pathlib-usage"> </a>
+</h2>
+<p>Making the extra import is worth it for <code>Path</code> object to get the following:</p>
+<ul>
+<li>Accurate path on <a href="https://docs.python.org/3/library/pathlib.html">any OS</a>
+</li>
+<li>file open and close with <code>write_text()</code>
+</li>
+<li>Still a similar one-liner!</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">Path</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">some_data</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>15</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Does the disassembler tell us anything?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dis</span><span class="p">(</span><span class="s2">"Path('my_file.txt').write_text('something')"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  1           0 LOAD_NAME                0 (Path)
+              2 LOAD_CONST               0 ('my_file.txt')
+              4 CALL_FUNCTION            1
+              6 LOAD_METHOD              1 (write_text)
+              8 LOAD_CONST               1 ('something')
+             10 CALL_METHOD              1
+             12 RETURN_VALUE
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Not really, what about on the write_text method specifically?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dis</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1282           0 LOAD_GLOBAL              0 (isinstance)
+               2 LOAD_FAST                1 (data)
+               4 LOAD_GLOBAL              1 (str)
+               6 CALL_FUNCTION            2
+               8 POP_JUMP_IF_TRUE        26
+
+1283          10 LOAD_GLOBAL              2 (TypeError)
+              12 LOAD_CONST               1 ('data must be str, not %s')
+
+1284          14 LOAD_FAST                1 (data)
+              16 LOAD_ATTR                3 (__class__)
+              18 LOAD_ATTR                4 (__name__)
+
+1283          20 BINARY_MODULO
+              22 CALL_FUNCTION            1
+              24 RAISE_VARARGS            1
+
+1285     &gt;&gt;   26 LOAD_FAST                0 (self)
+              28 LOAD_ATTR                5 (open)
+              30 LOAD_CONST               2 ('w')
+              32 LOAD_FAST                2 (encoding)
+              34 LOAD_FAST                3 (errors)
+              36 LOAD_CONST               3 (('mode', 'encoding', 'errors'))
+              38 CALL_FUNCTION_KW         3
+              40 SETUP_WITH              26 (to 68)
+              42 STORE_FAST               4 (f)
+
+1286          44 LOAD_FAST                4 (f)
+              46 LOAD_METHOD              6 (write)
+              48 LOAD_FAST                1 (data)
+              50 CALL_METHOD              1
+              52 POP_BLOCK
+              54 ROT_TWO
+              56 LOAD_CONST               4 (None)
+              58 DUP_TOP
+              60 DUP_TOP
+              62 CALL_FUNCTION            3
+              64 POP_TOP
+              66 RETURN_VALUE
+         &gt;&gt;   68 WITH_EXCEPT_START
+              70 POP_JUMP_IF_TRUE        74
+              72 RERAISE
+         &gt;&gt;   74 POP_TOP
+              76 POP_TOP
+              78 POP_TOP
+              80 POP_EXCEPT
+              82 POP_TOP
+              84 LOAD_CONST               4 (None)
+              86 RETURN_VALUE
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Well that's a whole lot to end up looking like the same bytecode as the <code>with</code> statement...</p>
+<p>In fact, pathlib would have gotten away with it too if it weren't for that meddling <a href="https://github.com/python/cpython/blob/602630ac1855e38ef06361c68f6e216375a06180/Lib/pathlib.py#L1070">source code</a> to betray it!</p>
+<p>We wind up calling the same with statement, but get a free assertion that our data is a valid string:</p>
+<div class="highlight"><pre><span></span><span class="c1"># pathlib.Path.write_text</span>
+<span class="c1"># ...</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="n">newline</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">
+<a class="anchor" href="#Conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion<a class="anchor-link" href="#Conclusion"> </a>
+</h2>
+<p>Pathlib <code>write_text()</code> is just <code>with open()...</code> under the covers.</p>
+<p>Nevertheless, I prefer the <code>write_text()</code> one-liner to the <code>with open() as f: ...</code> one-liner out of respect for semi-colons.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="gerardrbentley/tech-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/beginner/python/2022/02/15/my-favorite-python-one-liner-sucks.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
