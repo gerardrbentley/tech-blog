@@ -5,6 +5,7 @@ description: |
 categories: ['intermediate', 'streamlit', 'python']
 toc: true
 layout: post
+image: images/python_form_generator.png
 ---
 
 # Python Form Generator
