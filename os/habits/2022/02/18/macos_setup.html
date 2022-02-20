@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>macOS Developer Setup | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="macOS Developer Setup" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Returning to brew after a few years without a macbook" />
+<meta property="og:description" content="Returning to brew after a few years without a macbook" />
+<link rel="canonical" href="https://tech.gerardbentley.com/os/habits/2022/02/18/macos_setup.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/os/habits/2022/02/18/macos_setup.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-02-18T00:00:00-06:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="macOS Developer Setup" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-02-18T00:00:00-06:00","datePublished":"2022-02-18T00:00:00-06:00","description":"Returning to brew after a few years without a macbook","headline":"macOS Developer Setup","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/os/habits/2022/02/18/macos_setup.html"},"url":"https://tech.gerardbentley.com/os/habits/2022/02/18/macos_setup.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">macOS Developer Setup</h1><p class="page-description">Returning to brew after a few years without a macbook
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-18T00:00:00-06:00" itemprop="datePublished">
+        Feb 18, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#os">os</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#habits">habits</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#macos-developer-setup">macOS Developer Setup</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#python">Python</a></li>
+<li class="toc-entry toc-h2"><a href="#vs-code">VS Code</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#extensions">Extensions</a></li>
+<li class="toc-entry toc-h3"><a href="#settings">Settings</a></li>
+<li class="toc-entry toc-h3"><a href="#keybindings">Keybindings</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#docker">Docker</a></li>
+<li class="toc-entry toc-h2"><a href="#github">Github</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#set-default-git-user">Set Default Git User</a></li>
+<li class="toc-entry toc-h3"><a href="#create-ssh-key">Create SSH Key</a></li>
+<li class="toc-entry toc-h3"><a href="#add-github-to-ssh-config">Add Github to SSH Config</a></li>
+<li class="toc-entry toc-h3"><a href="#add-public-key-to-github">Add Public Key to Github</a></li>
+<li class="toc-entry toc-h3"><a href="#test-authentication">Test Authentication</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#homebrew">Homebrew</a></li>
+<li class="toc-entry toc-h2"><a href="#amethyst">Amethyst</a></li>
+</ul>
+</li>
+</ul><h1 id="macos-developer-setup">
+<a class="anchor" href="#macos-developer-setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>macOS Developer Setup</h1>
+
+<p><em>NOTE:</em> at some point you will be prompted to install the “Command Line Developer Tools” for Xcode.
+This is a large download.
+Be prepared.</p>
+
+<h2 id="python">
+<a class="anchor" href="#python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python</h2>
+
+<p>Mac still ships with python 2, but <a href="https://www.macrumors.com/2022/01/28/apple-removing-python-2-in-macos-12-3/#:~:text=Apple%20will%20no%20longer%20bundle,security%20patches%2C%20or%20other%20changes.">one day maybe it won’t…</a></p>
+
+<p>I prefer using <a href="https://docs.conda.io/en/latest/miniconda.html">conda</a> to manage python anyway, so <a href="https://tech.gerardbentley.com/python/beginner/2022/01/29/install-python.html">my install notes</a> works just fine for me.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Note, this uses macOS Apple M1 installer. Use apple menu -&gt; About This Mac to check if “Chip” is Apple M1</span>
+
+<span class="c"># Download</span>
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh <span class="nt">-o</span> conda_installer.sh
+
+<span class="c"># Install with human prompts, agree to license and conda init</span>
+bash conda_installer.sh
+
+<span class="c"># Cleanup your computer</span>
+<span class="nb">rm </span>conda_installer.sh
+
+
+<span class="c"># (if needed for script) Silent Install</span>
+bash conda_installer.sh <span class="nt">-b</span>
+<span class="nb">source </span>miniconda3/bin/activate <span class="o">&amp;&amp;</span> conda init zsh 
+</code></pre></div></div>
+
+<p>In a new Terminal, update python version to desired 3.9 or 3.10 or <a href="https://endoflife.date/python">what have you</a></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda <span class="nb">install </span><span class="nv">python</span><span class="o">=</span>3.10
+</code></pre></div></div>
+
+<p>Add packages you might want for development and testing.
+(This is where I had to install Xcode developer tools in order to build python packages)</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>black flake8 isort pep8-naming pytest-cov
+</code></pre></div></div>
+
+<p>Optionally install tools from the <a href="https://jupyter.org/">Project Jupyter</a> ecosystem:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Just jupyter notebook server</span>
+pip <span class="nb">install </span>notebook 
+<span class="c"># Jupyterlab capability</span>
+pip <span class="nb">install </span>jupyterlab
+</code></pre></div></div>
+
+<h2 id="vs-code">
+<a class="anchor" href="#vs-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>VS Code</h2>
+
+<ul>
+  <li>Download the <a href="https://code.visualstudio.com/download">Mac installer</a> (it should choose the correct version for your system)</li>
+  <li>Unzip it from your browser downloads or Finder -&gt; Downloads</li>
+  <li>Move the “Visual Studio Code” Application to Applications if desired</li>
+  <li>Delete the Installer zip if desired</li>
+</ul>
+
+<p><em>NOTE:</em> I couldn’t find the correct link to download with curl</p>
+
+<h3 id="extensions">
+<a class="anchor" href="#extensions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extensions</h3>
+
+<ul>
+  <li>Dracula (theme)</li>
+  <li>Python Specific
+    <ul>
+      <li>Python (Microsoft official)</li>
+      <li>Python Docstring Generator (Nils Werner)</li>
+      <li>Even Better TOML (tamasfe)</li>
+    </ul>
+  </li>
+  <li>General VS Code
+    <ul>
+      <li>indent-rainbow (oderwat): Visualize deeply indented blocks more easily</li>
+      <li>GitLens (Eric Amodio): Quickly check git history of files, branches, lines, etc.</li>
+    </ul>
+  </li>
+  <li>Various File Types
+    <ul>
+      <li>Markdown All in One (Yu Zhang)</li>
+      <li>Markdown navigation (AlanWalk)</li>
+      <li>markdownlint (David Anson)</li>
+      <li>Paste Image (mushan)</li>
+      <li>Markdown Preview Github Styling (Matt Bierner)</li>
+      <li>Markdown Emoji (Matt Bierner)</li>
+      <li>Docker (Microsoft)</li>
+      <li>YAML (Red Hat)</li>
+      <li>XML (Red Hat)</li>
+      <li>SQL Formatter (adpyke)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="settings">
+<a class="anchor" href="#settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Settings</h3>
+
+<p>I tend to put these in the VS Code settings (<code class="language-plaintext highlighter-rouge">cmd + shift + p</code> then type “settings JSON” for one way to get there).</p>
+
+<p>A lot of these are Python experience and specific to using <code class="language-plaintext highlighter-rouge">flake8</code>, <code class="language-plaintext highlighter-rouge">black</code>, and <code class="language-plaintext highlighter-rouge">isort</code>.
+These are the first several up to and including the “autoDocstring” entry.</p>
+
+<p>That said, there’s some that are useful for general editing, searching large code bases, and working with the integrated terminal.
+Shoutout to <a href="https://gist.github.com/digitarald/f19acbe2bfdefa4d282b3196bde3fff7">Harald Kirschner’s tips</a> (and <a href="https://www.youtube.com/watch?v=fyg9Uw3CLUU">presentation</a>).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"python.condaPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~/miniconda3/bin/conda"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.defaultInterpreterPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~/miniconda3/bin/python"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.formatting.provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"black"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.flake8Enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.linting.enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.testing.pytestEnabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.sortImports.path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"isort"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"python.sortImports.args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"--profile black"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"python.terminal.executeInFileDir"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"jupyter.askForKernelRestart"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"terminal.integrated.inheritEnv"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"autoDocstring.startOnNewLine"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"workbench.colorTheme"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dracula Soft"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"telemetry.telemetryLevel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"security.workspace.trust.untrustedFiles"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"files.autoSave"</span><span class="p">:</span><span class="w"> </span><span class="s2">"onFocusChange"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"terminal.integrated.allowChords"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"search.mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reuseEditor"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"search.searchEditor.doubleClickBehaviour"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openLocationToSide"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"files.defaultLanguage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${activeEditorLanguage}"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"workbench.editor.pinnedTabSizing"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shrink"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"editor.minimap.enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"diffEditor.ignoreTrimWhitespace"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="keybindings">
+<a class="anchor" href="#keybindings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Keybindings</h3>
+
+<p>Some things are worth changing for productivity and matching other tools.</p>
+
+<ul>
+  <li>Jump to beginning of text in the line: <code class="language-plaintext highlighter-rouge">ctrl + a</code>
+</li>
+  <li>Jump to top / bottom of file: <code class="language-plaintext highlighter-rouge">shift + cmd + ,</code> and <code class="language-plaintext highlighter-rouge">shift + cmd + /</code>
+    <ul>
+      <li>From Emacs muscle memory trying to get something similar</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ctrl+a"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cursorHome"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shift+cmd+,"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cursorTop"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"when"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputFocus"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shift+cmd+/"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cursorBottom"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"when"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputFocus"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shift+cmd+,"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-editor.action.inPlaceReplace.up"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"when"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editorTextFocus &amp;&amp; !editorReadonly"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="docker">
+<a class="anchor" href="#docker" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker</h2>
+
+<p>For running applications and mocking linux filesystems.</p>
+
+<p>Docker recommends installing Rosetta 2 when running <a href="https://docs.docker.com/desktop/mac/apple-silicon/">on Apple Silicon</a>.
+This will install it to translate from Intel to M1:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>softwareupdate <span class="nt">--install-rosetta</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Download the <code class="language-plaintext highlighter-rouge">.dmg</code>
+</li>
+  <li>Open and <code class="language-plaintext highlighter-rouge">.dmg</code> then drag the Docker Application into Applications</li>
+  <li>Search or open Docker from spotlight</li>
+  <li>Accept terms and conditions</li>
+  <li>Try to run the hello world application</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-rm</span> hello-world
+</code></pre></div></div>
+
+<h2 id="github">
+<a class="anchor" href="#github" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github</h2>
+
+<p>I use SSH keys to connect to github / gitlab / etc. for convenience and making the connection work out of the box from tools like VS Code.</p>
+
+<h3 id="set-default-git-user">
+<a class="anchor" href="#set-default-git-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set Default Git User</h3>
+
+<p>Set your preferences so tools like VS Code will use these on your commits by default.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git config <span class="nt">--global</span> user.name <span class="s2">"Your Name Here"</span> 
+git config <span class="nt">--global</span> user.email <span class="s2">"your_email@your_domain.com"</span>
+</code></pre></div></div>
+
+<h3 id="create-ssh-key">
+<a class="anchor" href="#create-ssh-key" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create SSH Key</h3>
+
+<p>It’s best to create new keys for new machines as opposed to copying an old key from one machine to another.
+Use a password if other people have access to your machine, otherwise feel free to leave blank.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> ed25519 <span class="nt">-f</span> ~/.ssh/github_key
+</code></pre></div></div>
+
+<h3 id="add-github-to-ssh-config">
+<a class="anchor" href="#add-github-to-ssh-config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add Github to SSH Config</h3>
+
+<p>To make sure this key gets used when we try to authenticate to Github, we’ll add the following entry to <code class="language-plaintext highlighter-rouge">~/.ssh/config</code>:</p>
+
+<pre><code class="language-txt">Host github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_key
+</code></pre>
+
+<p>To do this with a terminal editor use one of the following:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano ~/.ssh/config
+vim ~/.ssh/config
+ed ~/.ssh/config
+</code></pre></div></div>
+
+<p>To do this with a GUI editor, you have to make sure the file exists first:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">touch</span> ~/.ssh/config
+open ~/.ssh/config
+</code></pre></div></div>
+
+<h3 id="add-public-key-to-github">
+<a class="anchor" href="#add-public-key-to-github" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add Public Key to Github</h3>
+
+<p>Copy your public key to the clipboard with the following:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pbcopy &lt; ~/.ssh/github_key.pub
+</code></pre></div></div>
+
+<p>Alternatively you can paste it out and copy by hand:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> ~/.ssh/github_key.pub
+</code></pre></div></div>
+
+<p><em>NOTE:</em> be sure you are copying your <code class="language-plaintext highlighter-rouge">.pub</code> Public key, and not the Private key</p>
+
+<ul>
+  <li>Navigate to your github Account -&gt; Settings -&gt; SSH and GPG keys (under “Access”, or <a href="https://github.com/settings/keys">this link</a>)</li>
+  <li>Select <code class="language-plaintext highlighter-rouge">New SSH Key</code>
+</li>
+</ul>
+
+<p><img src="/images/2022-02-19-11-29-30.png" alt="Github SSH and GPG keys page"></p>
+
+<ul>
+  <li>Enter a nickname for your machine</li>
+  <li>Paste the Public key into the main text area</li>
+</ul>
+
+<p><img src="/images/2022-02-19-11-32-12.png" alt="Github add SSH key page"></p>
+
+<h3 id="test-authentication">
+<a class="anchor" href="#test-authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test Authentication</h3>
+
+<p>This command should spit out a message like <code class="language-plaintext highlighter-rouge">Hi {username}! You've successfully authenticated</code> if successful.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nt">-T</span> git@github.com
+</code></pre></div></div>
+
+<h2 id="homebrew">
+<a class="anchor" href="#homebrew" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew</h2>
+
+<p>See <a href="https://brew.sh/">main site</a>: “Installs the stuff you need that Apple didn’t”</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Grab and install homebrew from latest GitHub release</span>
+/bin/bash <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="si">)</span><span class="s2">"</span>
+<span class="c"># Add to PATH</span>
+<span class="nb">echo</span> <span class="s1">'eval "$(/opt/homebrew/bin/brew shellenv)"'</span> <span class="o">&gt;&gt;</span> /Users/gar/.zprofile
+<span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>/opt/homebrew/bin/brew shellenv<span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h2 id="amethyst">
+<a class="anchor" href="#amethyst" aria-hidden="true"><span class="octicon octicon-link"></span></a>Amethyst</h2>
+
+<p>Window Tiling Manager for macOS 10.12+ by <a href="https://ianyh.com/amethyst/">ianyh</a>.
+For splitting windows left and right, full screen, quarters, etc.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install</span> <span class="nt">--cask</span> amethyst
+</code></pre></div></div>
+
+<p>Open application and grant Accessibility Privacy permissions in Security &amp; Privacy System Preferences</p>
+
+  </div><a class="u-url" href="/os/habits/2022/02/18/macos_setup.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
