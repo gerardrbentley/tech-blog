@@ -10,7 +10,9 @@ image: images/python_form_generator.png
 
 # Python Form Generator
 
-From raw JSON to Python Pydantic Model to Streamlit Input Form :exploding_head:
+[![Live on Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/gerardrbentley/python-form-generator/main/app.py)
+
+From raw JSON to Python Pydantic Model to Streamlit Input Form :zap:
 
 Bootstrapping more Streamlit apps from within a Streamlit app :recycle:
 
@@ -20,6 +22,9 @@ Generate well-typed and validated Python forms from basic JSON example.
 - [Datamodel Code Generator](https://github.com/koxudaxi/datamodel-code-generator/) for mapping to Pydantic model
 - [JSON to Pydantic](https://jsontopydantic.com/) for proof this can work
 - [Streamlit Pydantic](https://github.com/LukasMasuch/streamlit-pydantic) for bootstrapped app code
+
+
+![Demo Screencast](/images/generate_form.gif)
 
 ## Full Walkthrough
 
