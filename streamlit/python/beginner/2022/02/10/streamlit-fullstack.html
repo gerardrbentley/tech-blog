@@ -4,21 +4,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Full Stack Python App in One File | Gar’s Bar</title>
+<title>Streamlit Full Stack Part 1: Python Web App in One File | Gar’s Bar</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Full Stack Python App in One File" />
+<meta property="og:title" content="Streamlit Full Stack Part 1: Python Web App in One File" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Exploring Streamlit + SQLite for the littlest full stack app." />
-<meta property="og:description" content="Exploring Streamlit + SQLite for the littlest full stack app." />
+<meta name="description" content="Exploring Streamlit + SQLite for the littlest Full Stack app." />
+<meta property="og:description" content="Exploring Streamlit + SQLite for the littlest Full Stack app." />
 <link rel="canonical" href="https://tech.gerardbentley.com/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html" />
 <meta property="og:url" content="https://tech.gerardbentley.com/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html" />
 <meta property="og:site_name" content="Gar’s Bar" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-02-10T00:00:00-06:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Full Stack Python App in One File" />
+<meta property="twitter:title" content="Streamlit Full Stack Part 1: Python Web App in One File" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-02-10T00:00:00-06:00","datePublished":"2022-02-10T00:00:00-06:00","description":"Exploring Streamlit + SQLite for the littlest full stack app.","headline":"Full Stack Python App in One File","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html"},"url":"https://tech.gerardbentley.com/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-02-10T00:00:00-06:00","datePublished":"2022-02-10T00:00:00-06:00","description":"Exploring Streamlit + SQLite for the littlest Full Stack app.","headline":"Streamlit Full Stack Part 1: Python Web App in One File","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html"},"url":"https://tech.gerardbentley.com/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
@@ -76,14 +76,14 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Full Stack Python App in One File</h1><p class="page-description">Exploring Streamlit + SQLite for the littlest full stack app.
+    <h1 class="post-title p-name" itemprop="name headline">Streamlit Full Stack Part 1: Python Web App in One File</h1><p class="page-description">Exploring Streamlit + SQLite for the littlest Full Stack app.
 </p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-10T00:00:00-06:00" itemprop="datePublished">
         Feb 10, 2022
       </time>
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -106,7 +106,7 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#streamlit-full-stack-app">Streamlit Full Stack App</a>
+<li class="toc-entry toc-h1"><a href="#streamlit-fullstack-part-1-the-littlest-full-stack-app">Streamlit Fullstack Part 1: The Littlest Full Stack App</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#the-littlest-full-stack-app">The Littlest Full Stack App</a>
 <ul>
@@ -116,26 +116,34 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#gluing-it-all-together">Gluing It All Together</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
-</ul><h1 id="streamlit-full-stack-app">
-<a class="anchor" href="#streamlit-full-stack-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Streamlit Full Stack App</h1>
+</ul><h1 id="streamlit-fullstack-part-1-the-littlest-full-stack-app">
+<a class="anchor" href="#streamlit-fullstack-part-1-the-littlest-full-stack-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Streamlit Fullstack Part 1: The Littlest Full Stack App</h1>
 
 <p><a href="https://share.streamlit.io/gerardrbentley/streamlit-fullstack/app.py"><img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Open in Streamlit"></a></p>
 
-<p>Demo Repo on building a Full Stack CRUD App with Streamlit.</p>
+<p>A Frontend, Backend, and Data Store in one Python file!</p>
 
-<p>Create, Read, Update, and Delete from a feed of 140 character markdown notes</p>
+<p>Create, Read, Update, and Delete from a feed of 140 character markdown notes!</p>
+
+<p>ex:
+<img src="/images/2022-03-02-22-55-24.png" alt="view of app with system generated note"></p>
 
 <h2 id="the-littlest-full-stack-app">
 <a class="anchor" href="#the-littlest-full-stack-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Littlest Full Stack App</h2>
 
-<p>The idea for this was starting with built-in sqlite module and streamlit to build a full stack application in a single Python file:</p>
+<p>The idea for this was starting with built-in <a href="https://www.sqlite.org/index.html">sqlite</a> <a href="https://docs.python.org/3/library/sqlite3.html">module</a> and <a href="https://docs.streamlit.io/">streamlit</a> to build a full stack application in a single Python file:</p>
 
 <ul>
-  <li>Streamlit:
+  <li>Streamlit
     <ul>
       <li>Frontend</li>
+    </ul>
+  </li>
+  <li>Python w/ SQLite3
+    <ul>
       <li>Backend</li>
     </ul>
   </li>
@@ -146,9 +154,9 @@ window.onload = wrap_img;
   </li>
 </ul>
 
-<p>Obviously this takes some liberties with the definition of Full-Stack App, for my purposes I take it to mean “a web application with a frontend that receives data upon request to a backend and that data is persisted in some data store”</p>
+<p>Obviously this takes some liberties with the definition of “<a href="https://www.reddit.com/r/ProgrammerHumor/comments/dzgyf6/fullstack_developer_means/">Full Stack App</a>”, for my purposes I take it to mean “a <a href="https://en.wikipedia.org/wiki/Web_application">web application</a> with a <a href="https://en.wikipedia.org/wiki/Frontend_and_backend">frontend</a> that receives data from some a <a href="https://en.wikipedia.org/wiki/Frontend_and_backend">backend</a> and that data is persisted in some <a href="https://en.wikipedia.org/wiki/Data_store">data store</a>”</p>
 
-<p>For the first swing at this I also took the standard CRUD definition of Full-Stack:</p>
+<p>For the first swing at this I also went with classic <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD Operations</a> that drive requirements for so many Full-Stack applications:</p>
 
 <ul>
   <li>Create</li>
@@ -160,9 +168,12 @@ window.onload = wrap_img;
 <h3 id="data-store">
 <a class="anchor" href="#data-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Store</h3>
 
-<p>Using SQLite is straightforward if you understand how to set up and query other SQL flavors.</p>
+<p>Using SQLite is straightforward if you understand how to set up and query other SQL flavors.
+(For a more in depth guide on SQL databases, I’d recommend the <a href="https://sqlmodel.tiangolo.com/tutorial/create-db-and-table-with-db-browser/">SQLModel docs</a> and <a href="https://sqlmodel.tiangolo.com/databases/">Intro to Databases</a> for a more beginner friednly intro than reading SQLite documentation…)</p>
 
-<p>I say this because we don’t need to download or spin up any external database server, its a C library that will let us interact with a database with just two lines of python!</p>
+<p>I say it’s straightforward because we don’t need to download or run any external database server.
+SQLite is a C library that works within an application to store data to disk or memory without an external server.
+It will let us connect with a database using just two lines of python!</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>
 <span class="n">connection</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">':memory'</span><span class="p">)</span>
@@ -172,7 +183,7 @@ window.onload = wrap_img;
 
 <p>For the purposes of using it as a more persistant store, it can be configured to write to a local file (conventionally ending with <code class="language-plaintext highlighter-rouge">.db</code>).</p>
 
-<p>It also defaults to only being accessible by a single thread, so we’ll need to turn this off for multiple users</p>
+<p>It also defaults to only being accessible by a single thread, so we’ll need to turn this off for multiple users hitting the application in the same thread.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">connection</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'notes.db'</span><span class="p">,</span> <span class="n">check_same_thread</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </code></pre></div></div>
@@ -180,11 +191,13 @@ window.onload = wrap_img;
 <h3 id="backend">
 <a class="anchor" href="#backend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Backend</h3>
 
-<p>This is all in one file, but the idea of a “Service” that provides access to the data store and returns rows from the data store can be captured in a class as a namespace:</p>
+<p>This is all in one file, but the idea of a “<a href="https://en.wikipedia.org/wiki/Service_(systems_architecture)">Service</a>” that provides reading and writing to the data store is useful to keep track of our goals.
+This can be captured in a class as a namespace, using staticmethods to indicate they don’t need an instance:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">NoteService</span><span class="p">:</span>
     <span class="s">"""Namespace for Database Related Note Operations"""</span>
 
+    <span class="o">@</span><span class="nb">staticmethod</span>        
     <span class="k">def</span> <span class="nf">list_all_notes</span><span class="p">(</span>
         <span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">Connection</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">sqlite3</span><span class="p">.</span><span class="n">Row</span><span class="p">]:</span>
@@ -193,29 +206,35 @@ window.onload = wrap_img;
         FROM notes ORDER BY rowid DESC;"""</span>
         <span class="n">note_rows</span> <span class="o">=</span> <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">read_notes_query</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">note_rows</span>
-
+    <span class="o">@</span><span class="nb">staticmethod</span>    
     <span class="k">def</span> <span class="nf">create_note</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">Connection</span><span class="p">,</span> <span class="n">note</span><span class="p">:</span> <span class="n">BaseNote</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
         <span class="s">"""Create a Note in the database"""</span>
         <span class="n">create_note_query</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"""INSERT into notes(created_timestamp, updated_timestamp, username, body)
     VALUES(:created_timestamp, :updated_timestamp, :username, :body);"""</span>
         <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">create_note_query</span><span class="p">,</span> <span class="n">asdict</span><span class="p">(</span><span class="n">note</span><span class="p">))</span>
-
+    <span class="o">@</span><span class="nb">staticmethod</span>
     <span class="k">def</span> <span class="nf">update_note</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">Connection</span><span class="p">,</span> <span class="n">note</span><span class="p">:</span> <span class="n">Note</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
         <span class="s">"""Replace a Note in the database"""</span>
         <span class="n">update_note_query</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"""UPDATE notes SET updated_timestamp=:updated_timestamp, username=:username, body=:body WHERE rowid=:rowid;"""</span>
         <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">update_note_query</span><span class="p">,</span> <span class="n">asdict</span><span class="p">(</span><span class="n">note</span><span class="p">))</span>
-
+    <span class="o">@</span><span class="nb">staticmethod</span>
     <span class="k">def</span> <span class="nf">delete_note</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">Connection</span><span class="p">,</span> <span class="n">note</span><span class="p">:</span> <span class="n">Note</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
         <span class="s">"""Delete a Note in the database"""</span>
         <span class="n">delete_note_query</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"""DELETE from notes WHERE rowid = :rowid;"""</span>
         <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">delete_note_query</span><span class="p">,</span> <span class="p">{</span><span class="s">"rowid"</span><span class="p">:</span> <span class="n">note</span><span class="p">.</span><span class="n">rowid</span><span class="p">})</span>
 </code></pre></div></div>
 
+<p><em>NOTE:</em> You could definitely initialize the class with a connection and not pass it to functions.
+Or in another module.
+<a href="https://en.wikipedia.org/wiki/There%27s_more_than_one_way_to_do_it">Or both</a>!</p>
+
 <h3 id="frontend">
 <a class="anchor" href="#frontend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frontend</h3>
 
+<p>Streamlit provides all the frontend <a href="https://docs.streamlit.io/library/api-reference/widgets">components</a> we need, supported underneath by <a href="https://reactjs.org/">React</a> components such as those from <a href="https://baseweb.design/">Base Web / UI</a>.</p>
+
 <p>I chose to use a Selectbox in the Sidebar to act as page navigation.
-This organizes things similarly to other Streamlit multi page examples.</p>
+This organizes things similarly to other Streamlit multi page examples (Such as this awesome <a href="https://share.streamlit.io/arup-group/social-data/run.py?page=Data+Explorer">US Data Explorer</a> from arup).</p>
 
 <p>The main entrypoint looks like this:</p>
 
@@ -268,18 +287,18 @@ This organizes things similarly to other Streamlit multi page examples.</p>
         <span class="n">render_note</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>For more on the forms for Creating, Updating and Deleting, check out the source code on github.</p>
+<p>For more on the forms for Creating, Updating and Deleting, check out the <a href="https://github.com/gerardrbentley/streamlit-fullstack/blob/7443b0d4d2e59e76ceeefb169520a987a720ee6c/app.py#L174">source code</a> on github.</p>
 
 <h3 id="gluing-it-all-together">
 <a class="anchor" href="#gluing-it-all-together" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gluing It All Together</h3>
 
 <ul>
   <li>SQLite can run with the Python process, so we’re good to deploy it wherever the Streamlit app runs</li>
-  <li>Frontend and Backend are in one server, so there’s no JSON or RPC data going between App services</li>
+  <li>Frontend and Backend are in one server, so there’s no <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> or <a href="https://en.wikipedia.org/wiki/WebSocket">Websocket</a> communication going between App services</li>
 </ul>
 
 <p>Python <code class="language-plaintext highlighter-rouge">dataclasses.dataclass</code> provides a nice way of modeling simple entities like this Note example.
-It lacks all of the features of <code class="language-plaintext highlighter-rouge">pydantic</code> and <code class="language-plaintext highlighter-rouge">attrs</code>, but it does have a free <code class="language-plaintext highlighter-rouge">__init__</code> with kwargs and the <code class="language-plaintext highlighter-rouge">dataclasses.asdict</code> method.</p>
+It lacks all of the features of <a href="https://pydantic-docs.helpmanual.io/usage/models/"><code class="language-plaintext highlighter-rouge">pydantic</code></a> and <a href="https://www.attrs.org/en/stable/why.html"><code class="language-plaintext highlighter-rouge">attrs</code></a>, but it does give us a free <code class="language-plaintext highlighter-rouge">__init__</code> with typed kwargs and the <code class="language-plaintext highlighter-rouge">dataclasses.asdict</code> method.</p>
 
 <p>After the rows are read from the database, the data is passed into this <code class="language-plaintext highlighter-rouge">dataclass</code> Note model.
 The model provides some level of validation on the data types and a Python object with known attributes for type-hinting and checking.</p>
@@ -300,6 +319,21 @@ The model provides some level of validation on the data types and a Python objec
 
     <span class="n">rowid</span><span class="p">:</span> <span class="nb">int</span>
 </code></pre></div></div>
+
+<h2 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+
+<p>That’s the basic app!</p>
+
+<p>It’s not perfect, in fact there’s no error handling or testing or linting of any sort.</p>
+
+<p>Also building things in one file is generally unsustainable, but I wanted to push the limits on this.
+One of the great python web frameworks, <a href="https://bottlepy.org/docs/dev/">bottle</a>, is a single (~4000 line) <a href="https://github.com/bottlepy/bottle/blob/master/bottle.py">file</a>!</p>
+
+<p>But those sorts of things can be addressed after getting something working.
+In the next post we’ll replace SQLite with Postgres as the Data Store layer.
+When doing that, it’s my preference to start using Docker, specifically the Docker-Compose tool.
+It makes sure things are easy to setup, run, then destroy without worrying about installing things to my user / filesystem directly.</p>
 
   </div><a class="u-url" href="/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html" hidden></a>
 </article>
