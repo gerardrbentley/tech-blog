@@ -50,7 +50,7 @@ It will let us connect with a database using just two lines of python!
 
 ```python
 import sqlite3
-connection = sqlite3.connect(':memory')
+connection = sqlite3.connect(':memory:')
 ```
 
 This gets us a `Connection` object for interacting with an in-memory SQL database!
