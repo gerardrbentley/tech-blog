@@ -19,10 +19,10 @@ Bootstrapping more Streamlit apps from within a Streamlit app :recycle:
 Generate well-typed and validated Python forms from basic JSON example.
 
 *DEPENDENCIES:*
+
 - [Datamodel Code Generator](https://github.com/koxudaxi/datamodel-code-generator/) for mapping to Pydantic model
 - [JSON to Pydantic](https://jsontopydantic.com/) for proof this can work
 - [Streamlit Pydantic](https://github.com/LukasMasuch/streamlit-pydantic) for bootstrapped app code
-
 
 ![Demo Screencast](/images/generate_form.gif)
 
