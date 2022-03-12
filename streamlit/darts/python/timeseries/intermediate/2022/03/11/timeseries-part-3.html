@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Time Series Data Part 3: Custom Model Tuning | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Time Series Data Part 3: Custom Model Tuning" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hyperparameter? I hardly know her!" />
+<meta property="og:description" content="Hyperparameter? I hardly know her!" />
+<link rel="canonical" href="https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/11/timeseries-part-3.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/11/timeseries-part-3.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:image" content="https://tech.gerardbentley.com/images/2022-03-12-12-22-44.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-11T00:00:00-06:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://tech.gerardbentley.com/images/2022-03-12-12-22-44.png" />
+<meta property="twitter:title" content="Time Series Data Part 3: Custom Model Tuning" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-03-11T00:00:00-06:00","datePublished":"2022-03-11T00:00:00-06:00","description":"Hyperparameter? I hardly know her!","headline":"Time Series Data Part 3: Custom Model Tuning","image":"https://tech.gerardbentley.com/images/2022-03-12-12-22-44.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/11/timeseries-part-3.html"},"url":"https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/11/timeseries-part-3.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Time Series Data Part 3: Custom Model Tuning</h1><p class="page-description">Hyperparameter? I hardly know her!
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-03-11T00:00:00-06:00" itemprop="datePublished">
+        Mar 11, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#streamlit">streamlit</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#darts">darts</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#timeseries">timeseries</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#intermediate">intermediate</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#time-series-data-part-3-custom-model-tuning">Time Series Data Part 3: Custom Model Tuning</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#how-to-train-your-model">How to Train Your Model</a></li>
+<li class="toc-entry toc-h2"><a href="#model-selection">Model Selection</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#tabular-models-in-time-series">Tabular Models in Time Series</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#dataset-selection-and-cleaning">Dataset Selection and Cleaning</a></li>
+<li class="toc-entry toc-h2"><a href="#hyperparameter-tuning">Hyperparameter Tuning</a></li>
+<li class="toc-entry toc-h2"><a href="#model-data-and-hyperparameter-selection-with-darts-and-streamlit">Model, Data, and Hyperparameter selection with Darts and Streamlit</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#explore-a-time-series">Explore A Time Series!</a></li>
+<li class="toc-entry toc-h3"><a href="#explorable-models">Explorable Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h1 id="time-series-data-part-3-custom-model-tuning">
+<a class="anchor" href="#time-series-data-part-3-custom-model-tuning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Time Series Data Part 3: Custom Model Tuning</h1>
+
+<p>tl;dr:</p>
+
+<p><a href="https://share.streamlit.io/gerardrbentley/darts-playground/main">Time Series Model Tuning App</a></p>
+
+<p><a href="https://github.com/gerardrbentley/darts-playground/blob/main/streamlit_app.py">Github Repo</a></p>
+
+<h2 id="how-to-train-your-model">
+<a class="anchor" href="#how-to-train-your-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Train Your Model</h2>
+
+<p>In Machine Learning our goal is to predict things based on some input data and usually a whole lot of training data.
+The accuracy of the model’s predictions are determined by a variety of factors:</p>
+
+<ul>
+  <li>Architecture</li>
+  <li>Training Data</li>
+  <li>Hyperparameters</li>
+</ul>
+
+<p>Each of these affects your training results and model outputs in different ways.
+Testing  different Architectures, Datasets, and Hyperparameters is paramount to getting the best results possible.</p>
+
+<p>People call each phase different things but you’ll often hear terms such as:</p>
+
+<ul>
+  <li>Model Selection</li>
+  <li>Data Cleaning / Augmentation</li>
+  <li>Hyperparameter Tuning / Grid Search</li>
+</ul>
+
+<p>In this post we’ll go over each of these with a primary focus on Hyperparameter Tuning.</p>
+
+<h2 id="model-selection">
+<a class="anchor" href="#model-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Selection</h2>
+
+<p>First up, there are many Machine Learning model “architectures” in the world.
+Some are basically as simple as an <code class="language-plaintext highlighter-rouge">if</code> statement (perceptrons).
+Some require more computing power than any normal user could afford.</p>
+
+<p>The architecture will determine the math the model computes in making a prediction out of an input.
+The linear combinations from input to output are defined in this way by the model architecture.</p>
+
+<p>Time Series Forecast models (those that predict future observations of a Time Series) have several restrictions for different types of training.
+The labels below are not mutually exclusive, but they do determine whether a given model can be trained on a given set of data.</p>
+
+<ul>
+  <li>Univariate Capable Models
+    <ul>
+      <li>Can train and predict on a Univariate (single value column) time series</li>
+      <li>Ex. Temperature</li>
+    </ul>
+  </li>
+  <li>Multivariate
+    <ul>
+      <li>Can train and predict on a Multivariate (multiple value columns) time series</li>
+      <li>Ex. Temperature and Humidity</li>
+    </ul>
+  </li>
+  <li>Probabilistic
+    <ul>
+      <li>Produces an output based on some random element. Non-deterministic predictions.</li>
+      <li>All neural network based methods have Probabilistic output</li>
+    </ul>
+  </li>
+  <li>Multiple-series training
+    <ul>
+      <li>Can train and predict on multiple (potentially unaligned) time series’</li>
+      <li>Ex. Train on many different stock IPOs</li>
+    </ul>
+  </li>
+  <li>Past-observed covariates support
+    <ul>
+      <li>Can train and predict utilizing an additional time series that provides known past data</li>
+      <li>Ex. Humidity when you’re only trying to predict Temperature</li>
+    </ul>
+  </li>
+  <li>Future-known covariates support
+    <ul>
+      <li>Can train and predict utilizing an additional time series that provides known future data</li>
+      <li>Ex. Day of the Week, Month of the Year, other forecasts</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="tabular-models-in-time-series">
+<a class="anchor" href="#tabular-models-in-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tabular Models in Time Series</h3>
+
+<p>Research and industry have found time and again that tabular regression based models such as LightGBM, Random Forests, and XGBoost perform just as well if not better than models specifically architected for Time Series data.</p>
+
+<h2 id="dataset-selection-and-cleaning">
+<a class="anchor" href="#dataset-selection-and-cleaning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataset Selection and Cleaning</h2>
+
+<p>When diving into a Machine Learning project the training dataset needs to mimic the real world data that will be used as input.
+Because of this, you’ll likely choose your starting dataset before settling on a model.</p>
+
+<p>That’s ok though, because there is more to a Dataset than meets the eye.</p>
+
+<p>Some common tasks that go along with handling Time Series datasets:</p>
+
+<ul>
+  <li>Removing known outliers and other bad data points</li>
+  <li>Merging Multiple Time Series into a Multivariate Time Series</li>
+  <li>Adding Future or Past Covariates</li>
+  <li>Splitting into Train, Validation, Test Data
+    <ul>
+      <li>In Time Series this is often split at a certain date into Train and Validation</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="hyperparameter-tuning">
+<a class="anchor" href="#hyperparameter-tuning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hyperparameter Tuning</h2>
+
+<p>Model / Training Hyperparameters are specific to each model and are decided before the training happens.
+In Time Series models they include things such as:</p>
+
+<ul>
+  <li>Seasonality Period</li>
+  <li>Additive vs Mutliplicative Seasonality</li>
+  <li>Number of differentiations</li>
+  <li>Size of moving windows (avg, max, min, etc.)</li>
+</ul>
+
+<p>Each unique combination of Hyperparameters that a particular model can have will yield different results.</p>
+
+<p>For this reason it’s important to try different values for each.
+It also implies we can use certain default values as a “baseline” for each model.</p>
+
+<p>Comparing results from different every possible combination of Hyperparameters to the baseline results lets you pick the best performance that model could have had on the dataset.
+This implies improving performance means changing to a different model architecture or changing the dataset, which were the topics above!</p>
+
+<p>Usually choosing <strong>all</strong> of the combinations is not feasible.
+It takes <strong>a lot</strong> of computing power in some circumstances!</p>
+
+<p>Nevertheless, the process of picking a range of values to try for different Hyperparameters is commonly called “Grid Searching.”
+The range of values depends on the model, how much time / computing power you have, and what you know about the model behaviour on similar data.</p>
+
+<p>For example, for data that appears to have a yearly seasonal trend, it would be a waste of resources to include period values very far from one year in the grid search.
+The results of a model trained with those Hyperparameters far away from the real trend are <strong>very</strong> likely to yield bad results.</p>
+
+<p>(<em>note:</em> using those model results as a baseline or to understand the model better is totally fine if you have the time and computing resources!)</p>
+
+<h2 id="model-data-and-hyperparameter-selection-with-darts-and-streamlit">
+<a class="anchor" href="#model-data-and-hyperparameter-selection-with-darts-and-streamlit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model, Data, and Hyperparameter selection with Darts and Streamlit</h2>
+
+<p><a href="https://share.streamlit.io/gerardrbentley/darts-playground/main">Live on Streamlit cloud</a></p>
+
+<p><a href="https://github.com/gerardrbentley/darts-playground/blob/main/streamlit_app.py">Github Repo</a></p>
+
+<p>A playground web app for the <a href="https://unit8co.github.io/darts/">Darts</a> API with <a href="https://streamlit.io">Streamlit</a>!</p>
+
+<p>Featuring:</p>
+
+<ul>
+  <li>Example datasets</li>
+  <li>Upload your own dataset</li>
+  <li>Model training tuning</li>
+  <li>Model forecasting and plotting controls</li>
+  <li>Downloadable forecasts</li>
+</ul>
+
+<h3 id="explore-a-time-series">
+<a class="anchor" href="#explore-a-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explore A Time Series!</h3>
+
+<p>Use your own csv data that has a well formed time series and plot some forecasts!</p>
+
+<p>Or use one of the example Darts <a href="https://github.com/unit8co/darts/tree/master/datasets">datasets</a></p>
+
+<h3 id="explorable-models">
+<a class="anchor" href="#explorable-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explorable Models</h3>
+
+<ul class="task-list">
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>NaiveDrift</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>NaiveMean</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>NaiveSeasonal</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>ARIMA</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>VARIMA (Requires Multivariate dataset)</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>ExponentialSmoothing</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>LinearRegressionModel (Hand set Lag)</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>FFT</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Theta</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>FourTheta</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>KalmanForecaster</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>LightGBMModel</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>RandomForest (Hand set Lag)</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>RegressionModel</li>
+</ul>
+
+  </div><a class="u-url" href="/streamlit/darts/python/timeseries/intermediate/2022/03/11/timeseries-part-3.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
