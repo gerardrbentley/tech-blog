@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      13 min read
     
 </span></p>
 
@@ -296,6 +296,24 @@ A table creation routine with SQLite for this might look like:</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>('expenses',
+ 'table',
+ 'CREATE TABLE expenses(\n   purchased_date VARCHAR(10) NOT NULL,\n   purchased_by VARCHAR(120) NOT NULL,\n   price_in_cents INT NOT NULL)')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -335,6 +353,22 @@ Splitting the Model into a child class for the internal application usage and pa
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Expense(price_in_cents=100, purchased_date=datetime.date(2022, 3, 15), purchased_by='gar', rowid=1)</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -380,6 +414,20 @@ Splitting the Model into a child class for the internal application usage and pa
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Seeded 200 rows
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -500,6 +548,69 @@ Passing a <code>start_date</code>, <code>end_date</code>, and <code>selections</
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>price_in_cents</th>
+      <th>purchased_date</th>
+      <th>purchased_by</th>
+      <th>rowid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3764</td>
+      <td>2022-12-25</td>
+      <td>Bob</td>
+      <td>150</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>227</td>
+      <td>2022-12-23</td>
+      <td>Alice</td>
+      <td>83</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>232</td>
+      <td>2022-12-22</td>
+      <td>Bob</td>
+      <td>155</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -525,6 +636,65 @@ This means the rowid doesn't really matter to me as a unique identifier, so let'
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>purchased_date</th>
+      <th>purchased_by</th>
+      <th>price_in_cents</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2022-12-25</td>
+      <td>Bob</td>
+      <td>3764</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2022-12-23</td>
+      <td>Alice</td>
+      <td>227</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2022-12-22</td>
+      <td>Bob</td>
+      <td>232</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -557,6 +727,79 @@ This means the rowid doesn't really matter to me as a unique identifier, so let'
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">price_in_cents</th>
+    </tr>
+    <tr>
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0</td>
+      <td>0</td>
+      <td>6204</td>
+    </tr>
+    <tr>
+      <th>2020-01-15</th>
+      <td>3211</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -581,6 +824,71 @@ This means the rowid doesn't really matter to me as a unique identifier, so let'
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0</td>
+      <td>0</td>
+      <td>6204</td>
+    </tr>
+    <tr>
+      <th>2020-01-15</th>
+      <td>3211</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -609,6 +917,132 @@ I also added a feature where "All" is a valid selection in addition to all <code
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-20</th>
+      <td>6848</td>
+      <td>5151</td>
+      <td>0</td>
+      <td>11999</td>
+    </tr>
+    <tr>
+      <th>2020-05-16</th>
+      <td>9385</td>
+      <td>7111</td>
+      <td>0</td>
+      <td>16496</td>
+    </tr>
+    <tr>
+      <th>2020-12-10</th>
+      <td>2580</td>
+      <td>2748</td>
+      <td>0</td>
+      <td>5328</td>
+    </tr>
+    <tr>
+      <th>2021-05-25</th>
+      <td>3418</td>
+      <td>567</td>
+      <td>0</td>
+      <td>3985</td>
+    </tr>
+    <tr>
+      <th>2021-11-27</th>
+      <td>2440</td>
+      <td>5404</td>
+      <td>0</td>
+      <td>7844</td>
+    </tr>
+    <tr>
+      <th>2022-01-28</th>
+      <td>8268</td>
+      <td>8456</td>
+      <td>5336</td>
+      <td>22060</td>
+    </tr>
+    <tr>
+      <th>2022-04-07</th>
+      <td>7830</td>
+      <td>3720</td>
+      <td>0</td>
+      <td>11550</td>
+    </tr>
+    <tr>
+      <th>2022-04-19</th>
+      <td>3811</td>
+      <td>8734</td>
+      <td>0</td>
+      <td>12545</td>
+    </tr>
+    <tr>
+      <th>2022-06-12</th>
+      <td>8471</td>
+      <td>4853</td>
+      <td>0</td>
+      <td>13324</td>
+    </tr>
+    <tr>
+      <th>2022-08-10</th>
+      <td>6119</td>
+      <td>1408</td>
+      <td>0</td>
+      <td>7527</td>
+    </tr>
+    <tr>
+      <th>2022-11-18</th>
+      <td>3845</td>
+      <td>7347</td>
+      <td>0</td>
+      <td>11192</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -643,6 +1077,76 @@ Filling with 0 is fine by me since there were no purchases on those days</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>0</td>
+      <td>3481</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0</td>
+      <td>0</td>
+      <td>6204</td>
+      <td>6204</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -666,6 +1170,90 @@ Filling with 0 is fine by me since there were no purchases on those days</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>0</td>
+      <td>3481</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>6204</td>
+      <td>9685</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>6204</td>
+      <td>9685</td>
+    </tr>
+    <tr>
+      <th>2020-01-05</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>6204</td>
+      <td>9685</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>0</td>
+      <td>3481</td>
+      <td>6204</td>
+      <td>9685</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -700,6 +1288,83 @@ Filling with 0 is fine by me since there were no purchases on those days</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0.0</td>
+      <td>50.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0.0</td>
+      <td>17.971089</td>
+      <td>32.028911</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>0.0</td>
+      <td>17.971089</td>
+      <td>32.028911</td>
+    </tr>
+    <tr>
+      <th>2020-01-05</th>
+      <td>0.0</td>
+      <td>17.971089</td>
+      <td>32.028911</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>0.0</td>
+      <td>17.971089</td>
+      <td>32.028911</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -727,6 +1392,66 @@ Filling with 0 is fine by me since there were no purchases on those days</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>purchased_by</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Alice</td>
+      <td>3513.45</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>3135.24</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Chuck</td>
+      <td>3801.31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>All</td>
+      <td>10450.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -758,6 +1483,111 @@ Filling with 0 is fine by me since there were no purchases on those days</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>0.0</td>
+      <td>3481.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>9685.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>9685.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-05</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>9685.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>9685.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-07</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>9685.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-08</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>9685.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-09</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -783,6 +1613,272 @@ Here we grab the biggest purchase each person made over each 30 day window.</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>purchased_by</th>
+      <th>Alice</th>
+      <th>Bob</th>
+      <th>Chuck</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>purchased_date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>0.0</td>
+      <td>3481.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-04</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-05</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-07</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-08</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-09</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-10</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-11</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-12</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-13</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-14</th>
+      <td>0.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-15</th>
+      <td>3211.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-16</th>
+      <td>3211.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-17</th>
+      <td>3211.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-18</th>
+      <td>3211.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-19</th>
+      <td>3211.0</td>
+      <td>3481.0</td>
+      <td>6204.0</td>
+      <td>6204.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-20</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6204.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-21</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6204.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-22</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-23</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-24</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-25</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-26</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-27</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-28</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-29</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-30</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-31</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+    <tr>
+      <th>2020-02-01</th>
+      <td>6848.0</td>
+      <td>5151.0</td>
+      <td>6616.0</td>
+      <td>11999.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -819,6 +1915,114 @@ Here we grab the biggest purchase each person made over each 30 day window.</p>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>purchased_date</th>
+      <th>purchased_by</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-01-02</td>
+      <td>Alice</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-01-03</td>
+      <td>Alice</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-01-04</td>
+      <td>Alice</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-01-05</td>
+      <td>Alice</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-01-06</td>
+      <td>Alice</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4351</th>
+      <td>2022-12-21</td>
+      <td>All</td>
+      <td>10407.77</td>
+    </tr>
+    <tr>
+      <th>4352</th>
+      <td>2022-12-22</td>
+      <td>All</td>
+      <td>10410.09</td>
+    </tr>
+    <tr>
+      <th>4353</th>
+      <td>2022-12-23</td>
+      <td>All</td>
+      <td>10412.36</td>
+    </tr>
+    <tr>
+      <th>4354</th>
+      <td>2022-12-24</td>
+      <td>All</td>
+      <td>10412.36</td>
+    </tr>
+    <tr>
+      <th>4355</th>
+      <td>2022-12-25</td>
+      <td>All</td>
+      <td>10450.00</td>
+    </tr>
+  </tbody>
+</table>
+<p>4356 rows × 3 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -850,6 +2054,19 @@ Here we grab the biggest purchase each person made over each 30 day window.</p>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+
+</div>
+
 </div>
 </div>
 
