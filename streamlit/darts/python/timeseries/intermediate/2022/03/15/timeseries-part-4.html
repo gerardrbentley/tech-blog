@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Time Series Data Part 4: A Full Stack Use Case | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Time Series Data Part 4: A Full Stack Use Case" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Data Analysis meets Data Science meets Data Engineering meets Data Operations" />
+<meta property="og:description" content="Data Analysis meets Data Science meets Data Engineering meets Data Operations" />
+<link rel="canonical" href="https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/15/timeseries-part-4.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/15/timeseries-part-4.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:image" content="https://tech.gerardbentley.com/images/2022-03-15-14-20-49.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-15T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://tech.gerardbentley.com/images/2022-03-15-14-20-49.png" />
+<meta property="twitter:title" content="Time Series Data Part 4: A Full Stack Use Case" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-03-15T00:00:00-05:00","datePublished":"2022-03-15T00:00:00-05:00","description":"Data Analysis meets Data Science meets Data Engineering meets Data Operations","headline":"Time Series Data Part 4: A Full Stack Use Case","image":"https://tech.gerardbentley.com/images/2022-03-15-14-20-49.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/15/timeseries-part-4.html"},"url":"https://tech.gerardbentley.com/streamlit/darts/python/timeseries/intermediate/2022/03/15/timeseries-part-4.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Time Series Data Part 4: A Full Stack Use Case</h1><p class="page-description">Data Analysis meets Data Science meets Data Engineering meets Data Operations</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-03-15T00:00:00-05:00" itemprop="datePublished">
+        Mar 15, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      10 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#streamlit">streamlit</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#darts">darts</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#timeseries">timeseries</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#intermediate">intermediate</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gerardrbentley/tech-blog/tree/master/_notebooks/2022-03-15-timeseries-part-4.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gerardrbentley/tech-blog/master?filepath=_notebooks%2F2022-03-15-timeseries-part-4.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/gerardrbentley/tech-blog/blob/master/_notebooks/2022-03-15-timeseries-part-4.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fgerardrbentley%2Ftech-blog%2Fblob%2Fmaster%2F_notebooks%2F2022-03-15-timeseries-part-4.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Time-Series-Data-Part-4:-A-Full-Stack-Use-Case">Time Series Data Part 4: A Full Stack Use Case </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Roommate-Spending-Ledger-Visualization">Roommate Spending Ledger Visualization </a></li>
+<li class="toc-entry toc-h2"><a href="#Idea">Idea </a></li>
+<li class="toc-entry toc-h2"><a href="#DevOps">DevOps </a></li>
+<li class="toc-entry toc-h2"><a href="#Backend">Backend </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Python-Object-Model">Python Object Model </a></li>
+<li class="toc-entry toc-h3"><a href="#Seeding">Seeding </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Reshaping-the-Data">Reshaping the Data </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Enter-the-Pandas">Enter the Pandas </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Now-Make-it-Pretty">Now Make it Pretty </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-03-15-timeseries-part-4.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Time-Series-Data-Part-4:-A-Full-Stack-Use-Case">
+<a class="anchor" href="#Time-Series-Data-Part-4:-A-Full-Stack-Use-Case" aria-hidden="true"><span class="octicon octicon-link"></span></a>Time Series Data Part 4: A Full Stack Use Case<a class="anchor-link" href="#Time-Series-Data-Part-4:-A-Full-Stack-Use-Case"> </a>
+</h1>
+<h2 id="Roommate-Spending-Ledger-Visualization">
+<a class="anchor" href="#Roommate-Spending-Ledger-Visualization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roommate Spending Ledger Visualization<a class="anchor-link" href="#Roommate-Spending-Ledger-Visualization"> </a>
+</h2>
+<p><a href="https://share.streamlit.io/gerardrbentley/roommate-ledger/main/app.py"><img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Open in Streamlit"></a></p>
+<p>Using Pandas + Plotly + SQLite to show a full stack use case of Time Series Data.</p>
+<p>Analyze spending over time per person (could be adapted to categories / tags / etc).</p>
+<p>See: <a href="https://github.com/gerardrbentley/roommate-ledger">Github Repo</a></p>
+<h2 id="Idea">
+<a class="anchor" href="#Idea" aria-hidden="true"><span class="octicon octicon-link"></span></a>Idea<a class="anchor-link" href="#Idea"> </a>
+</h2>
+<p>One time series that any financially independent person should pay attention to is their spending over time.</p>
+<p>Tracking your spending gets complicated with roommates and budgets for different categories.
+It also complicates your understanding of your data with a glance, which is where charts and graphs can help.</p>
+<p>There are many personal budgeting and even group budgeting apps, but I wanted to make the simplest possible and stick to the Data and Visualizations as an MVP.</p>
+<p>One way to get this data is from a CSV export from a bank account or credit card company.
+In <a href="/streamlit/darts/python/timeseries/intermediate/2022/03/11/timeseries-part-3.html">Part 3</a> is an app that uses this method on general time series data.
+Upload a CSV with some column for time stamps and some column to forecast and tune your own prediction model!</p>
+<p>The main drawbacks to this paradigm:</p>
+<ul>
+<li>Can't share data between people / sessions</li>
+<li>Can't persist data</li>
+<li>Can't incrementally add data</li>
+<li>Can't update data</li>
+</ul>
+<p>Another way is the CRUD paradigm explored in my <a href="/streamlit/python/beginner/2022/02/10/streamlit-fullstack.html">Streamlit Full Stack Post</a>.
+With this method we'll be able to operate on individual data points and let our friends / roommates add to it!</p>
+<p>(Of course the CSV paradigm could be blended with this)</p>
+<p>Now for each aspect of the app, from Backend to Front</p>
+<h2 id="DevOps">
+<a class="anchor" href="#DevOps" aria-hidden="true"><span class="octicon octicon-link"></span></a>DevOps<a class="anchor-link" href="#DevOps"> </a>
+</h2>
+<p>There's not much real DataOps in this project since the data is self-contained.</p>
+<p>That said, there are some DevOps aspects that are important in the time series world:</p>
+<ul>
+<li>Deployment: having a webserver accessible to multiple users</li>
+<li>Integration: how to get updated code into the deployment(s)</li>
+</ul>
+<p>Leaning on Streamlit Cloud sharing checks both of these boxes with ease.</p>
+<p>By including a <code>requirements.txt</code> and specifying a python version for the image, we get a free CI/CD pipeline from any push to a github branch (more providers to come).
+It'll provide us with an Ubuntu-like container that installs all requirements and tries to perform <code>streamlit run streamlit_app.py</code>, yielding a live webserver accessible to the public for public repos!</p>
+<h2 id="Backend">
+<a class="anchor" href="#Backend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Backend<a class="anchor-link" href="#Backend"> </a>
+</h2>
+<p>The Data Engineering aspect involves a bit of data design and a bit of service writing.</p>
+<p>I decided the minimum data to track expenses are:</p>
+<ul>
+<li>
+<code>purchased_date</code><ul>
+<li>The day on which the purchase was made</li>
+</ul>
+</li>
+<li>
+<code>purchased_by</code><ul>
+<li>The name of the person who made the purchase</li>
+</ul>
+</li>
+<li>
+<code>price_in_cents</code><ul>
+<li>Price of the purchase. Tracked in cents to avoid <a href="https://www.lahey.com/float.htm">floating point perils</a>
+</li>
+</ul>
+</li>
+</ul>
+<p>Relying on SQLite, we'll have to represent the date as a string, but <code>pandas</code> will help us transform it to a date / datetime object.
+A table creation routine with SQLite for this might look like:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="k">def</span> <span class="nf">get_connection</span><span class="p">(</span><span class="n">connection_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">":memory:"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">:</span>
+    <span class="sd">"""Make a connection object to sqlite3 with key-value Rows as outputs</span>
+<span class="sd">    - https://stackoverflow.com/questions/48218065/programmingerror-sqlite-objects-created-in-a-thread-can-only-be-used-in-that-sa</span>
+<span class="sd">    """</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">row_factory</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Row</span>
+    <span class="k">return</span> <span class="n">connection</span>
+
+<span class="k">def</span> <span class="nf">execute_query</span><span class="p">(</span>
+    <span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="sd">"""Given sqlite3.Connection and a string query (and optionally necessary query args as a dict),</span>
+<span class="sd">    Attempt to execute query with cursor, commit transaction, and return fetched rows"""</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">results</span>
+
+<span class="k">def</span> <span class="nf">create_expenses_table</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Create Expenses Table in the database if it doesn't already exist"""</span>
+    <span class="n">init_expenses_query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""CREATE TABLE IF NOT EXISTS expenses(</span>
+<span class="s2">   purchased_date VARCHAR(10) NOT NULL,</span>
+<span class="s2">   purchased_by VARCHAR(120) NOT NULL,</span>
+<span class="s2">   price_in_cents INT NOT NULL);"""</span>
+    <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">init_expenses_query</span><span class="p">)</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">get_connection</span><span class="p">()</span>
+<span class="n">create_expenses_table</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="n">info_results</span> <span class="o">=</span> <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s2">"SELECT name, type, sql FROM sqlite_schema WHERE name = 'expenses'"</span><span class="p">)</span>
+<span class="n">info</span> <span class="o">=</span> <span class="n">info_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">info</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s1">'type'</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s1">'sql'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We also get a free autoincrementing <code>rowid</code> from SQLite, which will differentiate any purchases by the same person on the same day for the same amount!</p>
+<h3 id="Python-Object-Model">
+<a class="anchor" href="#Python-Object-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Object Model<a class="anchor-link" href="#Python-Object-Model"> </a>
+</h3>
+<p>That's all well and good for a DBA, but what about the Python glue?</p>
+<p>Using <code>pydantic</code> / <code>dataclasses</code> is my preferred way to make Python classes that represent database objects or API responses.
+Splitting the Model into a child class for the internal application usage and parent class for database syncing is one way to handle auto-created id's and optional vs. required arguments.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span> <span class="nc">BaseExpense</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">price_in_cents</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">purchased_date</span><span class="p">:</span> <span class="n">date</span>
+    <span class="n">purchased_by</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">Expense</span><span class="p">(</span><span class="n">BaseExpense</span><span class="p">):</span>
+    <span class="n">rowid</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="n">Expense</span><span class="p">(</span><span class="n">rowid</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">price_in_cents</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">purchased_date</span><span class="o">=</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="n">purchased_by</span><span class="o">=</span><span class="s1">'gar'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Seeding">
+<a class="anchor" href="#Seeding" aria-hidden="true"><span class="octicon octicon-link"></span></a>Seeding<a class="anchor-link" href="#Seeding"> </a>
+</h3>
+<p>To get some values for playing around with and demonstrating Create / Update, here's a snippet of seeding the database</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">seed_expenses_table</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""Insert sample Expense rows into the database"""</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+        <span class="n">seed_expense</span> <span class="o">=</span> <span class="n">Expense</span><span class="p">(</span>
+            <span class="n">rowid</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+            <span class="n">purchased_date</span><span class="o">=</span><span class="n">date</span><span class="p">(</span>
+                <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">2022</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">),</span>
+            <span class="n">purchased_by</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="s2">"Bob"</span><span class="p">,</span> <span class="s2">"Chuck"</span><span class="p">]),</span>
+            <span class="n">price_in_cents</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100_00</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">seed_expense_query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""REPLACE into expenses(rowid, purchased_date, purchased_by, price_in_cents)</span>
+<span class="s2">        VALUES(:rowid, :purchased_date, :purchased_by, :price_in_cents);"""</span>
+        <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">seed_expense_query</span><span class="p">,</span> <span class="n">seed_expense</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span>
+
+<span class="n">seed_expenses_table</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Seeded 200 rows'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>200 times we'll create and save an Expense object with a hardcoded id and some random values for date, purchaser, and price.
+(Note the randomized days max out at 28 to avoid headaches with february being short. There's probably a builtin to help with random days, maybe just timedelta with random amount is easier)</p>
+<p>Using <code>kwarg</code> placeholders of the form <code>:keyname</code> lets us pass the dictionary / JSON representation of our Python object instead of specifying each invidual field in the correct order.</p>
+<p>The rest of the CRUD operations follow a similar pattern.
+Reading is the only hacky function to allow filtering / querying at database level before pulling <strong>ALL</strong> records into memory.</p>
+<h2 id="Reshaping-the-Data">
+<a class="anchor" href="#Reshaping-the-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reshaping the Data<a class="anchor-link" href="#Reshaping-the-Data"> </a>
+</h2>
+<p>The Data Science aspect of this involves massaging the data into something useful to display.</p>
+<p>The data as it stands is not actually the well formed time series you might have thought.</p>
+<p>Sure the date stamps are all real, but what value do we read from them?
+The goal is to track spending (<code>price_in_cents</code> in the database).</p>
+<p>But what if we have multiple purchases on the same day?
+Then we might start treating all the purchases on a given day as stochastic samples and that is not our use case. (But that might fit your use case if you are trying to model behaviour based off of <strong>many</strong> people's purchases)</p>
+<h3 id="Enter-the-Pandas">
+<a class="anchor" href="#Enter-the-Pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enter the Pandas<a class="anchor-link" href="#Enter-the-Pandas"> </a>
+</h3>
+<p>Utilizing Pydantic to parse / validate our database data then dumping as a list of dictionaries for Pandas to handle gets us a dataframe with all the expenses we want to see.
+Passing a <code>start_date</code>, <code>end_date</code>, and <code>selections</code> will limit the data to certain time range and <code>purchased_by</code> users.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="k">class</span> <span class="nc">ExpenseService</span><span class="p">:</span>
+    <span class="sd">"""Namespace for Database Related Expense Operations"""</span>
+
+    <span class="k">def</span> <span class="nf">list_all_purchasers</span><span class="p">(</span><span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">select_purchasers</span> <span class="o">=</span> <span class="s2">"SELECT DISTINCT purchased_by FROM expenses"</span>
+        <span class="n">expense_rows</span> <span class="o">=</span> <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">select_purchasers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">"purchased_by"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">expense_rows</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">list_all_expenses</span><span class="p">(</span>
+        <span class="n">connection</span><span class="p">:</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Connection</span><span class="p">,</span>
+        <span class="n">start_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">end_date</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">selections</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">sqlite3</span><span class="o">.</span><span class="n">Row</span><span class="p">]:</span>
+        <span class="sd">"""Returns rows from all expenses. Ordered in reverse creation order"""</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">"SELECT rowid, purchased_date, purchased_by, price_in_cents FROM expenses"</span>
+        <span class="p">)</span>
+        <span class="n">where</span> <span class="o">=</span> <span class="s2">""</span>
+        <span class="n">do_and</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">selections</span><span class="p">)):</span>
+            <span class="n">where</span> <span class="o">=</span> <span class="s2">"WHERE"</span>
+        <span class="k">if</span> <span class="n">start_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">where</span> <span class="o">+=</span> <span class="s2">" purchased_date &gt;= :start_date"</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">"start_date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_date</span>
+            <span class="n">do_and</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">end_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">do_and</span><span class="p">:</span>
+                <span class="n">where</span> <span class="o">+=</span> <span class="s2">" and"</span>
+            <span class="n">where</span> <span class="o">+=</span> <span class="s2">" purchased_date &lt;= :end_date"</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">"end_date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">end_date</span>
+            <span class="n">do_and</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">selections</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">do_and</span><span class="p">:</span>
+                <span class="n">where</span> <span class="o">+=</span> <span class="s2">" and"</span>
+            <span class="n">selection_map</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">):</span> <span class="n">x</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selections</span><span class="p">)}</span>
+            <span class="n">where</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">" purchased_by IN (</span><span class="si">{</span><span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">':'</span> <span class="o">+</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">selection_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">)"</span>
+            <span class="p">)</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">selection_map</span><span class="p">)</span>
+
+        <span class="n">order_by</span> <span class="o">=</span> <span class="s2">"ORDER BY purchased_date DESC;"</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">select</span><span class="p">,</span> <span class="n">where</span><span class="p">,</span> <span class="n">order_by</span><span class="p">))</span>
+        <span class="n">expense_rows</span> <span class="o">=</span> <span class="n">execute_query</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">expense_rows</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">expense_rows</span> <span class="o">=</span> <span class="n">ExpenseService</span><span class="o">.</span><span class="n">list_all_expenses</span><span class="p">(</span>
+    <span class="n">connection</span><span class="p">,</span> <span class="n">date</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">date</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="s1">'Alice'</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">,</span> <span class="s1">'Chuck'</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">expenses</span> <span class="o">=</span> <span class="p">[</span><span class="n">Expense</span><span class="p">(</span><span class="o">**</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">expense_rows</span><span class="p">]</span>
+<span class="n">raw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">expenses</span><span class="p">])</span>
+<span class="n">raw_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For this analysis I mainly care about total purchase amount per day per person.
+This means the rowid doesn't really matter to me as a unique identifier, so let's drop it.</p>
+<p>(This indexing selection will also re-order your columns if you do or do not want that)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">raw_df</span><span class="p">[[</span><span class="s2">"purchased_date"</span><span class="p">,</span> <span class="s2">"purchased_by"</span><span class="p">,</span> <span class="s2">"price_in_cents"</span><span class="p">]]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To handle the summation of each person's purchase per day, pandas <code>pivot_table</code> provides us the grouping and sum in one function call.</p>
+<p>This will get us roughly columnar shaped data for each person</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pivot_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+    <span class="n">index</span><span class="o">=</span><span class="s2">"purchased_date"</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">"purchased_by"</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s2">"sum"</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">pivot_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looking more like a time series!</p>
+<p><code>pivot_table</code> had the minor side effect of adding a multi index, which can be popped off if not relevant</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pivot_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">pivot_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Side note:
+I also added a feature where "All" is a valid selection in addition to all <code>purchased_by</code> users.</p>
+<p>The "All" spending per day is the sum of each row!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pivot_df</span><span class="p">[</span><span class="s1">'All'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pivot_df</span><span class="p">[(</span><span class="n">pivot_df</span><span class="o">.</span><span class="n">Alice</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pivot_df</span><span class="o">.</span><span class="n">Bob</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To fill in date gaps (make the time series have a well defined period of one day), one way is to build your own range of dates and then reindex the time series dataframe with the full range of dates.</p>
+<p>Grabbing the min and max of the current index gets the start and end points for the range.
+Filling with 0 is fine by me since there were no purchases on those days</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">min_date</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">max_date</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">all_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">min_date</span><span class="p">,</span> <span class="n">max_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"D"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"purchased_date"</span><span class="p">)</span>
+<span class="n">pivot_df</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">all_dates</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">pivot_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To get the cumulative spend up to each point in time, pandas provides <code>cumsum()</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cumulative</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">cumulative</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And to analyze percentage contributed to the whole group's cumulative spending we can divide by the sum of each cumulative row.</p>
+<p>(We included the "All" summation already, so this case is actually slightly over-complicated)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">percentages</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cumulative</span><span class="p">[</span><span class="n">cumulative</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"All"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">)]</span>
+    <span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">cumulative</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">percentages</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Grabbing the totals of each spender might be a nice metric to display.</p>
+<p>This could also be grabbed from the end of the cumulative data</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">totals</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">totals</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"purchased_by"</span>
+<span class="n">totals</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"value"</span>
+<span class="n">totals</span> <span class="o">=</span> <span class="n">totals</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">totals</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas also provides a convenient <code>rolling()</code> function for applying tranformations on moving windows.</p>
+<p>In this case let's get the cumulative spending per 7 days per person.</p>
+<p>Notice that the value will stay the same on days when the person made <code>$0.00</code> of purchases, since <code>x + 0 = x</code>!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rolling_df</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">rolling_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We don't have to sum the rolling values though.
+Here we grab the biggest purchase each person made over each 30 day window.</p>
+<p>Notice that a given value will stick around for up to 30 days, but will get replaced if a bigger purchase occurs!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">maxes_df</span> <span class="o">=</span> <span class="n">pivot_df</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">maxes_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">31</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Now-Make-it-Pretty">
+<a class="anchor" href="#Now-Make-it-Pretty" aria-hidden="true"><span class="octicon octicon-link"></span></a>Now Make it Pretty<a class="anchor-link" href="#Now-Make-it-Pretty"> </a>
+</h2>
+<p>Since we did most of the work in pandas already to shape the data, the Data Analysis of it should be more straightforward</p>
+<p>We'll use a helper function to do one final transformation that applies to almost all our datasets</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">prep_df_for_display</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="s2">"purchased_date"</span><span class="p">)</span>
+
+<span class="n">prepped_cumulative</span> <span class="o">=</span> <span class="n">prep_df_for_display</span><span class="p">(</span><span class="n">cumulative</span><span class="p">)</span>
+<span class="n">prepped_cumulative</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Seems like it's undoing a lot of work we've already done, but this Long Format is generally easier for plotting software to work with.</p>
+<p>In this case we keep <code>purchased_date</code> as a column (not index), get a value column called <code>value</code>, and a column we can use for trend highlighting which is <code>purchased_by</code></p>
+<p>After that, plotly express provides the easiest (but not most performant) visualizations in my experience</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">prepped_cumulative</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">"purchased_date"</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">"value"</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"purchased_by"</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">"value"</span><span class="p">:</span> <span class="s2">"Cumulative Dollars Spent"</span><span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For more of the plotting and charting, check it out <a href="https://share.streamlit.io/gerardrbentley/roommate-ledger/main/app.py">live on streamlit!</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="gerardrbentley/tech-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/streamlit/darts/python/timeseries/intermediate/2022/03/15/timeseries-part-4.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
