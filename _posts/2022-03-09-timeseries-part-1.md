@@ -2,7 +2,7 @@
 title: "Time Series Data Part 1: What is a Time Series?"
 description: |
   Learning what is and is not a Time Series
-categories: ['python', 'Time Series', 'beginner']
+categories: ['python', 'timeseries', 'beginner']
 toc: true
 layout: post
 image: images/2022-03-10-15-55-37.png
