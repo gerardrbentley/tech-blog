@@ -492,7 +492,7 @@ Passing a <code>start_date</code>, <code>end_date</code>, and <code>selections</
             <span class="s2">"SELECT rowid, purchased_date, purchased_by, price_in_cents FROM expenses"</span>
         <span class="p">)</span>
         <span class="n">where</span> <span class="o">=</span> <span class="s2">""</span>
-        <span class="n">do_and</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">do_and</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">selections</span><span class="p">)):</span>
             <span class="n">where</span> <span class="o">=</span> <span class="s2">"WHERE"</span>
