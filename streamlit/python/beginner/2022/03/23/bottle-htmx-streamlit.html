@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Bottle + HTMX vs Streamlit | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Bottle + HTMX vs Streamlit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Accepting dependencies to get a whole lot of goodies." />
+<meta property="og:description" content="Accepting dependencies to get a whole lot of goodies." />
+<link rel="canonical" href="https://tech.gerardbentley.com/streamlit/python/beginner/2022/03/23/bottle-htmx-streamlit.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/streamlit/python/beginner/2022/03/23/bottle-htmx-streamlit.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-03-23T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Bottle + HTMX vs Streamlit" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-03-23T00:00:00-05:00","datePublished":"2022-03-23T00:00:00-05:00","description":"Accepting dependencies to get a whole lot of goodies.","headline":"Bottle + HTMX vs Streamlit","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/python/beginner/2022/03/23/bottle-htmx-streamlit.html"},"url":"https://tech.gerardbentley.com/streamlit/python/beginner/2022/03/23/bottle-htmx-streamlit.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Bottle + HTMX vs Streamlit</h1><p class="page-description">Accepting dependencies to get a whole lot of goodies.
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-03-23T00:00:00-05:00" itemprop="datePublished">
+        Mar 23, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#streamlit">streamlit</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#beginner">beginner</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#bottle--htmx-vs-streamlit">Bottle + HTMX vs Streamlit</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#python-full-stack-development">Python Full Stack Development</a></li>
+<li class="toc-entry toc-h2"><a href="#a-simpler-web-stack">A Simpler Web Stack</a></li>
+<li class="toc-entry toc-h2"><a href="#an-easier-web-stack">An Easier Web Stack</a></li>
+<li class="toc-entry toc-h2"><a href="#bottle--htmx">Bottle + HTMX</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#static-files">Static Files</a></li>
+<li class="toc-entry toc-h3"><a href="#get-routes-in-bottle--htmx">Get Routes in Bottle + HTMX</a></li>
+<li class="toc-entry toc-h3"><a href="#post-routes-in-bottle--htmx">Post Routes in Bottle + HTMX</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#doing-it-with-streamlit">Doing it with Streamlit</a></li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul><h1 id="bottle--htmx-vs-streamlit">
+<a class="anchor" href="#bottle--htmx-vs-streamlit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bottle + HTMX vs Streamlit</h1>
+
+<p><strong>NOTE:</strong> This isn’t a debate that real people have.</p>
+
+<p>So why compare them…?</p>
+
+<p>It’s a comparison of workflows for quickly building small, interactive web apps.</p>
+
+<p><code class="language-plaintext highlighter-rouge">streamlit</code> is the new hotness in Data Science and Machine Learning.
+It basically turns Python scripts into websites, pre-styled and pre-packaged with a good looking component library.
+But its install size is not small!</p>
+
+<p>The Python web framework <code class="language-plaintext highlighter-rouge">bottle</code> and the Javascript/HTML power tool <code class="language-plaintext highlighter-rouge">htmx</code> are each dependency free and each is contained in a single <code class="language-plaintext highlighter-rouge">.py</code> / <code class="language-plaintext highlighter-rouge">.js</code> file (js can be loaded from cdn).</p>
+
+<p><code class="language-plaintext highlighter-rouge">bottle</code> is <a href="https://github.com/bottlepy/bottle/blob/master/bottle.py">~4500 lines of Python</a> and <code class="language-plaintext highlighter-rouge">htmx</code> is <a href="https://github.com/bigskysoftware/htmx/blob/master/src/htmx.js">~3000 lines of Javascript (unminified)</a>.
+Combining the two allows for writing interactive apps with just Python and HTML.</p>
+
+<p>But first some context for people who haven’t heard of <code class="language-plaintext highlighter-rouge">bottle</code> and <code class="language-plaintext highlighter-rouge">htmx</code>.</p>
+
+<h2 id="python-full-stack-development">
+<a class="anchor" href="#python-full-stack-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Full Stack Development</h2>
+
+<p>Before I found <code class="language-plaintext highlighter-rouge">streamlit</code> I played with different Python web frameworks (<code class="language-plaintext highlighter-rouge">flask</code>, <code class="language-plaintext highlighter-rouge">klein</code>, <code class="language-plaintext highlighter-rouge">twisted</code>, <code class="language-plaintext highlighter-rouge">django</code>, etc.).
+They all try to make spinning up a web server <em>easier</em> (some with a heavier hand than others <em>cough</em> django <em>cough</em>).</p>
+
+<p>They all have some templating mechanism (ex. <code class="language-plaintext highlighter-rouge">jinja2</code>) for sending html to the frontend.
+But many modern “full-stack” tutorials won’t bother with this feature.</p>
+
+<p>The flavor of the moment I’ve seen is <strong>JSON Rest Api</strong> + <strong>React/Vue/Angular Frontend</strong>.
+So as an aspiring developer I’ve hacked away at Vue projects (like a <a href="https://repeter.gerardbentley.com/">timer app</a> for daily tasks) to figure out web-workers and browser storage work.
+And I’ve gone through courses such as <a href="https://testdriven.io/courses/real-time-app-with-django-channels-and-angular/">Django Channels + Angular + Docker</a> to learn wtf a websocket is.
+I even did some minor work on a <code class="language-plaintext highlighter-rouge">react</code> + <code class="language-plaintext highlighter-rouge">express</code> admin app for a startup.</p>
+
+<p>But I have never been able to get invested in the javascript ecosystem &amp; accept the size of <code class="language-plaintext highlighter-rouge">node_modules</code>.
+(Saying this fully aware of Python’s packaging woes…)</p>
+
+<h2 id="a-simpler-web-stack">
+<a class="anchor" href="#a-simpler-web-stack" aria-hidden="true"><span class="octicon octicon-link"></span></a>A Simpler Web Stack</h2>
+
+<p>If you’ve run code like <code class="language-plaintext highlighter-rouge">django-admin startproject mysite</code> then fired up a webserver without understanding the magic of the background that is totally fine.</p>
+
+<p>To get a grip on <em>why</em> <code class="language-plaintext highlighter-rouge">django</code> does what it does, you can spend some time with <code class="language-plaintext highlighter-rouge">bottle</code>.</p>
+
+<p>A simple bottle app that returns <code class="language-plaintext highlighter-rouge">hello world</code> on a GET request might look like the following:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">run</span>
+
+<span class="o">@</span><span class="n">route</span><span class="p">(</span><span class="s">'/'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">'hello world'</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">'localhost'</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Running this code in a normal Python script (i.e. <code class="language-plaintext highlighter-rouge">python my_bottle_app.py</code>) will run a server on your local machine.
+Going to a browser with url <a href="http://localhost:8080/">http://localhost:8080/</a> should show you ‘hello world’.
+You can also use a program like <code class="language-plaintext highlighter-rouge">curl</code> (or Python <code class="language-plaintext highlighter-rouge">requests</code>) to fetch the data as an API request.</p>
+
+<p><strong>HOLD UP</strong></p>
+
+<p>WTF is a <code class="language-plaintext highlighter-rouge">route</code> or a <code class="language-plaintext highlighter-rouge">localhost</code> or a <code class="language-plaintext highlighter-rouge">port</code>?</p>
+
+<h2 id="an-easier-web-stack">
+<a class="anchor" href="#an-easier-web-stack" aria-hidden="true"><span class="octicon octicon-link"></span></a>An Easier Web Stack</h2>
+
+<p>Let’s compare this to a <code class="language-plaintext highlighter-rouge">streamlit</code> hello world.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+<span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">'hello world'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>To run this we need to use <code class="language-plaintext highlighter-rouge">streamlit run my_streamlit_app.py</code> (you may need <code class="language-plaintext highlighter-rouge">python -m streamlit run ...</code> to specify the current Python interpreter)</p>
+
+<p>Then we should automagically get a browser window open with our ‘hello world’ displayed, styled, and part of a larger app with a hamburger menu that can change the theme and do some other things.</p>
+
+<p>One major drawback is we don’t get access to our code via API (see this <a href="https://github.com/streamlit/streamlit/issues/439#issuecomment-1075970927">github issue</a> for my hack on adding API routes to your Streamlit app’s <code class="language-plaintext highlighter-rouge">tornado</code> server).</p>
+
+<h2 id="bottle--htmx">
+<a class="anchor" href="#bottle--htmx" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bottle + HTMX</h2>
+
+<p>To actually get cooking with gas, let’s demo an interactive <code class="language-plaintext highlighter-rouge">bottle</code> webpage.
+If you don’t want to see raw HTML, avert your attention now.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">Bottle</span><span class="p">,</span> <span class="n">static_file</span><span class="p">,</span> <span class="n">request</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Bottle</span><span class="p">()</span>
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">static_file</span><span class="p">(</span><span class="s">"index.html"</span><span class="p">,</span> <span class="s">'.'</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/htmx.js"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">htmx</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">static_file</span><span class="p">(</span><span class="s">"htmx.js"</span><span class="p">,</span> <span class="s">'.'</span><span class="p">)</span>
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/fun"</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">"GET"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fun_template</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">"""&lt;textarea placeholder="Type some nonsense then tab / click away!" 
+        hx-post="/fun" hx-target="#fun-outputs" hx-swap="innerHTML" 
+        name="fun-input" id="fun-input" cols="60" rows="20"&gt;&lt;/textarea&gt;
+        &lt;div id="fun-outputs"&gt;&lt;/div&gt;"""</span>
+
+
+<span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/fun"</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">"POST"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fun_handler</span><span class="p">():</span>
+    <span class="n">fun_input</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">forms</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"fun-input"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fun_input</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s">"""
+            &lt;h1&gt;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fun_input</span><span class="p">)</span><span class="si">}</span><span class="s"> Characters Processed! REVERSE REVERSE!&lt;/h1&gt;
+            &lt;div&gt;</span><span class="si">{</span><span class="n">fun_input</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s">&lt;/div&gt;"""</span>
+
+
+<span class="n">app</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">reloader</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>If you have played around with <code class="language-plaintext highlighter-rouge">flask</code>, this app creation pattern and adding routes with decorators might be a little familiar.</p>
+
+<p>Returning HTML strings with random <code class="language-plaintext highlighter-rouge">hx-</code> element attributes is probably not familiar at all.</p>
+
+<h3 id="static-files">
+<a class="anchor" href="#static-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Static Files</h3>
+
+<p>To be explicit, I’ve included 2 routes to serve the 2 necessary static files.
+Bottle does have the ability to serve static files from a directory on a wildcard route.</p>
+
+<p><code class="language-plaintext highlighter-rouge">index.html</code> holds the skeleton of the app.
+Just including the interesting bits here:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"htmx.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">hx-get=</span><span class="s">"/fun"</span> 
+            <span class="na">hx-target=</span><span class="s">"#app"</span> 
+            <span class="na">hx-swap=</span><span class="s">"innerHTML"</span><span class="nt">&gt;</span>🎉 Do Something Fun!<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div></div>
+
+<p>At the top we have a standard <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tag to load in the file at <code class="language-plaintext highlighter-rouge">/htmx.js</code>, which is the raw <code class="language-plaintext highlighter-rouge">htmx</code> library (included as raw file for showcase, serve it gzipped / from cdn in production).</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">htmx</code> magic comes in the <code class="language-plaintext highlighter-rouge">hx-get</code>, <code class="language-plaintext highlighter-rouge">hx-target</code> and <code class="language-plaintext highlighter-rouge">hx-swap</code> attributes.</p>
+
+<p>When the <code class="language-plaintext highlighter-rouge">button</code> is clicked, it will make a GET request to <code class="language-plaintext highlighter-rouge">/fun</code>.
+It then takes the response from <code class="language-plaintext highlighter-rouge">/fun</code> and injects it into the <code class="language-plaintext highlighter-rouge">innerHTML</code> of the <code class="language-plaintext highlighter-rouge">#app</code> element (the <code class="language-plaintext highlighter-rouge">div</code> in this case).</p>
+
+<p>All powered by <code class="language-plaintext highlighter-rouge">htmx</code> using 3 HTML attributes!</p>
+
+<h3 id="get-routes-in-bottle--htmx">
+<a class="anchor" href="#get-routes-in-bottle--htmx" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get Routes in Bottle + HTMX</h3>
+
+<p>Next we have a route that handles GET requests to <code class="language-plaintext highlighter-rouge">/fun</code>.</p>
+
+<p>On the <code class="language-plaintext highlighter-rouge">bottle</code> side of things we just want to return the HTML template for the “fun zone” (tm 🎉).
+Which with syntax highlighting looks like:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;textarea</span> <span class="na">placeholder=</span><span class="s">"Type some nonsense then tab / click away!"</span> 
+    <span class="na">hx-post=</span><span class="s">"/fun"</span> <span class="na">hx-target=</span><span class="s">"#fun-outputs"</span> <span class="na">hx-swap=</span><span class="s">"innerHTML"</span> 
+    <span class="na">name=</span><span class="s">"fun-input"</span> <span class="na">id=</span><span class="s">"fun-input"</span> <span class="na">cols=</span><span class="s">"60"</span> <span class="na">rows=</span><span class="s">"20"</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"fun-outputs"</span><span class="nt">&gt;&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>The first element returned is a <code class="language-plaintext highlighter-rouge">textarea</code> for inputting random text.
+When the content of this <code class="language-plaintext highlighter-rouge">textarea</code> changes, a POST request will be sent to <code class="language-plaintext highlighter-rouge">/fun</code> (note the <code class="language-plaintext highlighter-rouge">hx-post="/fun"</code>), and the response will be injected into the <code class="language-plaintext highlighter-rouge">innerHTML</code> of the <code class="language-plaintext highlighter-rouge">fun-outputs</code> <code class="language-plaintext highlighter-rouge">div</code>.</p>
+
+<h3 id="post-routes-in-bottle--htmx">
+<a class="anchor" href="#post-routes-in-bottle--htmx" aria-hidden="true"><span class="octicon octicon-link"></span></a>Post Routes in Bottle + HTMX</h3>
+
+<p><code class="language-plaintext highlighter-rouge">htmx</code> can send data from our html widgets in a post request (see the docs for more understanding of <a href="https://htmx.org/docs/#triggers">request triggers</a> such as with HTML forms).</p>
+
+<p><code class="language-plaintext highlighter-rouge">bottle</code> can then parse this request data and do something with it!</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fun_input</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">forms</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"fun-input"</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In this case, we’ll return the message in reverse and announce how long the string is.
+By returning HTML, it will get displayed nicely in the element specified by <code class="language-plaintext highlighter-rouge">hx-target</code>.</p>
+
+<p>In the case where there isn’t any actual text, it will implicitly return None and won’t update the display.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fun_input</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s">"""
+        &lt;h1&gt;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fun_input</span><span class="p">)</span><span class="si">}</span><span class="s"> Characters Processed! REVERSE REVERSE!&lt;/h1&gt;
+        &lt;div&gt;</span><span class="si">{</span><span class="n">fun_input</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s">&lt;/div&gt;"""</span>
+</code></pre></div></div>
+
+<p><em>NOTE</em> this doesn’t use built in <code class="language-plaintext highlighter-rouge">bottle</code> templating for simplicity.</p>
+
+<p>Admittedly, <code class="language-plaintext highlighter-rouge">bottle</code> uses a similarly confusing global request object to <code class="language-plaintext highlighter-rouge">flask</code>, but “Pay no attention to that man behind the curtain!”</p>
+
+<h2 id="doing-it-with-streamlit">
+<a class="anchor" href="#doing-it-with-streamlit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Doing it with Streamlit</h2>
+
+<p>Already the <code class="language-plaintext highlighter-rouge">bottle</code> example has grown in complexity and “things to know about”.</p>
+
+<p>So far the concepts outside of Python (that all require coding attention!) are:</p>
+
+<ul>
+  <li>HTML</li>
+  <li>Ports / Hostnames</li>
+  <li>Server / wsgi loops</li>
+  <li>URL routes</li>
+  <li>HTTP request methods</li>
+  <li>How <code class="language-plaintext highlighter-rouge">htmx</code> works</li>
+</ul>
+
+<p>And if we wanted to deploy this to the world we’d also want to know (and spend time on):</p>
+
+<ul>
+  <li>CSS styling</li>
+  <li>Static file deployment / bundling</li>
+  <li>Gunicorn / Gevent / production wsgi serving</li>
+  <li>Testing interaction between HTML and routes</li>
+</ul>
+
+<p>What if we could shove all of that mountain of stuff onto the shoulders of <code class="language-plaintext highlighter-rouge">streamlit</code>…?</p>
+
+<p><em>NOTE</em> These are all awesome things to learn!
+<a href="https://www.theodinproject.com/">The Odin Project</a> is an awesome resource and community for learning the <strong>web</strong> parts that Python learners usually don’t come into web apps with.</p>
+
+<p>Porting the example to streamlit, we can reduce it from 2 files (<code class="language-plaintext highlighter-rouge">index.html</code> and <code class="language-plaintext highlighter-rouge">wsgi.py</code>) to 1 (<code class="language-plaintext highlighter-rouge">streamlit_app.py</code>) and can reduce the lines of code we need to understand from ~50 to ~15.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+
+<span class="k">if</span> <span class="n">st</span><span class="p">.</span><span class="n">button</span><span class="p">(</span><span class="s">"Do Something Fun 🎉!"</span><span class="p">):</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">session_state</span><span class="p">[</span><span class="s">'show_fun'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">elif</span> <span class="s">'show_fun'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">st</span><span class="p">.</span><span class="n">session_state</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">session_state</span><span class="p">[</span><span class="s">'show_fun'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">if</span> <span class="n">st</span><span class="p">.</span><span class="n">session_state</span><span class="p">.</span><span class="n">show_fun</span><span class="p">:</span>
+    <span class="n">fun_input</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">text_area</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s">'Type some nonsense then hit cmd/ctrl + enter'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fun_input</span><span class="p">):</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fun_input</span><span class="p">)</span><span class="si">}</span><span class="s"> Characters Processed! REVERSE REVERSE!"</span><span class="p">)</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">fun_input</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>No more HTML… Replaced with:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">st.button</code></li>
+  <li><code class="language-plaintext highlighter-rouge">st.text_area</code></li>
+  <li><code class="language-plaintext highlighter-rouge">st.header</code></li>
+  <li><code class="language-plaintext highlighter-rouge">st.write</code></li>
+</ul>
+
+<p>No more Ports / server / routes… Replaced with:</p>
+
+<p><code class="language-plaintext highlighter-rouge">streamlit run streamlit_app.py</code></p>
+
+<p>No more HTTP requests or <code class="language-plaintext highlighter-rouge">htmx</code>… Replaced with:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">if st.button("Do Something Fun 🎉!"):</code></li>
+  <li><code class="language-plaintext highlighter-rouge">fun_input = st.text_area('')</code></li>
+</ul>
+
+<p>This example didn’t even show any effort to CSS on the <code class="language-plaintext highlighter-rouge">bottle</code> app, but <code class="language-plaintext highlighter-rouge">streamlit</code> gives it to us for free!</p>
+
+<p>Additionally, the communication between frontend components and backend updates has to be tested by <em>you</em>.
+And <em>then</em> you have to test the business logic.</p>
+
+<p><code class="language-plaintext highlighter-rouge">streamlit</code> has over a dozen widgets in their <a href="https://docs.streamlit.io/library/api-reference/widgets">input library</a> with a team and community of developeres working on their speed, UI/UX, and resiliency.</p>
+
+<p>Finally, deploying to streamlit with <code class="language-plaintext highlighter-rouge">streamlit run streamlit_app.py</code> is a valid way to run the server.
+Deploying with Streamlit Sharing in the cloud is even less to deal with, netting a free Continuous Deployment pipeline from github to the cloud.</p>
+
+<h2 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
+
+<p>While <code class="language-plaintext highlighter-rouge">streamlit</code> isn’t the simplest interactive web stack out there, it very well might be the easiest.</p>
+
+<p>With a growing community, new web features are added all the time to <code class="language-plaintext highlighter-rouge">streamlit</code>, but are accessible in a Pythonic way.</p>
+
+<p>Are you with the majority of people who hear the word “state” and think about political geographies?
+Spend some time with <a href="https://docs.streamlit.io/library/api-reference/session-state">session_state</a> since the <code class="language-plaintext highlighter-rouge">streamlit</code> execution model is unique.
+Soon your understanding of frontend <code class="language-plaintext highlighter-rouge">state</code> will carry over to other projects!</p>
+
+<p>Want to learn what query params / arguments are for?
+There’s experimental support for <a href="https://docs.streamlit.io/library/api-reference/utilities/st.experimental_get_query_params">getting</a> and <a href="https://docs.streamlit.io/library/api-reference/utilities/st.experimental_set_query_params">setting</a> them with Python.</p>
+
+<p>All that being said, if you need barebones interactivity with no dependencies, it is acheivable.</p>
+
+  </div><a class="u-url" href="/streamlit/python/beginner/2022/03/23/bottle-htmx-streamlit.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
