@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>LightGBM Predicting Water Pump Functionality | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="LightGBM Predicting Water Pump Functionality" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="DrivenData competition for fun Data Mining Tanzania Water Table data." />
+<meta property="og:description" content="DrivenData competition for fun Data Mining Tanzania Water Table data." />
+<link rel="canonical" href="https://tech.gerardbentley.com/streamlit/python/intermediate/drivendata/2022/04/19/lightgbm-water-pumps.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/streamlit/python/intermediate/drivendata/2022/04/19/lightgbm-water-pumps.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-04-19T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="LightGBM Predicting Water Pump Functionality" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-04-19T00:00:00-05:00","datePublished":"2022-04-19T00:00:00-05:00","description":"DrivenData competition for fun Data Mining Tanzania Water Table data.","headline":"LightGBM Predicting Water Pump Functionality","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/streamlit/python/intermediate/drivendata/2022/04/19/lightgbm-water-pumps.html"},"url":"https://tech.gerardbentley.com/streamlit/python/intermediate/drivendata/2022/04/19/lightgbm-water-pumps.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">LightGBM Predicting Water Pump Functionality</h1><p class="page-description">DrivenData competition for fun Data Mining Tanzania Water Table data.
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-04-19T00:00:00-05:00" itemprop="datePublished">
+        Apr 19, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#streamlit">streamlit</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#intermediate">intermediate</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#drivendata">drivendata</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#lightgbm-predicting-water-pump-functionality">LightGBM Predicting Water Pump Functionality</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#project-walkthrough">Project Walkthrough</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#data-sources">Data Sources</a></li>
+<li class="toc-entry toc-h3"><a href="#feature-exploration-and-engineering">Feature Exploration and Engineering</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#credits">Credits</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#drivendata-platform">DrivenData Platform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h1 id="lightgbm-predicting-water-pump-functionality">
+<a class="anchor" href="#lightgbm-predicting-water-pump-functionality" aria-hidden="true"><span class="octicon octicon-link"></span></a>LightGBM Predicting Water Pump Functionality</h1>
+
+<p>Water Pump functionality prediction. Based on the DrivenData challenge <a href="https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/">Pump it Up: Data Mining the Water Table</a></p>
+
+<p>See the exploration in <a href="https://share.streamlit.io/gerardrbentley/pump-it-up/main">Streamlit Cloud</a> 🎈</p>
+
+<p>For better performance, grab the code from <a href="https://github.com/gerardrbentley/pump-it-up">github repo</a></p>
+
+<div class="jekyll-twitter-plugin">
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">Trying out LightGBM for a <a href="https://twitter.com/drivendataorg?ref_src=twsrc%5Etfw">@drivendataorg</a> competition assessing water pump functionality. Still need to work on the pre-processing before I go posting any scores though 😆<br><br>🕹 <a href="https://twitter.com/streamlit?ref_src=twsrc%5Etfw">@streamlit</a> Demo: <a href="https://t.co/P4XzP1t9vC">https://t.co/P4XzP1t9vC</a><br>🐙 Github Repo: <a href="https://t.co/nn1Ose9tL4">https://t.co/nn1Ose9tL4</a><a href="https://twitter.com/hashtag/30DaysOfStreamlit?src=hash&amp;ref_src=twsrc%5Etfw">#30DaysOfStreamlit</a></p>— Gerard Bentley (@GarsBar35Plus) <a href="https://twitter.com/GarsBar35Plus/status/1516588954346160131?ref_src=twsrc%5Etfw">April 20, 2022</a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<h2 id="project-walkthrough">
+<a class="anchor" href="#project-walkthrough" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Walkthrough</h2>
+
+<p>Using data from <a href="http://taarifa.org/">Taarifa</a> and the <a href="http://maji.go.tz/">Tanzanian Ministry of Water</a>, can we predict which pumps are functional, which need some repairs, and which don’t work at all?</p>
+
+<p>Predict one of these three classes based on a number of variables about what kind of pump is operating, when it was installed, and how it is managed.</p>
+
+<p>A smart understanding of which waterpoints will fail can improve maintenance operations and ensure that clean, potable water is available to communities across Tanzania.</p>
+
+<h3 id="data-sources">
+<a class="anchor" href="#data-sources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Sources</h3>
+
+<ul>
+  <li>Training and test data from drivendata, along with submission format
+    <ul>
+      <li>Details in <a href="https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/25/#features_list">problem description</a>
+</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/images/2022-04-15-20-02-15.png" alt="driven data downloads"></p>
+
+<h3 id="feature-exploration-and-engineering">
+<a class="anchor" href="#feature-exploration-and-engineering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Exploration and Engineering</h3>
+
+<p>Much of this was guided by the DrivenData Competition forum, specifically this user’s <a href="https://towardsdatascience.com/pump-it-up-with-catboost-828bf9eaac68">EDA + Catboost example</a> (I haven’t tried out all of his data processing steps… yet)</p>
+
+<h2 id="credits">
+<a class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>This package was created with Cookiecutter and the <code class="language-plaintext highlighter-rouge">gerardrbentley/cookiecutter-streamlit</code> project template.</p>
+
+<ul>
+  <li>Cookiecutter: <a href="https://github.com/audreyr/cookiecutter">https://github.com/audreyr/cookiecutter</a>
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">gerardrbentley/cookiecutter-streamlit</code>: <a href="https://github.com/gerardrbentley/cookiecutter-streamlit">https://github.com/gerardrbentley/cookiecutter-streamlit</a>
+</li>
+</ul>
+
+<h3 id="drivendata-platform">
+<a class="anchor" href="#drivendata-platform" aria-hidden="true"><span class="octicon octicon-link"></span></a>DrivenData Platform</h3>
+
+<p>@misc{<a href="https://doi.org/10.48550/arxiv.1606.07781">https://doi.org/10.48550/arxiv.1606.07781</a>,
+  doi = {10.48550/ARXIV.1606.07781},</p>
+
+<p>url = {<a href="https://arxiv.org/abs/1606.07781">https://arxiv.org/abs/1606.07781</a>},</p>
+
+<p>author = {Bull, Peter and Slavitt, Isaac and Lipstein, Greg},</p>
+
+<p>keywords = {Human-Computer Interaction (cs.HC), Computers and Society (cs.CY), Social and Information Networks (cs.SI), Machine Learning (stat.ML), FOS: Computer and information sciences, FOS: Computer and information sciences},</p>
+
+<p>title = {Harnessing the Power of the Crowd to Increase Capacity for Data Science in the Social Sector},</p>
+
+<p>publisher = {arXiv},</p>
+
+<p>year = {2016},</p>
+
+<p>copyright = {Creative Commons Attribution 4.0 International}
+}</p>
+
+  </div><a class="u-url" href="/streamlit/python/intermediate/drivendata/2022/04/19/lightgbm-water-pumps.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
