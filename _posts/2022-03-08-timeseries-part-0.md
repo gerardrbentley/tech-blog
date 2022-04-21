@@ -17,12 +17,23 @@ For code libraries, blog posts, papers, and talks regarding Time Series data.
   - Rob J Hyndman and George Athanasopoulos
 - [Forecasting: theory and practice](https://arxiv.org/abs/2012.03854)
   - Review
+- [Practical Time Series Analysis](https://www.oreilly.com/library/view/practical-time-series/9781492041641/)
+  - Aileen Nielsen
 
 ## Python Libraries
 
 - [Pandas timeseries functionality](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html)
 - [Darts](https://github.com/unit8co/darts)
 - [sktime](https://github.com/alan-turing-institute/sktime)
+
+## Talks
+
+- Aileen Nielsen Pydata
+  - [Time Series Analysis with Python Intermediate (2016)](https://www.youtube.com/watch?v=JNfxr4BQrLk)
+  - [Irregular Time Series (2016)](https://www.youtube.com/watch?v=E4NMZyfao2c)
+  - [Modern Time Series Analysis (2019)](https://www.youtube.com/watch?v=v5ijNXvlC5A&t=1242s)
+    - [notebooks](https://github.com/john-science/scipy_con_2019)
+    - [referenced background notebooks](https://github.com/AileenNielsen/TimeSeriesAnalysisWithPython)
 
 ## Darts Specific
 

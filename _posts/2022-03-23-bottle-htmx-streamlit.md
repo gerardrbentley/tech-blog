@@ -9,6 +9,8 @@ layout: post
 
 # Bottle + HTMX vs Streamlit
 
+[![Youtube Link](https://img.youtube.com/vi/4V3VACzOmrI/0.jpg)](https://www.youtube.com/watch?v=4V3VACzOmrI)
+
 **NOTE:** This isn't a debate that real people have.
 
 So why compare them...?
