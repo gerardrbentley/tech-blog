@@ -159,6 +159,7 @@ window.onload = wrap_img;
 </h1>
 <p>Turning to DuckDB when you need to crunch more numbers faster than pandas in your Streamlit app 🎈</p>
 <p>Inspired by "DuckDB quacks Arrow" blogpost cross-posted on <a href="https://duckdb.org/2021/12/03/duck-arrow.html">duckdb</a> and <a href="https://arrow.apache.org/blog/2021/12/03/arrow-duckdb/">arrow</a></p>
+<p><a href="https://share.streamlit.io/gerardrbentley/uber-nyc-pickups-duckdb/main/streamlit_app_duck.py"><img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Open in Streamlit"></a></p>
 <h2 id="Background">
 <a class="anchor" href="#Background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background<a class="anchor-link" href="#Background"> </a>
 </h2>
@@ -172,6 +173,12 @@ A very common pattern uses csv files with <code>pandas</code> to accomplish the 
 <h2 id="NYC-Uber-Data">
 <a class="anchor" href="#NYC-Uber-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>NYC Uber Data<a class="anchor-link" href="#NYC-Uber-Data"> </a>
 </h2>
+<ul>
+<li>Streamlit DuckDB Uber NYC <a href="https://github.com/gerardrbentley/uber-nyc-pickups-duckdb">repo</a>
+</li>
+<li>Streamlit Original Uber NYC <a href="https://github.com/streamlit/demo-uber-nyc-pickups">repo</a>
+</li>
+</ul>
 <p>Let's take this NYC Uber dataset example from Streamlit.
 We'll pay attention to:</p>
 <ul>
@@ -1250,8 +1257,13 @@ memory usage: 31.4+ MB
 Common advice is to utilize C optimizations via <code>numpy</code> and <code>pandas</code>.</p>
 <p>Another new contender is utilizing the C++ driven <code>duckdb</code> as an in-process OLAP database manager.
 It takes some re-writing of Python code into SQL, but can play nicely with <code>pandas</code> and <code>pyarrow</code>.</p>
-<p>Speaking of Arrow, it seems to be</p>
-<p>This post explores an example <code>streamlit</code> app that utilizes some <code>pandas</code> and <code>numpy</code> functions such as <code>read_csv</code>, <code>average</code>, and DataFrame slicing</p>
+<p>Speaking of Arrow 🏹, it seems to be efficient and growing in popularity and adoption.
+<code>streamlit</code> 🎈 utilizes it to simplify objects in protobufs <a href="https://blog.streamlit.io/all-in-on-apache-arrow/">between browser and server</a>.
+<code>pandas</code> 🐼 has further integrations on <a href="https://pandas.pydata.org/docs/development/roadmap.html#apache-arrow-interoperability">their roadmap</a>.
+<code>polars</code> 🐻‍❄️ uses it to power their Rust-written <a href="https://github.com/pola-rs/polars">DataFrame library</a>.</p>
+<p>This post explores an example <code>streamlit</code> app that utilizes some <code>pandas</code> and <code>numpy</code> functions such as <code>read_csv</code>, <code>average</code>, and DataFrame slicing.</p>
+<p>Using <code>pyarrow</code> to load data gives a speedup over the default <code>pandas</code> engine.
+Using <code>duckdb</code> to generate new views of data also speeds up difficult computations.</p>
 
 </div>
 </div>
