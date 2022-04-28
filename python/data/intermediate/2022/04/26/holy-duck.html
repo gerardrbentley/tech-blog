@@ -1256,7 +1256,7 @@ memory usage: 31.4+ MB
 <p>It's no secret that Python is not a fast language, but there are tricks to speed it up.
 Common advice is to utilize C optimizations via <code>numpy</code> and <code>pandas</code>.</p>
 <p>Another new contender is utilizing the C++ driven <code>duckdb</code> as an in-process OLAP database manager.
-It takes some re-writing of Python code into SQL, but can play nicely with <code>pandas</code> and <code>pyarrow</code>.</p>
+It takes some re-writing of Python code into SQL (or utilize the <a href="https://github.com/duckdb/duckdb/blob/master/examples/python/duckdb-python.py">Relational API</a> or another library such as <a href="https://ibis-project.org/docs/3.0.2/">Ibis Project</a>), but can play nicely with <code>pandas</code> and <code>pyarrow</code>.</p>
 <p>Speaking of Arrow 🏹, it seems to be efficient and growing in popularity and adoption.
 <code>streamlit</code> 🎈 utilizes it to simplify objects in protobufs <a href="https://blog.streamlit.io/all-in-on-apache-arrow/">between browser and server</a>.
 <code>pandas</code> 🐼 has further integrations on <a href="https://pandas.pydata.org/docs/development/roadmap.html#apache-arrow-interoperability">their roadmap</a>.
