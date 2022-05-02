@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Pipreqs FastAPI Server + Github Bot | Gar’s Bar</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Pipreqs FastAPI Server + Github Bot" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Spreading pinned dependencies one repo at a time." />
+<meta property="og:description" content="Spreading pinned dependencies one repo at a time." />
+<link rel="canonical" href="https://tech.gerardbentley.com/python/intermediate/fastapi/bot/2022/04/21/pipreqs-fastapi.html" />
+<meta property="og:url" content="https://tech.gerardbentley.com/python/intermediate/fastapi/bot/2022/04/21/pipreqs-fastapi.html" />
+<meta property="og:site_name" content="Gar’s Bar" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-04-21T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Pipreqs FastAPI Server + Github Bot" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-04-21T00:00:00-05:00","datePublished":"2022-04-21T00:00:00-05:00","description":"Spreading pinned dependencies one repo at a time.","headline":"Pipreqs FastAPI Server + Github Bot","mainEntityOfPage":{"@type":"WebPage","@id":"https://tech.gerardbentley.com/python/intermediate/fastapi/bot/2022/04/21/pipreqs-fastapi.html"},"url":"https://tech.gerardbentley.com/python/intermediate/fastapi/bot/2022/04/21/pipreqs-fastapi.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://tech.gerardbentley.com/feed.xml" title="Gar's Bar" /><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Gar&#39;s Bar</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Pipreqs FastAPI Server + Github Bot</h1><p class="page-description">Spreading pinned dependencies one repo at a time.
+</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-04-21T00:00:00-05:00" itemprop="datePublished">
+        Apr 21, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      18 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#intermediate">intermediate</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#fastapi">fastapi</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#bot">bot</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#python-pipreqs-api--github-bot">Python Pipreqs API + Github Bot</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#how-to-use">How to Use</a></li>
+<li class="toc-entry toc-h2"><a href="#background">Background</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#deployments">Deployments</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#manual-method">Manual Method</a></li>
+<li class="toc-entry toc-h2"><a href="#python-method">Python Method</a></li>
+<li class="toc-entry toc-h2"><a href="#api-endpoint">API Endpoint</a></li>
+<li class="toc-entry toc-h2"><a href="#async-python">Async Python</a></li>
+<li class="toc-entry toc-h2"><a href="#primary-function">Primary Function</a></li>
+<li class="toc-entry toc-h2"><a href="#caching">Caching</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#singular-cache">Singular Cache</a></li>
+<li class="toc-entry toc-h3"><a href="#using-the-cache">Using the cache</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#github-bot">Github Bot</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#webhooks">Webhooks</a></li>
+<li class="toc-entry toc-h3"><a href="#gidgethub-endpoint-the-bot">Gidgethub Endpoint (the bot)</a></li>
+<li class="toc-entry toc-h3"><a href="#automatically-opening-an-issue">Automatically Opening an Issue</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#testing">Testing</a></li>
+<li class="toc-entry toc-h2"><a href="#next-steps">Next Steps</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#bot">Bot</a></li>
+<li class="toc-entry toc-h3"><a href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h1 id="python-pipreqs-api--github-bot">
+<a class="anchor" href="#python-pipreqs-api--github-bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Pipreqs API + Github Bot</h1>
+
+<p>tl;dr: <a href="https://github.com/gerardrbentley/pipreqs-api">repo link</a></p>
+
+<div class="jekyll-twitter-plugin">
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">Turned my <a href="https://twitter.com/hashtag/Python?src=hash&amp;ref_src=twsrc%5Etfw">#Python</a> requirements API into a <a href="https://twitter.com/github?ref_src=twsrc%5Etfw">@github</a> <a href="https://twitter.com/hashtag/bot?src=hash&amp;ref_src=twsrc%5Etfw">#bot</a> that reminds me when I forget to update dependencies! 🤖<br><br>I used httpx and gidgethub, deployed with the existing <a href="https://twitter.com/FastAPI?ref_src=twsrc%5Etfw">@FastAPI</a> server on <a href="https://twitter.com/heroku?ref_src=twsrc%5Etfw">@heroku</a> <br><br>Followed a great guide by <a href="https://twitter.com/mariatta?ref_src=twsrc%5Etfw">@mariatta</a> -&gt; <a href="https://t.co/3GthR5urKe">https://t.co/3GthR5urKe</a> <a href="https://t.co/ARQw007LEQ">https://t.co/ARQw007LEQ</a> <a href="https://t.co/WRbuxvF3qA">pic.twitter.com/WRbuxvF3qA</a></p>— Gerard Bentley (@GarsBar35Plus) <a href="https://twitter.com/GarsBar35Plus/status/1520075920853274625?ref_src=twsrc%5Etfw">April 29, 2022</a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<p>Powered by <a href="https://github.com/tiangolo/fastapi">FastAPI</a>, <a href="https://github.com/bndr/pipreqs">pipreqs</a>, and <a href="https://gidgethub.readthedocs.io/en/latest/index.html">gidgethub</a>.
+Specifically, FastAPI runs the API server for receiving requests, pipreqs does the code requirements assessing, and gidgethub handles routing requests from Github Webhooks.</p>
+
+<p>Basic API to power bots / helpers to rid the world of Python projects without correct requirements!
+Simple bot to open an issue if <code class="language-plaintext highlighter-rouge">requirements.txt</code> doesn’t match the output of <code class="language-plaintext highlighter-rouge">pipreqs</code>.</p>
+
+<p>Attempts to shallow <code class="language-plaintext highlighter-rouge">git clone</code> a given repo then run <code class="language-plaintext highlighter-rouge">pipreqs</code> on the codebase.
+Returns the resulting <code class="language-plaintext highlighter-rouge">requirements.txt</code> contents!</p>
+
+<h2 id="how-to-use">
+<a class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to Use</h2>
+
+<ul>
+  <li>Use the <a href="https://gerardrbentley.github.io/pipreqs-api/">pyscript frontend on github pages</a>
+</li>
+  <li>Use the <a href="https://share.streamlit.io/gerardrbentley/pipreqs-api/streamlit_deploy/streamlit_app/streamlit_app.py">Streamlit frontend</a> 🎈</li>
+  <li>Use the fastapi generated <a href="https://pipreqs-api.herokuapp.com/docs#/default/pipreqs_endpoint_pipreqs_get">swagger docs</a>
+</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">curl</code> or other http client</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="s2">"https://pipreqs-api.herokuapp.com/pipreqs?code_url=https://github.com/gerardrbentley/pipreqs-api"</span>
+</code></pre></div></div>
+
+<p>Response</p>
+
+<pre><code class="language-txt">cachetools==5.0.0
+fastapi==0.75.2
+gidgethub==5.1.0
+httpx==0.22.0
+pydantic==1.9.0
+pytest==7.1.2
+streamlit==1.8.1
+uvicorn==0.17.6
+</code></pre>
+
+<h2 id="background">
+<a class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h2>
+
+<p>Python is a popular language, but it lacks a standard build &amp; dependency management tool.
+The official docs recommend the third party <a href="https://packaging.python.org/en/latest/tutorials/managing-dependencies/">pipenv</a>, and others such as <a href="">poetry</a> and <a href="">pants</a> are available for other preferences.
+Even <a href="">conda</a> can provide environment and dependency management!</p>
+
+<p>Slowing things down, the basic way of installing Python packages is with <a href=""><code class="language-plaintext highlighter-rouge">pip</code></a> and a file called <code class="language-plaintext highlighter-rouge">requirements.txt</code> (which is a list of packages like the one above!)</p>
+
+<p>Common guides will recommend running something like:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</code></pre></div></div>
+
+<p>Or maybe this to make sure the active Python environment’s pip gets used:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</code></pre></div></div>
+
+<h3 id="deployments">
+<a class="anchor" href="#deployments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deployments</h3>
+
+<p>This project had the goal of reducing headaches from the following loop:</p>
+
+<ul>
+  <li>Write code for a Python / Streamlit app</li>
+  <li>Push the code to a github repo</li>
+  <li>Connect the repo to Streamlit Cloud</li>
+  <li>Wait for deploy on Streamlit Cloud</li>
+  <li>Get <code class="language-plaintext highlighter-rouge">"No module named"</code> or other error from not having up-to-date requirements</li>
+</ul>
+
+<p>So why is this the way it is?</p>
+
+<p>I could say it’s because “Python lacks a standard build &amp; dependency management tool”, but I know that a simple build script / <a href="">Dockerfile</a> and something like <a href="">pre-commit</a> can prevent these headaches before pushing code.</p>
+
+<p>So then the answer is a combination of laziness and a desire to not bloat every repo with many tools and scripts.
+Part of the beauty of managed application hosts such as <a href="">Heroku</a> and <a href="">Streamlit Cloud</a> is the minimal amount of setup needed to launch your app.</p>
+
+<p>A truly minimal Streamlit Cloud repo just needs the <code class="language-plaintext highlighter-rouge">.py</code> file that holds the <code class="language-plaintext highlighter-rouge">streamlit</code> calls.
+Once your app needs more third party Python packages than <code class="language-plaintext highlighter-rouge">streamlit</code>, some kind of dependency file is needed for the Platform to know how to install and run your app.</p>
+
+<h2 id="manual-method">
+<a class="anchor" href="#manual-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Manual Method</h2>
+
+<p>The essence of this API and bot can be boiled down to 2 CLI calls:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git clone --depth 1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">pipreqs --print</code></li>
+</ul>
+
+<p>The clone command will download a copy of the repository that we want to check for requirements.
+The <code class="language-plaintext highlighter-rouge">--depth 1</code> flag is important to limit how many files get downloaded (we don’t need the whole repo history, just the latest).</p>
+
+<p><a href="">pipreqs</a> is a tool that analyzes a directory containing Python files and aims to produce a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file with every third party package that is imported in the project directory.
+The <code class="language-plaintext highlighter-rouge">--print</code> flag will tell pipreqs not to produce a file, but just to print out the file contents to stdout.</p>
+
+<p>You can try this on your own!</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone <span class="nt">--depth</span> 1 https://github.com/gerardrbentley/pipreqs-api test_dir
+python <span class="nt">-m</span> pip <span class="nb">install </span>pipreqs
+pipreqs <span class="nt">--print</span> test_dir
+
+<span class="c"># clean up</span>
+<span class="nb">rm</span> <span class="nt">-r</span> test_dir
+</code></pre></div></div>
+
+<h2 id="python-method">
+<a class="anchor" href="#python-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Method</h2>
+
+<p>From Python we can either use a library such as <a href="https://gitpython.readthedocs.io/en/stable/reference.html?highlight=clone#git.repo.base.Repo.clone">gitpython</a>, or make the system call to <code class="language-plaintext highlighter-rouge">git</code> with the <a href="https://docs.python.org/3/library/subprocess.html">subprocess</a> standard library module.</p>
+
+<p>Here is a basic example (using <code class="language-plaintext highlighter-rouge">.split()</code> to avoid using <a href="https://docs.python.org/3/library/subprocess.html#frequently-used-arguments">shell execution</a>)</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="n">subprocess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="s">'git clone --depth 1 https://github.com/gerardrbentley/pipreqs-api test_dir'</span><span class="p">.</span><span class="n">split</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Since <code class="language-plaintext highlighter-rouge">pipreqs</code> uses <a href=""><code class="language-plaintext highlighter-rouge">docopt</code></a> to <a href="https://github.com/bndr/pipreqs/blob/a593d27e3d9fcdecc0fbf385ef43116cccad71ec/pipreqs/pipreqs.py#L483">parse CLI arguments</a>, I figured it would be easy enough to repeat the <code class="language-plaintext highlighter-rouge">subprocess</code> pattern and be sure to capture the stdout output (the requirements!)</p>
+
+<h2 id="api-endpoint">
+<a class="anchor" href="#api-endpoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Endpoint</h2>
+
+<p>For users to access our function over the internet (and for bots 🤖 to access it!) we’ll serve it up in a REST API.
+Python has plenty of <a href="https://www.techempower.com/benchmarks/#section=data-r20&amp;hw=ph&amp;test=composite&amp;l=zijzen-sf">web framework libraries</a>, pretty much any of them would handle this fine.</p>
+
+<p>For version 1 of this system I’ve chosen to have a single endpoint that responds to HTTP GET requests and requires a query argument called <code class="language-plaintext highlighter-rouge">code_url</code>.
+All it will respond with is plain text containing the <code class="language-plaintext highlighter-rouge">requirements.txt</code> contents and a <code class="language-plaintext highlighter-rouge">200</code> status code.</p>
+
+<p>Here’s what that looks like in my [FastAPI] app:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">router</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/pipreqs"</span><span class="p">,</span> <span class="n">response_class</span><span class="o">=</span><span class="n">PlainTextResponse</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">pipreqs_endpoint</span><span class="p">(</span><span class="n">code_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="p">...</span> <span class="c1"># Clone the repo from code_url
+</span>    <span class="p">...</span> <span class="c1"># Run pipreqs on the cloned repo
+</span>    <span class="k">return</span> <span class="n">requirements</span>
+</code></pre></div></div>
+
+<h2 id="async-python">
+<a class="anchor" href="#async-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Async Python</h2>
+
+<p>This method so far works fine for a single user, but imagine the system with multiple users / bots making requests at once.
+Each <code class="language-plaintext highlighter-rouge">git clone</code> and <code class="language-plaintext highlighter-rouge">pipreqs</code> call would have to complete for a single user before the next in the queue can be processed.</p>
+
+<p><code class="language-plaintext highlighter-rouge">git clone</code> relies on the I/O speed of our server to write files, the remote git server to read the files, and the network speed to get them to our server.
+<code class="language-plaintext highlighter-rouge">pipreqs</code> includes synchronous <code class="language-plaintext highlighter-rouge">requests</code> calls to <a href="">pypi</a>, so it relies on the response speed of the pypi server and the I/O speed of our server to loop over project files and run <code class="language-plaintext highlighter-rouge">ast.parse</code> (from <a href="https://docs.python.org/3/library/ast.html#ast.parse">standard library</a>) on the <code class="language-plaintext highlighter-rouge">.py</code> files.</p>
+
+<p>WSGI frameworks such as <a href="">Flask</a> and <a href="">Bottle</a> rely on threading tricks such as gevent <em>greenlets</em> (read more <a href="https://bottlepy.org/docs/dev/async.html">from Bottle</a>) to handle many connections in a single process.
+ASGI frameworks such as FastAPI (built on <a href="">Starlette</a>) instead rely on a single-threaded event loop and async coroutines to handle many connections.</p>
+
+<p>Above we defined the <code class="language-plaintext highlighter-rouge">/pipreqs</code> route handler with <code class="language-plaintext highlighter-rouge">async def</code> function.
+In FastAPI our function will already be running in the event loop so we can use <code class="language-plaintext highlighter-rouge">await</code> in our code to utilize other <code class="language-plaintext highlighter-rouge">async</code> functions!</p>
+
+<p>Speaking of other <code class="language-plaintext highlighter-rouge">async</code> functions, we can swap out the synchronous <code class="language-plaintext highlighter-rouge">subprocess.run()</code> with another standard library function <code class="language-plaintext highlighter-rouge">asyncio.create_subprocess_exec()</code> (see the <a href="https://docs.python.org/3/library/asyncio-subprocess.html#subprocesses">asyncio subprocess docs</a>).
+This will ensure that our program can let <code class="language-plaintext highlighter-rouge">git clone</code> and <code class="language-plaintext highlighter-rouge">pipreqs</code> run without hanging up our server process when there’s no work to check on.</p>
+
+<p>A general asynchronous run function using exec needs a try block (using <code class="language-plaintext highlighter-rouge">create_subprocess_shell</code> will return the errors in <code class="language-plaintext highlighter-rouge">stderr</code> without raising).</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">_run</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">proc</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">create_subprocess_exec</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">cmd</span><span class="p">.</span><span class="n">split</span><span class="p">(),</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">asyncio</span><span class="p">.</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">asyncio</span><span class="p">.</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">log</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">stack_info</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">""</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="mi">1</span>
+    <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="k">await</span> <span class="n">proc</span><span class="p">.</span><span class="n">communicate</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">stdout</span><span class="p">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">stderr</span><span class="p">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">proc</span><span class="p">.</span><span class="n">returncode</span>
+</code></pre></div></div>
+
+<h2 id="primary-function">
+<a class="anchor" href="#primary-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Primary Function</h2>
+
+<p>Above in the endpoint code we glossed over the most important details:</p>
+
+<ul>
+  <li>Clone the repo from <code class="language-plaintext highlighter-rouge">code_url</code>
+</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">pipreqs</code> on the cloned repo</li>
+</ul>
+
+<p>When we clone a repo we don’t need to store its contents forever.
+That would take a lot of storage space and each repo will get new commits that invalidate the old downloads anyway.
+Making a temporary directory, cloning into it, running <code class="language-plaintext highlighter-rouge">pipreqs</code> on it, then deleting it will work just fine.</p>
+
+<p><em>PRE-NOTE:</em> We’ll continue to use <code class="language-plaintext highlighter-rouge">async</code> functions</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">pipreqs_from_url</span><span class="p">(</span><span class="n">code_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="k">with</span> <span class="n">tempfile</span><span class="p">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">dir_path</span><span class="p">:</span>
+        <span class="n">old_requirements</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch_code</span><span class="p">(</span><span class="n">code_url</span><span class="p">,</span> <span class="n">dir_path</span><span class="p">)</span>
+        <span class="n">pipreqs_output</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_pipreqs</span><span class="p">(</span><span class="n">code_url</span><span class="p">,</span> <span class="n">dir_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pipreqs_output</span><span class="p">,</span> <span class="n">old_requirements</span>
+</code></pre></div></div>
+
+<p><em>NOTE:</em> We’re adding a bit of complexity to prepare for a bot use-case, which is comparing existing <code class="language-plaintext highlighter-rouge">requirements.txt</code> to <code class="language-plaintext highlighter-rouge">pipreqs</code> result.</p>
+
+<p>To clone the repo and check the contents of <code class="language-plaintext highlighter-rouge">requirements.txt</code>, we can do something like this:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">fetch_code</span><span class="p">(</span>
+    <span class="n">code_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">destination_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">requirements_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s">"requirements.txt"</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">clone_cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"git clone --depth 1 </span><span class="si">{</span><span class="n">code_url</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">destination_dir</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s">"</span>
+    <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">returncode</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_run</span><span class="p">(</span><span class="n">clone_cmd</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"Could not clone the code from </span><span class="si">{</span><span class="n">code_url</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s">!"</span>
+        <span class="n">log</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">stack_info</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="n">old_requirements</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">destination_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">requirements_path</span>
+    <span class="k">if</span> <span class="n">old_requirements</span><span class="p">.</span><span class="n">is_file</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">old_requirements</span><span class="p">.</span><span class="n">read_text</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">""</span>
+</code></pre></div></div>
+
+<p>And to run pipreqs on the directory we just cloned:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">run_pipreqs</span><span class="p">(</span><span class="n">code_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dir_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">clone_cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"pipreqs --print </span><span class="si">{</span><span class="n">dir_path</span><span class="si">}</span><span class="s">"</span>
+    <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">returncode</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_run</span><span class="p">(</span><span class="n">clone_cmd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s">"Could not run pipreqs on the code from </span><span class="si">{</span><span class="n">code_url</span><span class="err">!</span><span class="n">r</span><span class="si">}</span><span class="s">!"</span>
+        <span class="n">log</span><span class="p">.</span><span class="n">exception</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">stack_info</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stdout</span>
+</code></pre></div></div>
+
+<p><em>POST-NOTE:</em> using HTTPException from FastAPI couples the logic of our program to the API component. I’m fine with this for now, but a more specific error to the function would allow it to be re-used more easily in another app.</p>
+
+<h2 id="caching">
+<a class="anchor" href="#caching" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching</h2>
+
+<p>If you’ve written a bot that makes requests to an external API then you might see making unlimited <code class="language-plaintext highlighter-rouge">git clone</code> and <code class="language-plaintext highlighter-rouge">pipreqs</code> calls as a potential problem.</p>
+
+<p>One strategy to prevent (some) repeated requests to external APIs is by caching results for your server to reference when the same user request comes in.
+The Python standard library has <code class="language-plaintext highlighter-rouge">functools.lru_cache</code>, but in this case I want the results to expire if the cache becomes too large and also if more than 5 minutes has passed.</p>
+
+<p>I used <code class="language-plaintext highlighter-rouge">cachetools</code> library for a tested TTLCache implementation, but to get it to work with an asynchronous function we have to get a little creative.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">cachetools</span> <span class="kn">import</span> <span class="n">TTLCache</span>
+
+<span class="k">class</span> <span class="nc">RequirementsCache</span><span class="p">(</span><span class="n">TTLCache</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__missing__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code_url</span><span class="p">):</span>
+        <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">pipreqs_from_url</span><span class="p">(</span><span class="n">code_url</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">code_url</span><span class="p">]</span> <span class="o">=</span> <span class="n">future</span>
+        <span class="k">return</span> <span class="n">future</span>
+</code></pre></div></div>
+
+<p>Since <code class="language-plaintext highlighter-rouge">cachetools</code> caches act much like a Dictionary, we can overwrite the dunder method that gets called when we try to access a key that doesn’t exist!
+Here we create a future / task, which is to run the <code class="language-plaintext highlighter-rouge">pipreqs_from_url</code> function.</p>
+
+<p>Then we assign that future as the value for the <code class="language-plaintext highlighter-rouge">code_url</code> key (so that future checks will access that instead of going to <code class="language-plaintext highlighter-rouge">__missing__</code>)</p>
+
+<p>Finally we return the bare future so that we don’t lock up the program while executing <code class="language-plaintext highlighter-rouge">pipreqs_from_url</code> immediately and synchronously.</p>
+
+<h3 id="singular-cache">
+<a class="anchor" href="#singular-cache" aria-hidden="true"><span class="octicon octicon-link"></span></a>Singular Cache</h3>
+
+<p><code class="language-plaintext highlighter-rouge">functools.lru_cache</code> does come in handy for creating an object that serves as a singleton in Python.
+We can treat the <code class="language-plaintext highlighter-rouge">RequirementsCache</code> for our program this way and make a small, cached wrapper function that returns it once and only once.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">functools</span><span class="p">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_requirements_cache</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">RequirementsCache</span><span class="p">:</span>
+    <span class="n">requirements_cache</span> <span class="o">=</span> <span class="n">RequirementsCache</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">requirements_cache</span>
+</code></pre></div></div>
+
+<h3 id="using-the-cache">
+<a class="anchor" href="#using-the-cache" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the cache</h3>
+
+<p>Now we can fill in the API endpoint code!</p>
+
+<p>The wrapper function to fetch the cache is synchronous so we don’t need to await <code class="language-plaintext highlighter-rouge">get_requirements_cache()</code>.
+Then we use Dictionary bracket notation to ask the cache for the <em>future</em>, which we must <code class="language-plaintext highlighter-rouge">await</code> to get the actual returned value from <code class="language-plaintext highlighter-rouge">pipreqs_from_url</code></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">__missing__</code> function we wrote above will get called when a given <code class="language-plaintext highlighter-rouge">code_url</code> isn’t in the Cache.
+Otherwise the cache can return the same future that was stored earlier in <code class="language-plaintext highlighter-rouge">__missing__</code>!</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">router</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/pipreqs"</span><span class="p">,</span> <span class="n">response_class</span><span class="o">=</span><span class="n">PlainTextResponse</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">pipreqs_endpoint</span><span class="p">(</span><span class="n">code_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">requirements_cache</span> <span class="o">=</span> <span class="n">get_requirements_cache</span><span class="p">()</span>
+    <span class="n">requirements</span><span class="p">,</span> <span class="n">old_requirements</span> <span class="o">=</span> <span class="k">await</span> <span class="n">requirements_cache</span><span class="p">[</span><span class="n">code_url</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">requirements</span>
+</code></pre></div></div>
+
+<p>For this endpoint the <code class="language-plaintext highlighter-rouge">old_requirements</code> isn’t useful, so we just return the <code class="language-plaintext highlighter-rouge">pipreqs</code> generated requirements.</p>
+
+<h2 id="github-bot">
+<a class="anchor" href="#github-bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github Bot</h2>
+
+<p>I followed <a href="https://github-bot-tutorial.readthedocs.io/en/latest/index.html">this guide</a> by Python Core developer and Github Bot builder Mariatta, but adapted it to fit in FastAPI.</p>
+
+<p>The main concept of our bot interaction goes as follows:</p>
+
+<ul>
+  <li>Whenever there is a push to my repository the bot should be notified with at least the url and whoever made the push</li>
+  <li>The bot should then run our <code class="language-plaintext highlighter-rouge">pipreqs_from_url</code> function on the repository url and this time compare the generated <code class="language-plaintext highlighter-rouge">requirements.txt</code> to any existing <code class="language-plaintext highlighter-rouge">requirements.txt</code>
+</li>
+  <li>If there’s a difference between the files then the bot should open an Issue on the repository to note the differences</li>
+</ul>
+
+<p>Maybe it seems simple in concept but there’s a few technical and non-technical aspects to highlight.</p>
+
+<h3 id="webhooks">
+<a class="anchor" href="#webhooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Webhooks</h3>
+
+<p>Github (among other git hosting services) allows you to set up webhooks on your repositories.
+This is the technology that will notify our bot whenever someone pushes a commit.</p>
+
+<p>Webhooks prevent our bot service from having to constantly ping the repository to check for changes.
+So long as we trust Github’s servers are running correctly, we can be confident that our bot will be notified whenever a push happens.</p>
+
+<p>We can set one up manually in a repo with a secret key to ensure no attacker sends bogus data.
+To expand this idea to other users, a Github app or adapting to PubSub might be necessary to ease the creation and access of webhooks.</p>
+
+<p>Check out the webhook <a href="https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push">events and payloads documentation</a> for more on what Github will send to our bot.
+Which brings us to the next step, what exactly is the bot?</p>
+
+<h3 id="gidgethub-endpoint-the-bot">
+<a class="anchor" href="#gidgethub-endpoint-the-bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gidgethub Endpoint (the bot)</h3>
+
+<p>Our bot is actually another FastAPI endpoint!
+It’s barely a robot at all!</p>
+
+<p>Since we already have a FastAPI server that will be running (to host the main endpoint), it makes sense to me to include our bot as an additional endpoint.
+Another strategy would be to utilze a new web server hosted somewhere else to listen for Github’s webhook events.</p>
+
+<p>The guide <a href="https://github-bot-tutorial.readthedocs.io/en/latest/gidgethub-for-webhooks.html#">linked above</a> utilizes aiohttp as both the server and the http client for interacting with Github <strong>after</strong> receiving a webhook event (since we’ll open an Issue in some cases).
+Another option is to use a “serverless” technology such as <a href="">AWS Lambda</a> as your bot host, which might reduce your server costs if it is idling a lot.</p>
+
+<p>Here’s what the endpoint looks like FastAPI / Starlette.
+Gidgethub is doing the heavy lifting, we simply pass along request headers and body to the library in order to validate and parse them.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fastapi</span> <span class="kn">import</span> <span class="n">APIRouter</span><span class="p">,</span> <span class="n">Request</span><span class="p">,</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">gidgethub</span> <span class="kn">import</span> <span class="n">routing</span><span class="p">,</span> <span class="n">sansio</span>
+
+<span class="n">router</span> <span class="o">=</span> <span class="n">APIRouter</span><span class="p">()</span>
+<span class="n">gh_router</span> <span class="o">=</span> <span class="n">routing</span><span class="p">.</span><span class="n">Router</span><span class="p">()</span>
+
+
+<span class="o">@</span><span class="n">router</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="n">response_class</span><span class="o">=</span><span class="n">Response</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">request</span><span class="p">:</span> <span class="n">Request</span><span class="p">):</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="k">await</span> <span class="n">request</span><span class="p">.</span><span class="n">body</span><span class="p">()</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"GITHUB_SECRET"</span><span class="p">)</span>
+    <span class="n">oauth_token</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"GITHUB_TOKEN"</span><span class="p">)</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">sansio</span><span class="p">.</span><span class="n">Event</span><span class="p">.</span><span class="n">from_http</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span><span class="n">secret</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="p">.</span><span class="n">AsyncClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+        <span class="n">gh</span> <span class="o">=</span> <span class="n">gidgethub</span><span class="p">.</span><span class="n">httpx</span><span class="p">.</span><span class="n">GitHubAPI</span><span class="p">(</span>
+            <span class="n">client</span><span class="p">,</span> <span class="s">"gerardrbentley"</span><span class="p">,</span> <span class="n">oauth_token</span><span class="o">=</span><span class="n">oauth_token</span>
+        <span class="p">)</span>
+        <span class="k">await</span> <span class="n">gh_router</span><span class="p">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">gh</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="automatically-opening-an-issue">
+<a class="anchor" href="#automatically-opening-an-issue" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatically Opening an Issue</h3>
+
+<p>I considered 3 ways to alert the repo owner (myself in this case) of a potential dependency mismatch:</p>
+
+<ul>
+  <li>Send an email</li>
+  <li>Open a Pull Request with new <code class="language-plaintext highlighter-rouge">requirements.txt</code>
+</li>
+  <li>Open an Issue with new and old <code class="language-plaintext highlighter-rouge">requirements.txt</code>
+</li>
+</ul>
+
+<p>Reasons in favor of opening an Issue:</p>
+
+<ul>
+  <li>There may be Python modules that aren’t used in deployment that trigger extra dependencies in pipreqs</li>
+  <li>A specific older vesion of a package might be required (pipreqs grabs latest version)</li>
+  <li>Allows the user to set email preferences for alerts</li>
+</ul>
+
+<p>The main reasons against opening a Pull Request:</p>
+
+<ul>
+  <li>Thinking about scaling this bot into a scraper of sorts for other people’s projects, it’s not always courteous to open a Pull Request without alerting the maintainer in an Issue</li>
+  <li>Some projects prefer <code class="language-plaintext highlighter-rouge">environment.yml</code> or <code class="language-plaintext highlighter-rouge">pyproject.toml</code> for dependencies</li>
+</ul>
+
+<p>Utilizing <code class="language-plaintext highlighter-rouge">gidgethub</code>, we can write a function that responds to any <code class="language-plaintext highlighter-rouge">push</code> events to the repository:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">gh_router</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="s">"push"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">push_to_repo_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">gh</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="s">"""
+    Whenever a push is made, check the requirements matches pipreqs output; else open an issue.
+    """</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="s">"repository"</span><span class="p">][</span><span class="s">"url"</span><span class="p">]</span>
+    <span class="n">pusher</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="s">"pusher"</span><span class="p">][</span><span class="s">"name"</span><span class="p">]</span>
+
+    <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s">"Recent push by @</span><span class="si">{</span><span class="n">pusher</span><span class="si">}</span><span class="s"> to </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">! Checking if requirements.txt is in line."</span>
+    <span class="p">)</span>
+    <span class="p">...</span>
+</code></pre></div></div>
+
+<p>Next, we can utilize our <code class="language-plaintext highlighter-rouge">requirements_cache</code> the same way as in the API endpoint to fetch the requirements and old_requirements (if present) for the repo.
+If our pipreqs requirements match what is in the repo, then there’s nothing to do for the bot.
+Otherwise, we’ll grab the provided url for interacting with Issues in the repo:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">requirements_cache</span> <span class="o">=</span> <span class="n">get_requirements_cache</span><span class="p">()</span>
+    <span class="n">requirements</span><span class="p">,</span> <span class="n">old_requirements</span> <span class="o">=</span> <span class="k">await</span> <span class="n">requirements_cache</span><span class="p">[</span><span class="n">url</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">requirements</span> <span class="o">==</span> <span class="n">old_requirements</span><span class="p">:</span>
+        <span class="n">log</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s">"Requirements satisfied in repo </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">issues_url</span> <span class="o">=</span> <span class="n">event</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="s">"repository"</span><span class="p">][</span><span class="s">"issues_url"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Finally, we’ll write a short message and use the <code class="language-plaintext highlighter-rouge">gh</code> http client to make the POST request to alert the repository owner and whoever submitted the push!</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">"title"</span><span class="p">:</span> <span class="s">"Check dependencies"</span><span class="p">,</span>
+            <span class="s">"body"</span><span class="p">:</span> <span class="sa">f</span><span class="s">"""</span><span class="se">\
+</span><span class="s">⚠️ Warning! Please confirm dependencies are satisfied.
+Requirements generated by pipreqs:
+
+```txt
+</span><span class="si">{</span><span class="n">requirements</span><span class="si">}</span><span class="s">
+```"""</span><span class="p">,</span>
+            <span class="s">"assignees"</span><span class="p">:</span> <span class="p">[</span><span class="n">pusher</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">await</span> <span class="n">gh</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">issues_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="testing">
+<a class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>We can use <code class="language-plaintext highlighter-rouge">pytest</code> and a handful of its helpers to make testing the API and subprocess calls a bit easier:</p>
+
+<pre><code class="language-txt">pytest==7.1.1
+pytest-asyncio==0.18.3
+pytest-cov==3.0.0
+pytest-mock==3.7.0
+</code></pre>
+
+<p>By using a <code class="language-plaintext highlighter-rouge">conftest.py</code> we can prepare a Starlette test client for testing the API endpoints:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># conftest.py
+</span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">fastapi.testclient</span> <span class="kn">import</span> <span class="n">TestClient</span>
+
+<span class="kn">from</span> <span class="nn">app.config</span> <span class="kn">import</span> <span class="n">Settings</span><span class="p">,</span> <span class="n">get_settings</span>
+<span class="kn">from</span> <span class="nn">app.main</span> <span class="kn">import</span> <span class="n">create_application</span>
+
+
+<span class="k">def</span> <span class="nf">get_settings_override</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">Settings</span><span class="p">(</span><span class="n">testing</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="o">@</span><span class="n">pytest</span><span class="p">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s">"module"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_app</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">create_application</span><span class="p">()</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">dependency_overrides</span><span class="p">[</span><span class="n">get_settings</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_settings_override</span>
+    <span class="k">with</span> <span class="n">TestClient</span><span class="p">(</span><span class="n">app</span><span class="p">)</span> <span class="k">as</span> <span class="n">test_client</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">test_client</span>
+</code></pre></div></div>
+
+<p>Then in our <code class="language-plaintext highlighter-rouge">test_pipreqsapi.py</code> we need to make sure to cue <code class="language-plaintext highlighter-rouge">pytest-asyncio</code> and clear the cache after each test in order to validate call counts:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">pytest</span><span class="p">.</span><span class="n">mark</span><span class="p">.</span><span class="n">asyncio</span>
+<span class="k">class</span> <span class="nc">TestPipreqsApi</span><span class="p">:</span>
+    <span class="s">"""Test backend logic that handles cloning repos and running pipreqs"""</span>
+
+    <span class="o">@</span><span class="n">pytest</span><span class="p">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">get_requirements_cache</span><span class="p">()</span>
+        <span class="n">cache</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>From there we can test each function, building up to the main endpoint.
+We’ll include general tests on whether things succeed when given good inputs or mocks and whether they fail with the intended errors when bad things happen.</p>
+
+<p>Testing our async subprocess run is a good example.
+Here we use known command <code class="language-plaintext highlighter-rouge">ls</code> and broken command <code class="language-plaintext highlighter-rouge">lz</code> to verify our function responds as we expect.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_async_run_succeeds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">resultcode</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_run</span><span class="p">(</span><span class="s">"ls"</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">resultcode</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_async_run_fails_bad_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">resultcode</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_run</span><span class="p">(</span><span class="s">"lz"</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">resultcode</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">stderr</span> <span class="o">==</span> <span class="s">"[Errno 2] No such file or directory: 'lz'"</span>
+</code></pre></div></div>
+
+<p>(I don’t include git clone here since it needs to go out to an external server without other setup / guarantees.
+It’s definitely worth an end to end test though at some point.)</p>
+
+<p>We can use monkeypatching to fake an expected result now that we’ve verified our <code class="language-plaintext highlighter-rouge">_run</code> function works.
+This next test assumes we cloned the repo and that it didn’t have an existing <code class="language-plaintext highlighter-rouge">requirements.txt</code>:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_fetch_code_succeeds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">fake_run_success</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="n">monkeypatch</span><span class="p">.</span><span class="nb">setattr</span><span class="p">(</span><span class="n">pipreqsapi</span><span class="p">,</span> <span class="s">"_run"</span><span class="p">,</span> <span class="n">fake_run_success</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch_code</span><span class="p">(</span><span class="s">"good_clone_url"</span><span class="p">,</span> <span class="s">"none"</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">res</span> <span class="o">==</span> <span class="s">""</span>
+</code></pre></div></div>
+
+<p>To simulate the case where there is a <code class="language-plaintext highlighter-rouge">requirements.txt</code> we could set up a dummy repo with one or use mocking to pretend that any Path from pathlib can find it and read it:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MOCK_REQS</span> <span class="o">=</span> <span class="s">"""fastapi==0.75.1
+gunicorn==20.1.0
+pipreqs==0.4.11
+uvicorn==0.17.6"""</span>
+<span class="p">...</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_fetch_code_returns_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">,</span> <span class="n">mocker</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">fake_run_success</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="n">monkeypatch</span><span class="p">.</span><span class="nb">setattr</span><span class="p">(</span><span class="n">pipreqsapi</span><span class="p">,</span> <span class="s">"_run"</span><span class="p">,</span> <span class="n">fake_run_success</span><span class="p">)</span>
+        <span class="n">mocker</span><span class="p">.</span><span class="n">patch</span><span class="p">.</span><span class="nb">object</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="s">"is_file"</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">mocker</span><span class="p">.</span><span class="n">patch</span><span class="p">.</span><span class="nb">object</span><span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="s">"read_text"</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">MOCK_REQS</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetch_code</span><span class="p">(</span><span class="s">"good_clone_url"</span><span class="p">,</span> <span class="s">"none"</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">res</span> <span class="o">==</span> <span class="n">MOCK_REQS</span>
+</code></pre></div></div>
+
+<p>We can also use mocking to keep track of how many times a function gets called.
+This is useful for validating that our cache will not call the same function twice when it has the value cached already.</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_requirements_cache_caches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mocker</span><span class="p">):</span>
+        <span class="n">mock_pipreqs_from_url</span> <span class="o">=</span> <span class="n">mocker</span><span class="p">.</span><span class="n">patch</span><span class="p">(</span>
+            <span class="s">"app.pipreqsapi.pipreqs_from_url"</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="n">MOCK_REQS</span>
+        <span class="p">)</span>
+        <span class="n">cache</span> <span class="o">=</span> <span class="n">get_requirements_cache</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cache</span><span class="p">[</span><span class="s">"good_clone_url"</span><span class="p">]</span>
+        <span class="n">second_result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">cache</span><span class="p">[</span><span class="s">"good_clone_url"</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">result</span> <span class="o">==</span> <span class="n">MOCK_REQS</span>
+        <span class="n">mock_pipreqs_from_url</span><span class="p">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">"good_clone_url"</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">second_result</span> <span class="o">==</span> <span class="n">MOCK_REQS</span>
+        <span class="n">mock_pipreqs_from_url</span><span class="p">.</span><span class="n">assert_called_once_with</span><span class="p">(</span><span class="s">"good_clone_url"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Finally for the endpoints we’ll need to rely on the <code class="language-plaintext highlighter-rouge">test_app</code> established in <code class="language-plaintext highlighter-rouge">conftest.py</code>.
+We can assert things about the status and any expected errors:</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_pipreqs_endpoint_succeeds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_app</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">fake_pipreqs_from_url_success</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">MOCK_REQS</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
+
+        <span class="n">monkeypatch</span><span class="p">.</span><span class="nb">setattr</span><span class="p">(</span>
+            <span class="n">pipreqsapi</span><span class="p">,</span> <span class="s">"pipreqs_from_url"</span><span class="p">,</span> <span class="n">fake_pipreqs_from_url_success</span>
+        <span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">test_app</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/pipreqs"</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">"code_url"</span><span class="p">:</span> <span class="s">"good_clone_url"</span><span class="p">})</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="p">.</span><span class="n">text</span> <span class="o">==</span> <span class="n">MOCK_REQS</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">test_pipreqs_endpoint_fails_bad_repo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_app</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">test_app</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/pipreqs"</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s">"code_url"</span><span class="p">:</span> <span class="s">"bad_clone_url"</span><span class="p">})</span>
+        <span class="k">assert</span> <span class="n">response</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">response</span><span class="p">.</span><span class="n">json</span><span class="p">()[</span><span class="s">"detail"</span><span class="p">]</span>
+            <span class="o">==</span> <span class="s">"Could not clone the code from 'bad_clone_url'!"</span>
+        <span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="next-steps">
+<a class="anchor" href="#next-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next Steps</h2>
+
+<p>Overall this was a fun project for creating a FastAPI server with caching and async distributed transactions.</p>
+
+<p>It also got me to think about github bots a bit and how we might clean up Python repos going forward.</p>
+
+<h3 id="bot">
+<a class="anchor" href="#bot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bot</h3>
+
+<p>This server works for exposing the pipreqs functionality via API, but the bot leaves some steps to be desired.
+As of now the <code class="language-plaintext highlighter-rouge">gidgethub</code> handling relies on my own github account’s access token and the webhooks are validated based on the secret established for my particular repo.</p>
+
+<p>The bot might be better applied as a Github App to allow users to more easily click a button and get the functionality.</p>
+
+<h3 id="api">
+<a class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h3>
+
+<p>Adding features already available in pipreqs would be straightforward with further optional query params:</p>
+
+<ul>
+  <li>min / compatible version options</li>
+  <li>using non-pypi package host</li>
+</ul>
+
+<p>Adding features not already in pipreqs would be more involved or hacky:</p>
+
+<ul>
+  <li>Convert from <code class="language-plaintext highlighter-rouge">requirements.txt</code> to <code class="language-plaintext highlighter-rouge">pyproject.toml</code> / <code class="language-plaintext highlighter-rouge">environment.yml</code>
+</li>
+  <li>Async parsing and fetching package info</li>
+</ul>
+
+<p>Another idea is on-demand Issue / Pull requests on a given repo (for helping out others without putting too much effor in yourself)</p>
+
+  </div><a class="u-url" href="/python/intermediate/fastapi/bot/2022/04/21/pipreqs-fastapi.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Tech Blog from Gerard Bentley with topics in AI, Python, Developer Habits, and More</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/gerardrbentley" target="_blank" title="gerardrbentley"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/garsbar35plus" target="_blank" title="garsbar35plus"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
