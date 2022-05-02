@@ -2,7 +2,7 @@
 title: 'Pipreqs FastAPI Server + Github Bot' 
 description: |
   Spreading pinned dependencies one repo at a time.
-categories: ['python', 'intermediate', 'fastapi', 'bot']
+categories: ['python', 'intermediate', 'fastapi']
 toc: true
 layout: post
 ---
