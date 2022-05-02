@@ -193,10 +193,10 @@ uvicorn==0.17.6
 <a class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h2>
 
 <p>Python is a popular language, but it lacks a standard build &amp; dependency management tool.
-The official docs recommend the third party <a href="https://packaging.python.org/en/latest/tutorials/managing-dependencies/">pipenv</a>, and others such as <a href="">poetry</a> and <a href="">pants</a> are available for other preferences.
-Even <a href="">conda</a> can provide environment and dependency management!</p>
+The official docs recommend the third party <a href="https://packaging.python.org/en/latest/tutorials/managing-dependencies/">pipenv</a>, and others such as <a href="https://python-poetry.org/">poetry</a> and <a href="https://www.pantsbuild.org/">pants</a> are available for other preferences.
+Even <a href="https://anaconda.org/">conda</a> can provide environment and dependency management!</p>
 
-<p>Slowing things down, the basic way of installing Python packages is with <a href=""><code class="language-plaintext highlighter-rouge">pip</code></a> and a file called <code class="language-plaintext highlighter-rouge">requirements.txt</code> (which is a list of packages like the one above!)</p>
+<p>Slowing things down, the basic way of installing Python packages is with <a href="https://pip.pypa.io/en/stable/"><code class="language-plaintext highlighter-rouge">pip</code></a> and a file called <code class="language-plaintext highlighter-rouge">requirements.txt</code> (which is a list of packages like the one above!)</p>
 
 <p>Common guides will recommend running something like:</p>
 
@@ -223,10 +223,10 @@ Even <a href="">conda</a> can provide environment and dependency management!</p>
 
 <p>So why is this the way it is?</p>
 
-<p>I could say it’s because “Python lacks a standard build &amp; dependency management tool”, but I know that a simple build script / <a href="">Dockerfile</a> and something like <a href="">pre-commit</a> can prevent these headaches before pushing code.</p>
+<p>I could say it’s because “Python lacks a standard build &amp; dependency management tool”, but I know that a simple build script / <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a> and something like <a href="https://pre-commit.com/">pre-commit</a> can prevent these headaches before pushing code.</p>
 
 <p>So then the answer is a combination of laziness and a desire to not bloat every repo with many tools and scripts.
-Part of the beauty of managed application hosts such as <a href="">Heroku</a> and <a href="">Streamlit Cloud</a> is the minimal amount of setup needed to launch your app.</p>
+Part of the beauty of managed application hosts such as <a href="https://heroku.com/">Heroku</a> and <a href="https://streamlit.io/cloud">Streamlit Cloud</a> is the minimal amount of setup needed to launch your app.</p>
 
 <p>A truly minimal Streamlit Cloud repo just needs the <code class="language-plaintext highlighter-rouge">.py</code> file that holds the <code class="language-plaintext highlighter-rouge">streamlit</code> calls.
 Once your app needs more third party Python packages than <code class="language-plaintext highlighter-rouge">streamlit</code>, some kind of dependency file is needed for the Platform to know how to install and run your app.</p>
@@ -244,7 +244,7 @@ Once your app needs more third party Python packages than <code class="language-
 <p>The clone command will download a copy of the repository that we want to check for requirements.
 The <code class="language-plaintext highlighter-rouge">--depth 1</code> flag is important to limit how many files get downloaded (we don’t need the whole repo history, just the latest).</p>
 
-<p><a href="">pipreqs</a> is a tool that analyzes a directory containing Python files and aims to produce a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file with every third party package that is imported in the project directory.
+<p><a href="https://github.com/bndr/pipreqs">pipreqs</a> is a tool that analyzes a directory containing Python files and aims to produce a <code class="language-plaintext highlighter-rouge">requirements.txt</code> file with every third party package that is imported in the project directory.
 The <code class="language-plaintext highlighter-rouge">--print</code> flag will tell pipreqs not to produce a file, but just to print out the file contents to stdout.</p>
 
 <p>You can try this on your own!</p>
@@ -268,7 +268,7 @@ pipreqs <span class="nt">--print</span> test_dir
 <span class="n">subprocess</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="s">'git clone --depth 1 https://github.com/gerardrbentley/pipreqs-api test_dir'</span><span class="p">.</span><span class="n">split</span><span class="p">())</span>
 </code></pre></div></div>
 
-<p>Since <code class="language-plaintext highlighter-rouge">pipreqs</code> uses <a href=""><code class="language-plaintext highlighter-rouge">docopt</code></a> to <a href="https://github.com/bndr/pipreqs/blob/a593d27e3d9fcdecc0fbf385ef43116cccad71ec/pipreqs/pipreqs.py#L483">parse CLI arguments</a>, I figured it would be easy enough to repeat the <code class="language-plaintext highlighter-rouge">subprocess</code> pattern and be sure to capture the stdout output (the requirements!)</p>
+<p>Since <code class="language-plaintext highlighter-rouge">pipreqs</code> uses <a href="http://docopt.org/"><code class="language-plaintext highlighter-rouge">docopt</code></a> to <a href="https://github.com/bndr/pipreqs/blob/a593d27e3d9fcdecc0fbf385ef43116cccad71ec/pipreqs/pipreqs.py#L483">parse CLI arguments</a>, I figured it would be easy enough to repeat the <code class="language-plaintext highlighter-rouge">subprocess</code> pattern and be sure to capture the stdout output (the requirements!)</p>
 
 <h2 id="api-endpoint">
 <a class="anchor" href="#api-endpoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>API Endpoint</h2>
@@ -279,7 +279,7 @@ Python has plenty of <a href="https://www.techempower.com/benchmarks/#section=da
 <p>For version 1 of this system I’ve chosen to have a single endpoint that responds to HTTP GET requests and requires a query argument called <code class="language-plaintext highlighter-rouge">code_url</code>.
 All it will respond with is plain text containing the <code class="language-plaintext highlighter-rouge">requirements.txt</code> contents and a <code class="language-plaintext highlighter-rouge">200</code> status code.</p>
 
-<p>Here’s what that looks like in my [FastAPI] app:</p>
+<p>Here’s what that looks like in my FastAPI app:</p>
 
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">router</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"/pipreqs"</span><span class="p">,</span> <span class="n">response_class</span><span class="o">=</span><span class="n">PlainTextResponse</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">pipreqs_endpoint</span><span class="p">(</span><span class="n">code_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -295,10 +295,10 @@ All it will respond with is plain text containing the <code class="language-plai
 Each <code class="language-plaintext highlighter-rouge">git clone</code> and <code class="language-plaintext highlighter-rouge">pipreqs</code> call would have to complete for a single user before the next in the queue can be processed.</p>
 
 <p><code class="language-plaintext highlighter-rouge">git clone</code> relies on the I/O speed of our server to write files, the remote git server to read the files, and the network speed to get them to our server.
-<code class="language-plaintext highlighter-rouge">pipreqs</code> includes synchronous <code class="language-plaintext highlighter-rouge">requests</code> calls to <a href="">pypi</a>, so it relies on the response speed of the pypi server and the I/O speed of our server to loop over project files and run <code class="language-plaintext highlighter-rouge">ast.parse</code> (from <a href="https://docs.python.org/3/library/ast.html#ast.parse">standard library</a>) on the <code class="language-plaintext highlighter-rouge">.py</code> files.</p>
+<code class="language-plaintext highlighter-rouge">pipreqs</code> includes synchronous <code class="language-plaintext highlighter-rouge">requests</code> calls to <a href="https://pypi.org/">pypi</a>, so it relies on the response speed of the pypi server and the I/O speed of our server to loop over project files and run <code class="language-plaintext highlighter-rouge">ast.parse</code> (from <a href="https://docs.python.org/3/library/ast.html#ast.parse">standard library</a>) on the <code class="language-plaintext highlighter-rouge">.py</code> files.</p>
 
-<p>WSGI frameworks such as <a href="">Flask</a> and <a href="">Bottle</a> rely on threading tricks such as gevent <em>greenlets</em> (read more <a href="https://bottlepy.org/docs/dev/async.html">from Bottle</a>) to handle many connections in a single process.
-ASGI frameworks such as FastAPI (built on <a href="">Starlette</a>) instead rely on a single-threaded event loop and async coroutines to handle many connections.</p>
+<p>WSGI frameworks such as <a href="https://flask.palletsprojects.com/en/2.1.x/">Flask</a> and <a href="https://bottlepy.org/">Bottle</a> rely on threading tricks such as gevent <em>greenlets</em> (read more <a href="https://bottlepy.org/docs/dev/async.html">from Bottle</a>) to handle many connections in a single process.
+ASGI frameworks such as FastAPI (built on <a href="https://www.starlette.io/">Starlette</a>) instead rely on a single-threaded event loop and async coroutines to handle many connections.</p>
 
 <p>Above we defined the <code class="language-plaintext highlighter-rouge">/pipreqs</code> route handler with <code class="language-plaintext highlighter-rouge">async def</code> function.
 In FastAPI our function will already be running in the event loop so we can use <code class="language-plaintext highlighter-rouge">await</code> in our code to utilize other <code class="language-plaintext highlighter-rouge">async</code> functions!</p>
@@ -487,7 +487,7 @@ It’s barely a robot at all!</p>
 Another strategy would be to utilze a new web server hosted somewhere else to listen for Github’s webhook events.</p>
 
 <p>The guide <a href="https://github-bot-tutorial.readthedocs.io/en/latest/gidgethub-for-webhooks.html#">linked above</a> utilizes aiohttp as both the server and the http client for interacting with Github <strong>after</strong> receiving a webhook event (since we’ll open an Issue in some cases).
-Another option is to use a “serverless” technology such as <a href="">AWS Lambda</a> as your bot host, which might reduce your server costs if it is idling a lot.</p>
+Another option is to use a “serverless” technology such as <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html">AWS Lambda</a> as your bot host, which might reduce your server costs if it is idling a lot.</p>
 
 <p>Here’s what the endpoint looks like FastAPI / Starlette.
 Gidgethub is doing the heavy lifting, we simply pass along request headers and body to the library in order to validate and parse them.</p>
