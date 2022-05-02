@@ -50,10 +50,10 @@ uvicorn==0.17.6
 ## Background
 
 Python is a popular language, but it lacks a standard build & dependency management tool.
-The official docs recommend the third party [pipenv](https://packaging.python.org/en/latest/tutorials/managing-dependencies/), and others such as [poetry]() and [pants]() are available for other preferences.
-Even [conda]() can provide environment and dependency management!
+The official docs recommend the third party [pipenv](https://packaging.python.org/en/latest/tutorials/managing-dependencies/), and others such as [poetry](https://python-poetry.org/) and [pants](https://www.pantsbuild.org/) are available for other preferences.
+Even [conda](https://anaconda.org/) can provide environment and dependency management!
 
-Slowing things down, the basic way of installing Python packages is with [`pip`]() and a file called `requirements.txt` (which is a list of packages like the one above!)
+Slowing things down, the basic way of installing Python packages is with [`pip`](https://pip.pypa.io/en/stable/) and a file called `requirements.txt` (which is a list of packages like the one above!)
 
 Common guides will recommend running something like:
 
@@ -79,10 +79,10 @@ This project had the goal of reducing headaches from the following loop:
 
 So why is this the way it is?
 
-I could say it's because "Python lacks a standard build & dependency management tool", but I know that a simple build script / [Dockerfile]() and something like [pre-commit]() can prevent these headaches before pushing code.
+I could say it's because "Python lacks a standard build & dependency management tool", but I know that a simple build script / [Dockerfile](https://docs.docker.com/engine/reference/builder/) and something like [pre-commit](https://pre-commit.com/) can prevent these headaches before pushing code.
 
 So then the answer is a combination of laziness and a desire to not bloat every repo with many tools and scripts.
-Part of the beauty of managed application hosts such as [Heroku]() and [Streamlit Cloud]() is the minimal amount of setup needed to launch your app.
+Part of the beauty of managed application hosts such as [Heroku](https://heroku.com/) and [Streamlit Cloud](https://streamlit.io/cloud) is the minimal amount of setup needed to launch your app.
 
 A truly minimal Streamlit Cloud repo just needs the `.py` file that holds the `streamlit` calls.
 Once your app needs more third party Python packages than `streamlit`, some kind of dependency file is needed for the Platform to know how to install and run your app.
@@ -97,7 +97,7 @@ The essence of this API and bot can be boiled down to 2 CLI calls:
 The clone command will download a copy of the repository that we want to check for requirements.
 The `--depth 1` flag is important to limit how many files get downloaded (we don't need the whole repo history, just the latest).
 
-[pipreqs]() is a tool that analyzes a directory containing Python files and aims to produce a `requirements.txt` file with every third party package that is imported in the project directory.
+[pipreqs](https://github.com/bndr/pipreqs) is a tool that analyzes a directory containing Python files and aims to produce a `requirements.txt` file with every third party package that is imported in the project directory.
 The `--print` flag will tell pipreqs not to produce a file, but just to print out the file contents to stdout.
 
 You can try this on your own!
@@ -122,7 +122,7 @@ import subprocess
 subprocess.run('git clone --depth 1 https://github.com/gerardrbentley/pipreqs-api test_dir'.split())
 ```
 
-Since `pipreqs` uses [`docopt`]() to [parse CLI arguments](https://github.com/bndr/pipreqs/blob/a593d27e3d9fcdecc0fbf385ef43116cccad71ec/pipreqs/pipreqs.py#L483), I figured it would be easy enough to repeat the `subprocess` pattern and be sure to capture the stdout output (the requirements!)
+Since `pipreqs` uses [`docopt`](http://docopt.org/) to [parse CLI arguments](https://github.com/bndr/pipreqs/blob/a593d27e3d9fcdecc0fbf385ef43116cccad71ec/pipreqs/pipreqs.py#L483), I figured it would be easy enough to repeat the `subprocess` pattern and be sure to capture the stdout output (the requirements!)
 
 ## API Endpoint
 
@@ -132,7 +132,7 @@ Python has plenty of [web framework libraries](https://www.techempower.com/bench
 For version 1 of this system I've chosen to have a single endpoint that responds to HTTP GET requests and requires a query argument called `code_url`.
 All it will respond with is plain text containing the `requirements.txt` contents and a `200` status code.
 
-Here's what that looks like in my [FastAPI] app:
+Here's what that looks like in my FastAPI app:
 
 ```py
 @router.get("/pipreqs", response_class=PlainTextResponse)
@@ -148,10 +148,10 @@ This method so far works fine for a single user, but imagine the system with mul
 Each `git clone` and `pipreqs` call would have to complete for a single user before the next in the queue can be processed.
 
 `git clone` relies on the I/O speed of our server to write files, the remote git server to read the files, and the network speed to get them to our server.
-`pipreqs` includes synchronous `requests` calls to [pypi](), so it relies on the response speed of the pypi server and the I/O speed of our server to loop over project files and run `ast.parse` (from [standard library](https://docs.python.org/3/library/ast.html#ast.parse)) on the `.py` files.
+`pipreqs` includes synchronous `requests` calls to [pypi](https://pypi.org/), so it relies on the response speed of the pypi server and the I/O speed of our server to loop over project files and run `ast.parse` (from [standard library](https://docs.python.org/3/library/ast.html#ast.parse)) on the `.py` files.
 
-WSGI frameworks such as [Flask]() and [Bottle]() rely on threading tricks such as gevent *greenlets* (read more [from Bottle](https://bottlepy.org/docs/dev/async.html)) to handle many connections in a single process.
-ASGI frameworks such as FastAPI (built on [Starlette]()) instead rely on a single-threaded event loop and async coroutines to handle many connections.
+WSGI frameworks such as [Flask](https://flask.palletsprojects.com/en/2.1.x/) and [Bottle](https://bottlepy.org/) rely on threading tricks such as gevent *greenlets* (read more [from Bottle](https://bottlepy.org/docs/dev/async.html)) to handle many connections in a single process.
+ASGI frameworks such as FastAPI (built on [Starlette](https://www.starlette.io/)) instead rely on a single-threaded event loop and async coroutines to handle many connections.
 
 Above we defined the `/pipreqs` route handler with `async def` function.
 In FastAPI our function will already be running in the event loop so we can use `await` in our code to utilize other `async` functions!
@@ -334,7 +334,7 @@ Since we already have a FastAPI server that will be running (to host the main en
 Another strategy would be to utilze a new web server hosted somewhere else to listen for Github's webhook events.
 
 The guide [linked above](https://github-bot-tutorial.readthedocs.io/en/latest/gidgethub-for-webhooks.html#) utilizes aiohttp as both the server and the http client for interacting with Github **after** receiving a webhook event (since we'll open an Issue in some cases).
-Another option is to use a "serverless" technology such as [AWS Lambda]() as your bot host, which might reduce your server costs if it is idling a lot.
+Another option is to use a "serverless" technology such as [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html) as your bot host, which might reduce your server costs if it is idling a lot.
 
 Here's what the endpoint looks like FastAPI / Starlette.
 Gidgethub is doing the heavy lifting, we simply pass along request headers and body to the library in order to validate and parse them.
