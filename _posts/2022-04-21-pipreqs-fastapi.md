@@ -12,7 +12,7 @@ layout: post
 
 tl;dr: [repo link](https://github.com/gerardrbentley/pipreqs-api)
 
-{% twitter <https://twitter.com/GarsBar35Plus/status/1520075920853274625> %}
+{% twitter https://twitter.com/GarsBar35Plus/status/1520075920853274625 %}
 
 Powered by [FastAPI](https://github.com/tiangolo/fastapi), [pipreqs](https://github.com/bndr/pipreqs), and [gidgethub](https://gidgethub.readthedocs.io/en/latest/index.html).
 Specifically, FastAPI runs the API server for receiving requests, pipreqs does the code requirements assessing, and gidgethub handles routing requests from Github Webhooks.
