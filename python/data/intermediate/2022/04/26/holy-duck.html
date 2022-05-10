@@ -82,7 +82,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      12 min read
+      15 min read
     
 </span></p>
 
@@ -139,6 +139,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#NYC-Uber-Data">NYC Uber Data </a></li>
 <li class="toc-entry toc-h2"><a href="#Enter-the-Duck">Enter the Duck </a></li>
 <li class="toc-entry toc-h2"><a href="#Filtration">Filtration </a></li>
+<li class="toc-entry toc-h2"><a href="#Larger-Than-Memory-Data">Larger Than Memory Data </a></li>
 <li class="toc-entry toc-h2"><a href="#Conclusions">Conclusions </a></li>
 </ul>
 </li>
@@ -174,7 +175,9 @@ A very common pattern uses csv files with <code>pandas</code> to accomplish the 
 <a class="anchor" href="#NYC-Uber-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>NYC Uber Data<a class="anchor-link" href="#NYC-Uber-Data"> </a>
 </h2>
 <ul>
-<li>Streamlit DuckDB Uber NYC <a href="https://github.com/gerardrbentley/uber-nyc-pickups-duckdb">repo</a>
+<li>Streamlit DuckDB Uber NYC <a href="https://github.com/gerardrbentley/uber-nyc-pickups-duckdb">repo</a><ul>
+<li>Includes 10 Year, 1.5 Billion row Taxi data example as well</li>
+</ul>
 </li>
 <li>Streamlit Original Uber NYC <a href="https://github.com/streamlit/demo-uber-nyc-pickups">repo</a>
 </li>
@@ -249,8 +252,8 @@ We'll pay attention to:</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 3.29 s, sys: 33 ms, total: 3.33 s
-Wall time: 3.32 s
+<pre>CPU times: user 2.99 s, sys: 48.1 ms, total: 3.04 s
+Wall time: 2.94 s
 </pre>
 </div>
 </div>
@@ -367,8 +370,8 @@ Taking in <code>100,000</code> rows landed us around <code>2.3 MB</code> of memo
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 33.6 s, sys: 243 ms, total: 33.8 s
-Wall time: 33.7 s
+<pre>CPU times: user 29.8 s, sys: 163 ms, total: 30 s
+Wall time: 30 s
 </pre>
 </div>
 </div>
@@ -427,7 +430,7 @@ memory usage: 23.5 MB
 <li>
 <code>~10</code> times as much memory (<code>23.5 MB</code> vs <code>2.3 MB</code>)</li>
 <li>
-<code>~10</code> times as much time (<code>30.1 s</code> vs <code>2.99 s</code>)</li>
+<code>~10</code> times as much time (<code>30 s</code> vs <code>2.94 s</code>)</li>
 </ul>
 <p>The first time this app loads in <code>streamlit</code> will be a bit slow either way, but the <code>singleton</code> decorator is designed to prevent having to re-compute objects like this.</p>
 <p>(Also note that this is a single month of data... a year might include <code>~12,337,632</code> entries based on this september 2014 data)</p>
@@ -466,55 +469,8 @@ memory usage: 23.5 MB
 
     <span class="c1"># DuckDB can query Arrow tables, so we'll just return the table and a connection for flexible querying</span>
     <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">":memory:"</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
 <span class="n">arrow_data</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">load_data_duckdb</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>121 ms ± 4.21 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arrow_data</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">arrow_data</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -547,12 +503,44 @@ lon: [[-74.0021,-74.0027,-73.9864,-73.9889,-73.9444]]</pre>
 </div>
     
 
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<span class="n">load_data_duckdb</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>153 ms ± 121 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Holy Smokes! Well that was fast and fun!</p>
-<p><code>pyarrow</code> read the whole dataset in <code>120 ms</code>.
-That's <code>0.120 s</code> compared to <code>30.1 s</code> with <code>pandas</code>!</p>
+<p><code>pyarrow</code> read the whole dataset in <code>153 ms</code>.
+That's <code>0.153 s</code> compared to <code>30 s</code> with <code>pandas</code>!</p>
 <p>So how much memory are <code>pyarrow</code> and <code>duckdb</code> using?</p>
 
 </div>
@@ -682,7 +670,7 @@ Nevertheless, <code>duckdb</code> can query the <code>arrow_data</code> since it
 <code>pandas</code>: <code>~30 s</code> of time and <code>23.5 MB</code>
 </li>
 <li>
-<code>pyarrow</code>: <code>~.1 s</code> of time (<code>120 ms</code>) and <code>23.9 MB</code>
+<code>pyarrow</code>: <code>~.1 s</code> of time (<code>153 ms</code>) and <code>23.9 MB</code>
 </li>
 </ul>
 <p>In fairness, I tried <code>pandas</code> with the <code>pyarrow</code> engine.
@@ -730,8 +718,8 @@ Reading the full CSV without datetime parsing is in line in terms of speed thoug
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 33.6 s, sys: 248 ms, total: 33.9 s
-Wall time: 33.7 s
+<pre>CPU times: user 30.2 s, sys: 193 ms, total: 30.4 s
+Wall time: 30.2 s
 </pre>
 </div>
 </div>
@@ -815,7 +803,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>137 ms ± 189 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<pre>139 ms ± 568 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre>
 </div>
 </div>
@@ -896,7 +884,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>17.8 ms ± 116 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>18 ms ± 65.4 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
@@ -928,7 +916,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>404 µs ± 564 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+<pre>404 µs ± 1.65 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 </pre>
 </div>
 </div>
@@ -960,7 +948,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/var/folders/cp/ktx4zddx7q3bqctqfjykn5700000gn/T/ipykernel_82767/2026438809.py:16: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+<pre>/var/folders/cp/ktx4zddx7q3bqctqfjykn5700000gn/T/ipykernel_302/2026438809.py:16: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
   filtered = data[
 </pre>
 </div>
@@ -969,7 +957,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>39.5 ms ± 275 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<pre>39.9 ms ± 111 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre>
 </div>
 </div>
@@ -1039,7 +1027,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>6.25 ms ± 20.9 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>6.03 ms ± 10.9 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
@@ -1071,7 +1059,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1.64 ms ± 8.87 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+<pre>1.62 ms ± 16.6 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 </pre>
 </div>
 </div>
@@ -1103,7 +1091,7 @@ memory usage: 31.4+ MB
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>2.64 ms ± 26.6 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>2.86 ms ± 19.5 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
@@ -1122,25 +1110,25 @@ memory usage: 31.4+ MB
 <li>
 <code>filterdata</code>:<ul>
 <li>
-<code>pandas</code>: 19.1 ms ± 284 µs</li>
+<code>pandas</code>: 18 ms ± 65.4 µs</li>
 <li>
-<code>duckdb</code>: 6.53 ms ± 126 µs</li>
+<code>duckdb</code>: 6.03 ms ± 10.9 µs</li>
 </ul>
 </li>
 <li>
 <code>mpoint</code>:<ul>
 <li>
-<code>numpy</code>: 403 µs ± 5.35 µs</li>
+<code>numpy</code>: 404 µs ± 1.65 µs</li>
 <li>
-<code>duckdb</code>: 1.7 ms ± 82.6 µs</li>
+<code>duckdb</code>: 1.62 ms ± 16.6 µs</li>
 </ul>
 </li>
 <li>
 <code>histdata</code>:<ul>
 <li>
-<code>pandas</code> + <code>numpy</code>: 40.8 ms ± 430 µs</li>
+<code>pandas</code> + <code>numpy</code>: 39.9 ms ± 111 µs</li>
 <li>
-<code>duckdb</code>: 2.93 ms ± 28.4 µs</li>
+<code>duckdb</code>: 2.86 ms ± 19.5 µs</li>
 </ul>
 </li>
 </ul>
@@ -1155,7 +1143,7 @@ memory usage: 31.4+ MB
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mf">19.1</span> <span class="o">/</span> <span class="mf">6.53</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">18</span> <span class="o">/</span> <span class="mf">6.03</span>
 </pre></div>
 
     </div>
@@ -1170,7 +1158,7 @@ memory usage: 31.4+ MB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>2.9249617151607965</pre>
+<pre>2.9850746268656714</pre>
 </div>
 
 </div>
@@ -1188,7 +1176,7 @@ memory usage: 31.4+ MB
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">403</span> <span class="o">/</span> <span class="mi">1700</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="mi">404</span> <span class="o">/</span> <span class="mi">1620</span>
 </pre></div>
 
     </div>
@@ -1203,7 +1191,7 @@ memory usage: 31.4+ MB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0.23705882352941177</pre>
+<pre>0.24938271604938272</pre>
 </div>
 
 </div>
@@ -1221,7 +1209,7 @@ memory usage: 31.4+ MB
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="mf">40.8</span> <span class="o">/</span> <span class="mf">2.93</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="mf">39.9</span> <span class="o">/</span> <span class="mf">2.86</span>
 </pre></div>
 
     </div>
@@ -1236,7 +1224,7 @@ memory usage: 31.4+ MB
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>13.924914675767916</pre>
+<pre>13.951048951048952</pre>
 </div>
 
 </div>
@@ -1247,6 +1235,201 @@ memory usage: 31.4+ MB
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Larger-Than-Memory-Data">
+<a class="anchor" href="#Larger-Than-Memory-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Larger Than Memory Data<a class="anchor-link" href="#Larger-Than-Memory-Data"> </a>
+</h2>
+<p>Where this DuckDB + Arrow combo really shines is analyzing data that can't be handled by Pandas on your machine.</p>
+<p>In many cases if the data doesn't fit in your computer's memory (RAM) then using Pandas will consume disk (Swap) to try and fit it, which will slow things down.</p>
+<p>With the 10 Year dataset below the DuckDB authors found Pandas used <code>248 GBs</code> (!!!) of memory to read out <code>~300,000</code> rows from the <code>~1,500,000,000</code>.
+In this case it just crashes most laptops.</p>
+<p>So there evolved libraries such as Dask for handling these out-of-core situations through multiprocessing and distributed computing.
+Pandas has a whole list of <a href="https://pandas.pydata.org/pandas-docs/stable/ecosystem.html#ecosystem-out-of-core">related ecosystem projects</a>.</p>
+<p>To cut through data on a single laptop, DuckDB + Arrow + the Parquet format provide some impressive optimizations to where we don't need those <code>248 GBs</code> on any number of machines.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_from_10_year</span><span class="p">():</span>
+    <span class="n">nyc</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="s2">"nyc-taxi/"</span><span class="p">,</span> <span class="n">partitioning</span><span class="o">=</span><span class="p">[</span><span class="s2">"year"</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">])</span>
+    <span class="c1"># Get database connection</span>
+    <span class="n">con</span> <span class="o">=</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="c1"># Run query that selects part of the data</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"SELECT total_amount, passenger_count,year FROM nyc where total_amount &gt; 100 and year &gt; 2014"</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create Record Batch Reader from Query Result.</span>
+    <span class="c1"># "fetch_record_batch()" also accepts an extra parameter related to the desired produced chunk size.</span>
+    <span class="n">record_batch_reader</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">fetch_record_batch</span><span class="p">()</span>
+
+    <span class="c1"># Retrieve all batch chunks</span>
+    <span class="n">all_chunks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Process a single chunk here</span>
+            <span class="c1"># pyarrow.lib.RecordBatch</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="n">record_batch_reader</span><span class="o">.</span><span class="n">read_next_batch</span><span class="p">()</span>
+            <span class="n">all_chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">from_batches</span><span class="p">(</span><span class="n">all_chunks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">load_from_10_year</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>pyarrow.Table
+total_amount: float
+passenger_count: int8
+year: int32
+----
+total_amount: [[149.3,132.18,205.05,137.55,106.57,107.3,187.85,145.55,230.3,118.3,...,104.42,110.8,102.04,112.56,209.9,103.41,175.8,144.95,241.92,102.8]]
+passenger_count: [[1,1,1,1,1,2,1,4,2,1,...,5,1,1,8,2,2,1,1,3,2]]
+year: [[2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,...,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<span class="n">load_from_10_year</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>2.4 s ± 127 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Less than 3 seconds to sift through 1.5 Billion rows of data...</p>
+<p>Let's look at how long it takes to iterate over the whole set in chunks (the inefficient solution to most out-of-memory issues)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">nyc</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="s2">"nyc-taxi/"</span><span class="p">,</span> <span class="n">partitioning</span><span class="o">=</span><span class="p">[</span><span class="s2">"year"</span><span class="p">,</span> <span class="s2">"month"</span><span class="p">])</span>
+<span class="c1"># Get database connection</span>
+<span class="n">con</span> <span class="o">=</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="s2">"SELECT total_amount FROM nyc"</span>
+<span class="p">)</span>
+
+<span class="n">record_batch_reader</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">fetch_record_batch</span><span class="p">()</span>
+
+<span class="n">total_rows</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">record_batch_reader</span><span class="o">.</span><span class="n">read_next_batch</span><span class="p">()</span>
+        <span class="n">total_rows</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="n">total_rows</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 1min 30s, sys: 1min 54s, total: 3min 25s
+Wall time: 3min 53s
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1547741381</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Iterating is definitely not going to work for user interactive apps.
+2 - 3 seconds is bearable for most users (with a loading indicator), but 4 minutes is far too long to be engaging.</p>
+<p>Pandas currently would need to perform this whole iteration or load the whole dataset to process the query we asked before.</p>
+<p>Download instructions (from Ursa Labs S3 bucket) and Streamlit demo using the 10 year set is available in the <a href="https://github.com/gerardrbentley/uber-nyc-pickups-duckdb">same repo</a></p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1264,6 +1447,7 @@ It takes some re-writing of Python code into SQL (or utilize the <a href="https:
 <p>This post explores an example <code>streamlit</code> app that utilizes some <code>pandas</code> and <code>numpy</code> functions such as <code>read_csv</code>, <code>average</code>, and DataFrame slicing.</p>
 <p>Using <code>pyarrow</code> to load data gives a speedup over the default <code>pandas</code> engine.
 Using <code>duckdb</code> to generate new views of data also speeds up difficult computations.</p>
+<p>It also touches on the power of this combination for processing larger than memory datasets efficiently on a single machine.</p>
 
 </div>
 </div>
@@ -1462,25 +1646,25 @@ Using <code>duckdb</code> to generate new views of data also speeds up difficult
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb Cell 38'</span> in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=0'&gt;1&lt;/a&gt;</span> pd.read_csv(
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=1'&gt;2&lt;/a&gt;</span>     "uber-raw-data-sep14.csv.gz",
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=2'&gt;3&lt;/a&gt;</span>     # nrows=100000,  # approx. 10% of data
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=3'&gt;4&lt;/a&gt;</span>     engine='pyarrow',
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=4'&gt;5&lt;/a&gt;</span>     # names=[
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=5'&gt;6&lt;/a&gt;</span>     #     "date/time",
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=6'&gt;7&lt;/a&gt;</span>     #     "lat",
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=7'&gt;8&lt;/a&gt;</span>     #     "lon",
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=8'&gt;9&lt;/a&gt;</span>     #     "CONST"
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=9'&gt;10&lt;/a&gt;</span>     # ],  # specify names directly since they don't change
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=10'&gt;11&lt;/a&gt;</span>     # skiprows=1,  # don't read header since names specified directly
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=11'&gt;12&lt;/a&gt;</span>     usecols=[0,1],  # doesn't load last column, constant value "B02512"
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=12'&gt;13&lt;/a&gt;</span>     # parse_dates=[
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=13'&gt;14&lt;/a&gt;</span>     #     "date/time"
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=14'&gt;15&lt;/a&gt;</span>     # ],  # set as datetime instead of converting after the fact
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=15'&gt;16&lt;/a&gt;</span>     # # infer_datetime_format=True  # Unsupported for pyarrow
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=16'&gt;17&lt;/a&gt;</span>     # date_parser=lambda x: pd.to_datetime(x)
-<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/demo-uber-nyc-pickups-main/blog.ipynb#ch0000047?line=17'&gt;18&lt;/a&gt;</span> ).info()
+<span class="ansi-green-intense-fg ansi-bold">/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb Cell 44'</span> in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=0'&gt;1&lt;/a&gt;</span> pd.read_csv(
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=1'&gt;2&lt;/a&gt;</span>     "uber-raw-data-sep14.csv.gz",
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=2'&gt;3&lt;/a&gt;</span>     # nrows=100000,  # approx. 10% of data
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=3'&gt;4&lt;/a&gt;</span>     engine='pyarrow',
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=4'&gt;5&lt;/a&gt;</span>     # names=[
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=5'&gt;6&lt;/a&gt;</span>     #     "date/time",
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=6'&gt;7&lt;/a&gt;</span>     #     "lat",
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=7'&gt;8&lt;/a&gt;</span>     #     "lon",
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=8'&gt;9&lt;/a&gt;</span>     #     "CONST"
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=9'&gt;10&lt;/a&gt;</span>     # ],  # specify names directly since they don't change
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=10'&gt;11&lt;/a&gt;</span>     # skiprows=1,  # don't read header since names specified directly
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=11'&gt;12&lt;/a&gt;</span>     usecols=[0,1],  # doesn't load last column, constant value "B02512"
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=12'&gt;13&lt;/a&gt;</span>     # parse_dates=[
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=13'&gt;14&lt;/a&gt;</span>     #     "date/time"
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=14'&gt;15&lt;/a&gt;</span>     # ],  # set as datetime instead of converting after the fact
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=15'&gt;16&lt;/a&gt;</span>     # # infer_datetime_format=True  # Unsupported for pyarrow
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=16'&gt;17&lt;/a&gt;</span>     # date_parser=lambda x: pd.to_datetime(x)
+<span class="ansi-green-intense-fg ansi-bold">     &lt;a href='vscode-notebook-cell:/Users/gar/projects/tech-blog/_notebooks/2022-04-26-holy-duck.ipynb#ch0000038?line=17'&gt;18&lt;/a&gt;</span> ).info()
 
 File <span class="ansi-green-fg">~/miniconda3/envs/py39/lib/python3.9/site-packages/pandas/util/_decorators.py:311</span>, in <span class="ansi-cyan-fg">deprecate_nonkeyword_arguments.&lt;locals&gt;.decorate.&lt;locals&gt;.wrapper</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">    &lt;a href='file:///Users/gar/miniconda3/envs/py39/lib/python3.9/site-packages/pandas/util/_decorators.py?line=304'&gt;305&lt;/a&gt;</span> if len(args) &gt; num_allow_args:
